@@ -11,6 +11,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
@@ -36,6 +37,7 @@ public class cusTable extends JTable{
 		header.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 18));
 		header.setBorder(new MatteBorder(3, 2, 0, 2, (Color) new Color(0, 0, 0)));
 		setSelectionBackground(Color.CYAN);
+		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 	}
 	public void popUp(int i)

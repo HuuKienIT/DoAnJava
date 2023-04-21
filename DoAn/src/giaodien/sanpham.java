@@ -17,11 +17,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import DAO.NhanHieuDAO;
 import DAO.sanPhamDAO;
-import model.sanPham;
-import model.sanPhamGH;
+import model.SanPhamModel;
+import model.SanPhamGHModel;
 
 import java.awt.SystemColor;
 import javax.swing.JComboBox;
@@ -30,10 +33,20 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Currency;
+import java.util.Locale;
+
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-public class sanpham extends JPanel {
+public class SanPham extends JPanel {
 	private JTextField textField;
 	private JTextField txtMin;
 	private JTextField textField_3;
@@ -41,14 +54,16 @@ public class sanpham extends JPanel {
 	private JTextField textField_5;
 	private JTextField textField_6;
 	private JTextField textField_7;
+	RoundJTextField txtTenSP = new RoundJTextField(20);
+	JComboBox comboSLTG = new JComboBox();
 	public JComboBox comboBox = new JComboBox();
-	public JComboBox comboLoaiSp = new JComboBox();
+	public JComboBox comboNhanHieu = new JComboBox();
 	private JTextField txtMax;
 	private JTable table;
 	public DefaultTableModel modelSP = new DefaultTableModel();
+	ArrayList<SanPhamModel> dsSP = sanPhamDAO.getAllSanPham();
 
-
-	public sanpham() {
+	public SanPham() {
 		setBackground(SystemColor.control);
 		setLayout(null);
 		
@@ -69,55 +84,30 @@ public class sanpham extends JPanel {
 	 	scrollPane.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 	 	JScrollBar cuon = new ScrollBarCustom();
 	 	scrollPane.setVerticalScrollBar(cuon);
-		scrollPane.setBounds(10, 60, 1160, 500);
+		scrollPane.setBounds(10, 60, 1160, 629);
 		panel.add(scrollPane);
-		
-
 		
 		table = new cusTable();
 	 	scrollPane.setViewportView(table);
-	 	String[] columnNamesSP = {"Mã SP", "Tên SP","Nhãn Hiệu", "Giá nhập","Đơn giá", "Còn lại"};
+	 	String[] columnNamesSP = {"ID","Sản phẩm","Nhãn Hiệu","Đơn giá", "Còn lại"};
        	modelSP.setColumnIdentifiers(columnNamesSP);
-    	for(sanPham sp : sanPhamDAO.getAllSanPham() ) {
-       		Object[] row = new Object[] {sp.getMasp(),sp.getTensp(),sp.getGia(),sp.getGia(),sp.getConlai()} ;
-       		modelSP.addRow(row);
-       	}
-    	table.setModel(modelSP);
+    	layDuLieu();
     	table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				 if (e.getClickCount() == 2) { // Check if the click count is 2 (double-click)
-					 new sanPhamAdd(table.getValueAt(table.getSelectedRow(), 0)+"").setVisible(true);
+					 new SanPhamAdd(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0)+"")).setVisible(true);
                  }
-				
-//				txtMaSPCT.setText(table.getValueAt(table.getSelectedRow(), 0)+"");
-//				txtTenSPCT.setText(table.getValueAt(table.getSelectedRow(), 1)+"");
-//				txtDonGiaCT.setText(table.getValueAt(table.getSelectedRow(), 3)+"");
-//				txtDonViCT.setText(table.getValueAt(table.getSelectedRow(), 2)+"");
-//				boolean co=false;
-//				for(sanPhamGH spc :GH ) {
-//	 				if(spc.getMasp().equals(txtMaSPCT.getText())){
-//	 					txtSoLuongCT.setText(spc.getSoluong()+"");	
-//	 					co=true;
-//	 				}
-//	 			}	
-//				if(!co) {
-//					txtSoLuongCT.setText("1");	
-//				}
-			}
-    		
+			}		
 		});
-
-    	table.getColumnModel().getColumn(0).setPreferredWidth(100);
-    	table.getColumnModel().getColumn(1).setPreferredWidth(300);
-    	table.getColumnModel().getColumn(2).setPreferredWidth(200);
-    	table.getColumnModel().getColumn(3).setPreferredWidth(200);
-    	table.getColumnModel().getColumn(4).setPreferredWidth(200);
-    	table.getColumnModel().getColumn(5).setPreferredWidth(100);
-    	table.getColumnModel().getColumn(3).setCellRenderer(new CenterAlignRenderer());
+    	table.getColumnModel().getColumn(0).setPreferredWidth(10);
+    	table.getColumnModel().getColumn(1).setPreferredWidth(400);
+    	table.getColumnModel().getColumn(2).setPreferredWidth(100);
+    	table.getColumnModel().getColumn(3).setPreferredWidth(100);
+    	DefaultTableCellRenderer rendererRight = new DefaultTableCellRenderer();
+        rendererRight.setHorizontalAlignment(SwingConstants.RIGHT);
+    	table.getColumnModel().getColumn(3).setCellRenderer(rendererRight);
     	table.getColumnModel().getColumn(4).setCellRenderer(new CenterAlignRenderer());
-    	table.getColumnModel().getColumn(5).setCellRenderer(new CenterAlignRenderer());
-		
 		JPanel panelHeader = new RoundedJPanel(20);
 		panelHeader.setBackground(Color.WHITE);
 		panelHeader.setBounds(10, 10, 1180, 50);
@@ -131,7 +121,7 @@ public class sanpham extends JPanel {
 		panelHeader.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel = new JLabel("\r\n");
-		lblNewLabel.setIcon(new ImageIcon("E:\\Picrure AT\\iconjava\\arrow.jpg"));
+		lblNewLabel.setIcon(new ImageIcon(SanPham.class.getResource("/icon/arrow.jpg")));
 		lblNewLabel.setBounds(20, 5, 46, 40);
 		panelHeader.add(lblNewLabel);
 		
@@ -139,7 +129,7 @@ public class sanpham extends JPanel {
 		lblNewLabel_3_1_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new sanPhamAdd().setVisible(true);
+				new SanPhamAdd(0).setVisible(true);
 			}
 		});
 		lblNewLabel_3_1_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -164,49 +154,209 @@ public class sanpham extends JPanel {
 		paneThayDoi.setBackground(Color.WHITE);
 		paneThayDoi.setAlignmentY(0.0f);
 		paneThayDoi.setAlignmentX(0.0f);
-		paneThayDoi.setBounds(139, 10, 941, 30);
+		paneThayDoi.setBounds(139, 10, 900, 30);
 		panelTimKiem.add(paneThayDoi);
-		comboLoaiSp.setLocation(264, 0);
-		comboLoaiSp.setSize(200, 30);
+		comboNhanHieu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TimKiem();
+			}
+		});
+		comboNhanHieu.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
+		comboNhanHieu.setLocation(220, 0);
+		comboNhanHieu.setSize(200, 30);
 		
-		paneThayDoi.add(comboLoaiSp);
+		paneThayDoi.add(comboNhanHieu);
+		txtTenSP.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				TimKiem();
+			}
+			@Override
+			public void keyPressed(KeyEvent e) {
+				TimKiem();
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				TimKiem();
+			}
+		});
+		txtTenSP.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(txtTenSP.getText().equals("Nhập tên Sản Phẩm")) {
+					txtTenSP.setText("");
+				}
+			}
+		});
+		txtTenSP.setText("Nhập tên Sản Phẩm");
+		txtTenSP.setHorizontalAlignment(SwingConstants.CENTER);
+		txtTenSP.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
+		txtTenSP.setColumns(15);
+		txtTenSP.setBounds(10, 0, 200, 30);
+		paneThayDoi.add(txtTenSP);
 		
-		RoundJTextField txtKiem = new RoundJTextField(20);
-		txtKiem.setHorizontalAlignment(SwingConstants.LEFT);
-		txtKiem.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
-		txtKiem.setColumns(15);
-		txtKiem.setBounds(10, 0, 239, 30);
-		paneThayDoi.add(txtKiem);
-		
-		txtMax = new JTextField();
-		txtMax.setBounds(761, 0, 152, 29);
+		txtMax = new RoundJTextField(10);
+		txtMax.setHorizontalAlignment(SwingConstants.CENTER);
+		txtMax.setBounds(670, 0, 120, 29);
 		paneThayDoi.add(txtMax);
 		txtMax.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
 		txtMax.setColumns(10);
-		
+		txtMax.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		        char c = e.getKeyChar();
+		        if (!((c >= '0') && (c <= '9') ||
+		           (c == KeyEvent.VK_BACK_SPACE) ||
+		           (c == KeyEvent.VK_DELETE))) {
+		          e.consume();
+		        }
+		      }
+		    });
 		JLabel lbln = new JLabel("đến");
-		lbln.setBounds(710, 0, 40, 30);
+		lbln.setBounds(624, 0, 40, 30);
 		paneThayDoi.add(lbln);
 		lbln.setHorizontalAlignment(SwingConstants.CENTER);
 		lbln.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
 		
-		txtMin = new JTextField();
-		txtMin.setBounds(559, 0, 141, 30);
+		txtMin = new RoundJTextField(10);
+		txtMin.setHorizontalAlignment(SwingConstants.CENTER);
+		txtMin.setBounds(499, 0, 120, 30);
 		paneThayDoi.add(txtMin);
 		txtMin.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
 		txtMin.setColumns(10);
+		txtMin.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		        char c = e.getKeyChar();
+		        if (!((c >= '0') && (c <= '9') ||
+		           (c == KeyEvent.VK_BACK_SPACE) ||
+		           (c == KeyEvent.VK_DELETE))) {
+		          e.consume();
+		        }
+		      }
+		    });
 		
 		JLabel lblT = new JLabel("Giá từ");
-		lblT.setBounds(490, 0, 65, 30);
+		lblT.setBounds(430, 0, 65, 30);
 		paneThayDoi.add(lblT);
 		lblT.setHorizontalAlignment(SwingConstants.CENTER);
 		lblT.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
+		comboSLTG.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TimKiem();
+			}
+		});	
+		comboSLTG.setModel(new DefaultComboBoxModel(new String[] {"SL Tăng", "SL Giảm"}));
+		comboSLTG.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
+		comboSLTG.setBounds(800, 0, 100, 30);
+		paneThayDoi.add(comboSLTG);
 		
-		JLabel lblNewLabel_3_1_1_1 = new JLabel("Tìm");
-		lblNewLabel_3_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3_1_1_1.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
-		lblNewLabel_3_1_1_1.setBounds(1061, 5, 109, 40);
-		panelTimKiem.add(lblNewLabel_3_1_1_1);
+		JButton btnNewButton = new JButton("Tìm");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TimKiem();
+			}
+		});
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNewButton.setBounds(1050, 10, 70, 30);
+		panelTimKiem.add(btnNewButton);
 		
+		JButton btnNewButton_1 = new JButton("");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				resetAll();
+			}
+		});
+		btnNewButton_1.setIcon(new ImageIcon(SanPham.class.getResource("/icon/reset.jpg")));
+		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNewButton_1.setBounds(1130, 5, 40, 40);
+		panelTimKiem.add(btnNewButton_1);
+		setNhanHieu();
+	}
+	public static String intToMoney(int value) {
+	    Locale locale = new Locale("vi", "VN");
+	    Currency currency = Currency.getInstance("VND");
+	    NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+	    currencyFormatter.setCurrency(currency);
+	    return currencyFormatter.format(value);
+	}
+	public static int moneyToInt(String value) throws ParseException {
+	    Locale locale = new Locale("vi", "VN");
+	    NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+	    Number number = currencyFormatter.parse(value);
+	    return number.intValue();
+	}
+	public void resetAll() {
+		txtTenSP.setText("Nhập tên Sản Phẩm");
+		txtMax.setText("");
+		txtMin.setText("");
+		comboSLTG.setSelectedItem("SL Tăng");
+		layDuLieu();
+		setNhanHieu();
+	}
+	public void layDuLieu() {
+		modelSP.setRowCount(0);
+		for(SanPhamModel sp : dsSP ) {
+       		Object[] row = new Object[] {sp.getId_sp(),sp.getMasp()+"  -  "+sp.getTensp(),sp.getNhanhieu(),intToMoney(sp.getGia()),sp.getConlai()} ;
+       		modelSP.addRow(row);
+       	}
+		table.setModel(modelSP);
+	}
+	public void TimKiem() {
+		ArrayList<SanPhamModel> spLoc = new ArrayList<SanPhamModel>();
+		String tenSP = txtTenSP.getText();
+		if(tenSP.equals("Nhập tên Sản Phẩm")) {
+			tenSP="";
+		}
+		String nhanHieu = (String) comboNhanHieu.getSelectedItem();
+		if(nhanHieu.equals("Tất cả Nhãn Hiệu")) {
+			nhanHieu="";
+		}
+		int giaMin=0;
+		if(!txtMin.getText().equals("")) {
+			giaMin=Integer.parseInt(txtMin.getText());
+		}
+		int giaMax=10000000;
+		if(!txtMax.getText().equals("")) {
+			giaMax=Integer.parseInt(txtMax.getText());
+		}
+		if(giaMin>giaMax) {
+			return;
+		}
+		for(SanPhamModel sp :dsSP) {
+			if(sp.getTensp().toLowerCase().contains(tenSP.toLowerCase())&& sp.getNhanhieu().toLowerCase().contains(nhanHieu.toLowerCase())&&sp.getGia()>=giaMin && sp.getGia()<=giaMax) 
+			{
+				spLoc.add(sp);
+			}
+		}	//Sắp xếp
+		String sltg = (String) comboSLTG.getSelectedItem();
+		
+		if(sltg.equals("SL Tăng")) {
+			 Collections.sort(spLoc, new Comparator<SanPhamModel>() {
+		            @Override
+		            public int compare(SanPhamModel s1, SanPhamModel s2) {
+		                return s1.getGia() - s2.getGia();
+		            }
+		        });		
+		}else {
+			Collections.sort(spLoc, new Comparator<SanPhamModel>() {
+	            @Override
+	            public int compare(SanPhamModel s1, SanPhamModel s2) {
+	                return s2.getGia() - s1.getGia();
+	            }
+	        });	
+		}
+		modelSP.setRowCount(0);
+		for(SanPhamModel sp : spLoc ) {
+			Object[] row = new Object[] {sp.getId_sp(),sp.getMasp()+"  -  "+sp.getTensp(),sp.getNhanhieu(),intToMoney(sp.getGia()),sp.getConlai()} ;
+      		modelSP.addRow(row);
+		}
+		table.setModel(modelSP);
+	}
+	public void setNhanHieu() {
+		((DefaultComboBoxModel) comboNhanHieu.getModel()).addElement("Tất cả Nhãn Hiệu");
+		comboNhanHieu.setSelectedItem("Tất cả Nhãn Hiệu");
+		for(model.NhanHieuModel nh: NhanHieuDAO.getAllNhanHieu()) {
+		 ((DefaultComboBoxModel) comboNhanHieu.getModel()).addElement(nh.getTen_nh());
+		}
 	}
 }

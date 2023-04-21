@@ -19,7 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.border.MatteBorder;
 
-import model.nhanVien;
+import model.NhanVienModel;
 
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -33,7 +33,7 @@ import java.nio.file.StandardCopyOption;
 import java.awt.event.ActionEvent;
 
 public class ProfileEdit extends JFrame {
-	private nhanVien nv;
+	private NhanVienModel nv;
 	private JPanel contentPane;
 	JLabel txtManv;
 	private JTextField txtHoTen;
@@ -42,20 +42,7 @@ public class ProfileEdit extends JFrame {
 	JLabel txtChucVu;
 	JLabel hinhanh;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					themKhachHang frame = new themKhachHang();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public ProfileEdit(nhanVien nv) {
+	public ProfileEdit(NhanVienModel nv) {
 		this.nv=nv;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 783, 539);
@@ -97,10 +84,10 @@ public class ProfileEdit extends JFrame {
 		txtHoTen.setColumns(10);
 		txtHoTen.setBounds(171, 134, 200, 30);
 		panel.add(txtHoTen);
-		
 		JButton btnCapNhat = new JButton("Cập Nhật");
 		btnCapNhat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
 		btnCapNhat.setBackground(Color.WHITE);
@@ -186,7 +173,7 @@ public class ProfileEdit extends JFrame {
 	 		hinhanh.setIcon(null);
 	 	}else {
 	 		try {
-	            InputStream inputStream = banhang.class.getResourceAsStream("/photo/"+tenfile);
+	            InputStream inputStream = BanHang.class.getResourceAsStream("/photo/"+tenfile);
 				originalImage = ImageIO.read(inputStream);
 				Image resizedImage = originalImage.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
 		        ImageIcon icon = new ImageIcon(resizedImage);
@@ -216,7 +203,6 @@ public class ProfileEdit extends JFrame {
 	        String packageDirectoryPath = sourceDirectoryPath + "/src/photo";
 	        Path sourcePath = selectedFile.toPath();
 	        Path targetPath = Paths.get(packageDirectoryPath, "user-"+nv.getId_Tk()+".jpg");
-//	        Path targetPath = Paths.get(packageDirectoryPath, "user-3.jpg");
 
 	        try {
 	            Files.createDirectories(targetPath.getParent()); 

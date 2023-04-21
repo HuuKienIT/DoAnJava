@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import model.KhachHangModel;
+
 import java.awt.Window.Type;
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -13,30 +16,16 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
-public class themKhachHang extends JFrame {
+public class ThemKhachHang extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField txtHoTen;
+	private JTextField txtSoDth;
+	public int id_kh;
+	private JTextField txtMaKh;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					themKhachHang frame = new themKhachHang();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public themKhachHang() {
+	public ThemKhachHang(int id_kh) {
+		this.id_kh= id_kh;
 		setType(Type.UTILITY);
 		setBounds(100, 100, 591, 345);
 		contentPane = new JPanel();
@@ -51,7 +40,7 @@ public class themKhachHang extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("THÊM KHÁCH HÀNG");
+		JLabel lblNewLabel = new JLabel("CHI TIẾT KHÁCH HÀNG");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 23));
 		lblNewLabel.setEnabled(true);
@@ -62,45 +51,52 @@ public class themKhachHang extends JFrame {
 		lblHTn.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblHTn.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 18));
 		lblHTn.setEnabled(true);
-		lblHTn.setBounds(46, 80, 150, 30);
+		lblHTn.setBounds(42, 128, 150, 30);
 		panel.add(lblHTn);
 		
 		JLabel lblSinThoi = new JLabel("Số điện thoại");
 		lblSinThoi.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblSinThoi.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 18));
 		lblSinThoi.setEnabled(true);
-		lblSinThoi.setBounds(46, 130, 150, 30);
+		lblSinThoi.setBounds(42, 178, 150, 30);
 		panel.add(lblSinThoi);
 		
-		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblEmail.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 18));
-		lblEmail.setEnabled(true);
-		lblEmail.setBounds(46, 180, 150, 30);
-		panel.add(lblEmail);
+		txtHoTen = new JTextField();
+		txtHoTen.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
+		txtHoTen.setBounds(226, 128, 200, 30);
+		panel.add(txtHoTen);
+		txtHoTen.setColumns(10);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
-		textField.setBounds(230, 80, 200, 30);
-		panel.add(textField);
-		textField.setColumns(10);
-		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
-		textField_1.setColumns(10);
-		textField_1.setBounds(230, 130, 200, 30);
-		panel.add(textField_1);
-		
-		textField_2 = new JTextField();
-		textField_2.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
-		textField_2.setColumns(10);
-		textField_2.setBounds(230, 180, 200, 30);
-		panel.add(textField_2);
+		txtSoDth = new JTextField();
+		txtSoDth.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
+		txtSoDth.setColumns(10);
+		txtSoDth.setBounds(226, 178, 200, 30);
+		panel.add(txtSoDth);
 		
 		JButton btnNewButton = new JButton("Thêm");
 		btnNewButton.setBackground(Color.WHITE);
 		btnNewButton.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
 		btnNewButton.setBounds(224, 230, 100, 30);
 		panel.add(btnNewButton);
+		
+		txtMaKh = new JTextField();
+		txtMaKh.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
+		txtMaKh.setColumns(10);
+		txtMaKh.setBounds(226, 80, 200, 30);
+		panel.add(txtMaKh);
+		
+		JLabel akbask = new JLabel("Mã KH");
+		akbask.setHorizontalAlignment(SwingConstants.RIGHT);
+		akbask.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 18));
+		akbask.setEnabled(true);
+		akbask.setBounds(42, 80, 150, 30);
+		panel.add(akbask);
+		layDuLieu();
+	}
+	public void layDuLieu() {
+		KhachHangModel kh =DAO.khachHangDAO.getKhachHangByid(id_kh);
+		txtMaKh.setText(kh.getMakh());
+		txtHoTen.setText(kh.getTenkh());
+		txtSoDth.setText(kh.getSodth()+"");
 	}
 }

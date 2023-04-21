@@ -45,6 +45,7 @@ public class mySQLHelper {
 			Statement sm = (Statement) this.connection.createStatement();
 			n=sm.executeUpdate(sql);
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 		return n;
 	}

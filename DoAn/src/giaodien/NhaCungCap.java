@@ -57,7 +57,7 @@ public class NhaCungCap extends JPanel {
 		panel_2.add(lblNewLabel);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("E:\\Picrure AT\\iconjava\\arrow.jpg"));
+		lblNewLabel_2.setIcon(new ImageIcon(NhaCungCap.class.getResource("/icon/arrow.jpg")));
 		lblNewLabel_2.setBounds(20, 5, 46, 40);
 		panel_2.add(lblNewLabel_2);
 		

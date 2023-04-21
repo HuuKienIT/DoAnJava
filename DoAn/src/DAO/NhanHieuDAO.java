@@ -3,18 +3,18 @@ package DAO;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import model.NhanHieu;
+import model.NhanHieuModel;
 
 public class NhanHieuDAO {
-	public static ArrayList<NhanHieu> getAllNhanHieu(){
-		ArrayList<NhanHieu> ds = new ArrayList<NhanHieu>();
+	public static ArrayList<NhanHieuModel> getAllNhanHieu(){
+		ArrayList<NhanHieuModel> ds = new ArrayList<NhanHieuModel>();
 		try {
 			String sql = "SELECT * FROM nhanhieu";
 			mySQLHelper helper = new mySQLHelper();
 			helper.open();
 			ResultSet rs = helper.executeQuery(sql);
 			while(rs.next()) {
-				NhanHieu nh = new NhanHieu();
+				NhanHieuModel nh = new NhanHieuModel();
 				nh.setId_nh(rs.getInt("id_nh"));
 				nh.setMa_nh(rs.getString("ma_nh"));
 				nh.setTen_nh(rs.getString("ten_nh"));

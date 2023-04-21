@@ -3,19 +3,39 @@ package DAO;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import model.khachHang;
+import model.KhachHangModel;
 
 public class khachHangDAO {
-	public static ArrayList<khachHang> getAllKH(){
-		ArrayList<khachHang> ds = new ArrayList<khachHang>();
+	public static int demTongSoKH() {
+		int dem=0;
+		try {
+			String sql = "SELECT count(*) as soluong FROM khachhang";
+			mySQLHelper helper = new mySQLHelper();
+			helper.open();
+			ResultSet rs = helper.executeQuery(sql);
+			while(rs.next()) {
+				dem=rs.getInt("soluong");
+			}
+			helper.close();	
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return dem;
+	}
+	public static ArrayList<KhachHangModel> getAllKH(){
+		ArrayList<KhachHangModel> ds = new ArrayList<KhachHangModel>();
 		try {
 			String sql = "SELECT * FROM khachHang";
 			mySQLHelper helper = new mySQLHelper();
 			helper.open();
 			ResultSet rs = helper.executeQuery(sql);
 			while(rs.next()) {
-				khachHang kh = new khachHang();
-				
+				KhachHangModel kh = new KhachHangModel();
+				kh.setId_kh(rs.getInt("id_kh"));
+				kh.setMakh(rs.getString("ma_kh"));
+				kh.setTenkh(rs.getString("ten_kh"));
+				kh.setSodth(rs.getInt("sdth"));
+				kh.setDiemtl(rs.getInt("diem"));
 				ds.add(kh);
 			}
 			helper.close();	
@@ -24,105 +44,25 @@ public class khachHangDAO {
 		}
 		return ds;
 	}
-	public static ArrayList<khachHang> timKiemKH(int sodth){
-		ArrayList<khachHang> ds = new ArrayList<khachHang>();
+	public static KhachHangModel getKhachHangByid(int id_kh){
+		KhachHangModel kh = new KhachHangModel();
 		try {
-			String sql = "SELECT * FROM khachhang where sodth REGEXP "+sodth +" limit 5";
+			String sql = "SELECT * FROM khachhang where id_kh="+id_kh;
 			mySQLHelper helper = new mySQLHelper();
 			helper.open();
 			ResultSet rs = helper.executeQuery(sql);
 			while(rs.next()) {
-				khachHang kh = new khachHang();
 				kh.setId_kh(rs.getInt("id_kh"));
-				kh.setMakh(rs.getString("makh"));
-				kh.setTenkh(rs.getString("tenkh"));
-				kh.setSodth(rs.getInt("sodth"));
-				kh.setDiemtl(rs.getInt("diemtl"));
-				ds.add(kh);
+				kh.setMakh(rs.getString("ma_kh"));
+				kh.setTenkh(rs.getString("ten_kh"));
+				kh.setSodth(rs.getInt("sdth"));
+				kh.setDiemtl(rs.getInt("diem"));
 			}
-			helper.close();
-			
+			helper.close();	
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return ds;
+		return kh;
 	}
-//	public static int themUsers(khachHang us) {
-//		int n=-1;
-//		try {
-//			String sql = String.format("INSERT INTO hoten(hoten,email,taikhoan,makhhau.sodth,chucvu) VALUES('%s','%s','%s','%s','%d','%s')"
-//					,us.getHoTen(),us.getEmail(),us.getTaiKhoan(),us.getMakhhau(),us.getSoDth(),us.getChucVu());
-//			mySQLHelper helper = new mySQLHelper();
-//			helper.open();
-//			n = helper.executeUpdate(sql);
-//			helper.close();
-//		} catch (Exception e) {
-//		}
-//		return n;
-//	}
-//	public static int xoaUsers(int ID) {
-//		int n=-1;
-//		try {
-//			String sql = "DELETE FROM users where id_user="+ID;
-//			mySQLHelper helper = new mySQLHelper();
-//			helper.open();
-//			n = helper.executeUpdate(sql);
-//			helper.close();
-//		} catch (Exception e) {
-//		}
-//		return n;
-//	}
-//	public static khachHang getUsersByID(int ID) {
-//		khachHang us = new khachHang();
-//		try {
-//			String sql = "SELECT * FROM users where id_user="+ID;
-//			mySQLHelper helper = new mySQLHelper();
-//			helper.open();
-//			ResultSet rs = helper.executeQuery(sql);
-//			while(rs.next()) {
-//				us.setId_kh(rs.getInt("id_user"));
-//				us.setHoTen(rs.getString("hoten"));
-//				us.setEmail(rs.getString("email"));
-//				us.setTaiKhoan(rs.getString("taikhoan"));
-//				us.setMakhhau(rs.getString("makhhau"));
-//				us.setSoDth(rs.getInt("sodth"));
-//				us.setChucVu(rs.getString("chucvu"));
-//			}
-//			helper.close();
-//			
-//		} catch (Exception e) {
-//		}
-//		return us;
-//	}
-//	public static int chinhSuaUsers(int ID, khachHang us) {
-//		int n=-1;
-//		try {
-//			String sql = String.format("UPDATE users SET hoten='%s',email='%s',taikhoan='%s',makhhau='%s',sodth='%d',chucvu='%s' WHERE id_user='%d'"
-//					,us.getHoTen(),us.getEmail(),us.getTaiKhoan(),us.getMakhhau(),us.getSoDth(),us.getChucVu(),ID);
-//			mySQLHelper helper = new mySQLHelper();
-//			helper.open();
-//			n = helper.executeUpdate(sql);
-//			helper.close();
-//		} catch (Exception e) {
-//		}
-//		return n;
-//	}
-//	public static String layMakhhau(String taikhoan) {
-//		String makhhau="";
-//		try {
-//			String sql = String.format("SELECT makhhau from khachHang where taikhoan ='%s'",taikhoan);
-//			mySQLHelper helper = new mySQLHelper();
-//			helper.open();
-//			ResultSet rs = helper.executeQuery(sql);
-//			if(rs!=null) {
-//				while(rs.next()) {
-//					makhhau =rs.getString("makhhau");
-//				}
-//			}
-//			helper.close();
-//		} catch (Exception e) {
-//			System.out.println(e.getMessage());
-//		}
-//		return makhhau;
-//	}
+
 }

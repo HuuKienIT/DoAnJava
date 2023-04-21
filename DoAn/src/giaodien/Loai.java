@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 import DAO.loaiDAO;
 import model.loai;
-import model.sanPhamGH;
+import model.SanPhamGHModel;
 
 public class Loai extends JPanel {
 	private JTextField textField_1;

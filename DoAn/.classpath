@@ -7,5 +7,7 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="src/xuly/mysqlconnector.jar"/>
+	<classpathentry kind="lib" path="src/xuly/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="lib" path="src/xuly/jcommon-1.0.23.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

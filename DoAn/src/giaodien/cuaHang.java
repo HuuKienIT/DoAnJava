@@ -15,11 +15,15 @@ import javax.swing.Timer;
 import javax.swing.JLabel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.border.MatteBorder;
 
-public class cuaHang extends JPanel {
-
-	JPanel DiChuyen = new JPanel();
-	public cuaHang() {
+public class CuaHang extends JPanel {
+	
+	JLabel lblSanPham = new JLabel("SẢN PHẨM");
+	JLabel lblNCC = new JLabel("NHÀ CUNG CẤP");
+	JLabel lblNhanHieu = new JLabel("NHÃN HIỆU");
+	
+	public CuaHang() {
 		setLayout(null);
 		
 		JPanel panel = new JPanel();
@@ -34,7 +38,7 @@ public class cuaHang extends JPanel {
 		body.setLayout(new BorderLayout(0, 0));
 
 		// add panel san pham
-		sanpham tsp = new sanpham();
+		SanPham tsp = new SanPham();
 		tsp.setBackground(SystemColor.control);
 		tsp.setLayout(null);
 		tsp.setVisible(true);
@@ -56,144 +60,41 @@ public class cuaHang extends JPanel {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(0, 0, 200, 35);
+		panel_1.setBounds(0, 0, 200, 40);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("SẢN PHẨM");
-		lblNewLabel.addMouseListener(new MouseAdapter() {
+		lblSanPham.setBorder(new MatteBorder(0, 0, 3, 0, (Color) new Color(0, 0, 0)));
+		lblSanPham.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int targetX = 0; // target x position
-		        int targetY = 35; // target y position
-		        int stepSize = 40; // how many pixels to move at each step
-
-		        Timer timer = new Timer(1, new ActionListener() {
-		            int x = DiChuyen.getLocation().x;
-		            int y = 35;
-		            @Override
-		            
-		            public void actionPerformed(ActionEvent e) {
-		                int dx = targetX - x; 
-		                int dy = targetY - y;
-		                double distance = Math.sqrt(dx*dx + dy*dy);
-
-		                double stepX = stepSize * dx / distance;
-		                double stepY = stepSize * dy / distance;
-
-		                // update x and y positions
-		                x += (int) stepX;
-		                y += (int) stepY;
-		                if (distance < stepSize) {
-		                    return;
-		                }
-		                DiChuyen.setLocation(x, y);
-		            }
-		            
-		        });
-		        timer.start();
+				resetLabel();
+				lblSanPham.setBorder(new MatteBorder(0, 0, 3, 0, (Color) new Color(0, 0, 0)));
 		        body.removeAll();
-		        body.add(new sanpham());
+		        body.add(new SanPham());
 		        body.repaint();
 		        body.validate();
 		      
 			}
 		});
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 18));
-		lblNewLabel.setBounds(0, 0, 200, 35);
-		panel_1.add(lblNewLabel);
+		lblSanPham.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSanPham.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 18));
+		lblSanPham.setBounds(0, 0, 200, 40);
+		panel_1.add(lblSanPham);
 		
 		JPanel panel_1_1 = new JPanel();
 		panel_1_1.setLayout(null);
 		panel_1_1.setBackground(Color.WHITE);
-		panel_1_1.setBounds(200, 0, 200, 35);
+		panel_1_1.setBounds(200, 0, 200, 40);
 		panel.add(panel_1_1);
 		
-		JLabel lblNewLabel_1 = new JLabel("LOẠI SẢN PHẨM\r\n");
-		lblNewLabel_1.addMouseListener(new MouseAdapter() {
+		lblNCC.setBounds(0, 0, 200, 40);
+		panel_1_1.add(lblNCC);
+		lblNCC.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int targetX = 200; // target x position
-		        int targetY = 35; // target y position
-		        int stepSize = 40; // how many pixels to move at each step
-
-		        Timer timer = new Timer(1, new ActionListener() {
-		            int x = DiChuyen.getLocation().x;
-		            int y = 35;
-		            @Override
-		            
-		            public void actionPerformed(ActionEvent e) {
-		                int dx = targetX - x; 
-		                int dy = targetY - y;
-		                double distance = Math.sqrt(dx*dx + dy*dy);
-
-		                double stepX = stepSize * dx / distance;
-		                double stepY = stepSize * dy / distance;
-
-		                // update x and y positions
-		                x += (int) stepX;
-		                y += (int) stepY;
-		                if (distance < stepSize) {
-		                    return;
-		                }
-		                DiChuyen.setLocation(x, y);
-		            }
-		            
-		        });
-		        timer.start();
-		        body.removeAll();
-		        body.add(new Loai());
-		        body.repaint();
-		        body.validate();
-		     
-			}
-		});
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 18));
-		lblNewLabel_1.setBounds(0, 0, 200, 35);
-		panel_1_1.add(lblNewLabel_1);
-		
-		JPanel panel_1_2 = new JPanel();
-		panel_1_2.setLayout(null);
-		panel_1_2.setBackground(Color.WHITE);
-		panel_1_2.setBounds(400, 0, 200, 35);
-		panel.add(panel_1_2);
-		
-		JLabel lblNhCungCp = new JLabel("NHÀ CUNG CẤP");
-		lblNhCungCp.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int targetX = 400; // target x position
-		        int targetY = 35; // target y position
-		        int stepSize = 40; // how many pixels to move at each step
-
-		        Timer timer = new Timer(1, new ActionListener() {
-		            int x = DiChuyen.getLocation().x;
-		            int y = 35;
-		            @Override
-		            
-		            public void actionPerformed(ActionEvent e) {
-		                int dx = targetX - x; 
-		                int dy = targetY - y;
-		                double distance = Math.sqrt(dx*dx + dy*dy);
-
-		                double stepX = stepSize * dx / distance;
-		                double stepY = stepSize * dy / distance;
-
-		                // update x and y positions
-		                x += (int) stepX;
-		                y += (int) stepY;
-		                if (distance < stepSize) {
-		                    // if distance is less than stepSize, stop the animation
-		                    
-		                    return;
-		                }
-		                DiChuyen.setLocation(x, y); // set the new location
-		            }
-		            
-		        });
-		        timer.start();
+				resetLabel();
+				lblNCC.setBorder(new MatteBorder(0, 0, 3, 0, (Color) new Color(0, 0, 0)));
 		        body.removeAll();
 		        body.add(new NhaCungCap());
 		        body.repaint();
@@ -201,67 +102,35 @@ public class cuaHang extends JPanel {
 		        
 			}
 		});
-		lblNhCungCp.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNhCungCp.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 18));
-		lblNhCungCp.setBounds(0, 0, 200, 35);
-		panel_1_2.add(lblNhCungCp);
+		lblNCC.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNCC.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 18));
 		
-		JPanel panel_1_3 = new JPanel();
-		panel_1_3.setLayout(null);
-		panel_1_3.setBackground(Color.WHITE);
-		panel_1_3.setBounds(600, 0, 200, 35);
-		panel.add(panel_1_3);
+		JPanel panel_1_2 = new JPanel();
+		panel_1_2.setLayout(null);
+		panel_1_2.setBackground(Color.WHITE);
+		panel_1_2.setBounds(400, 0, 200, 40);
+		panel.add(panel_1_2);
 		
-		JLabel lblnVTnh = new JLabel("NHÃN HIỆU\r\n");
-		lblnVTnh.addMouseListener(new MouseAdapter() {
+		lblNhanHieu.setBounds(0, 0, 200, 40);
+		panel_1_2.add(lblNhanHieu);
+		lblNhanHieu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int targetX = 600; // target x position
-		        int targetY = 35; // target y position
-		        int stepSize = 40; // how many pixels to move at each step
-
-		        Timer timer = new Timer(1, new ActionListener() {
-		            int x = DiChuyen.getLocation().x;
-		            int y = 35;
-		            @Override
-		            
-		            public void actionPerformed(ActionEvent e) {
-		                int dx = targetX - x; 
-		                int dy = targetY - y;
-		                double distance = Math.sqrt(dx*dx + dy*dy);
-
-		                double stepX = stepSize * dx / distance;
-		                double stepY = stepSize * dy / distance;
-
-		                // update x and y positions
-		                x += (int) stepX;
-		                y += (int) stepY;
-		                if (distance < stepSize) {
-		                    // if distance is less than stepSize, stop the animation
-		                    
-		                    return;
-		                }
-		                DiChuyen.setLocation(x, y); // set the new location
-		            }
-		            
-		        });
-		        timer.start();
+				resetLabel();
+				lblNhanHieu.setBorder(new MatteBorder(0, 0, 3, 0, (Color) new Color(0, 0, 0)));
 		        body.removeAll();
 		        body.add(new NhanHieu());
 		        body.repaint();
 		        body.validate();
 			}
 		});
-		lblnVTnh.setHorizontalAlignment(SwingConstants.CENTER);
-		lblnVTnh.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 18));
-		lblnVTnh.setBounds(0, 0, 200, 35);
-		panel_1_3.add(lblnVTnh);
+		lblNhanHieu.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNhanHieu.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 18));
 		
-		DiChuyen.setBackground(Color.CYAN);
-		DiChuyen.setBounds(0, 35, 200, 5);
-		panel.add(DiChuyen);
-		
-		
-
+	}
+	public void resetLabel() {
+		lblSanPham.setBorder(null);
+		lblNCC.setBorder(null);
+		lblNhanHieu.setBorder(null);
 	}
 }

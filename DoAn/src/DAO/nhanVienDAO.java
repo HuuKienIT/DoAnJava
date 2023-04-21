@@ -3,25 +3,41 @@ package DAO;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import model.nhanVien;
+import model.NhanVienModel;
 
 public class nhanVienDAO {
-	public static ArrayList<nhanVien> getAllUsers(){
-		ArrayList<nhanVien> ds = new ArrayList<nhanVien>();
+	public static int demTongSoNV() {
+		int dem=0;
+		try {
+			String sql = "SELECT count(*) as soluong FROM nhanvien";
+			mySQLHelper helper = new mySQLHelper();
+			helper.open();
+			ResultSet rs = helper.executeQuery(sql);
+			while(rs.next()) {
+				dem=rs.getInt("soluong");
+			}
+			helper.close();	
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return dem;
+	}
+	public static ArrayList<NhanVienModel> getAllUsers(){
+		ArrayList<NhanVienModel> ds = new ArrayList<NhanVienModel>();
 		try {
 			String sql = "SELECT * FROM nhanvien";
 			mySQLHelper helper = new mySQLHelper();
 			helper.open();
 			ResultSet rs = helper.executeQuery(sql);
 			while(rs.next()) {
-				nhanVien tk = new nhanVien();
-				tk.setManv(rs.getString("manv"));
-				tk.setHoTen(rs.getString("tennv"));
-				tk.setTaiKhoan(rs.getString("taikhoan"));
-				tk.setGioiTinh(rs.getString("gioitinh"));
-				tk.setMatKhau(rs.getString("matkhau"));
+				NhanVienModel tk = new NhanVienModel();
+				tk.setId_Tk(rs.getInt("id_nv"));
+				tk.setManv(rs.getString("ma_nv"));
+				tk.setHoTen(rs.getString("ten_nv"));
+				tk.setEmail(rs.getString("email"));
 				tk.setSoDth(rs.getInt("sodth"));
-				tk.setChucVu(rs.getString("sodth"));
+				tk.setChucVu(rs.getString("ten_cv"));
+				tk.setPhoto(rs.getString("photo"));
 				ds.add(tk);
 			}
 			helper.close();	
@@ -30,15 +46,14 @@ public class nhanVienDAO {
 		}
 		return ds;
 	}
-	public static nhanVien getUserByTaiKhoan(String taikhoan){
-		nhanVien tk = new nhanVien();
+	public static NhanVienModel getUserByTaiKhoan(String taikhoan){
+		NhanVienModel tk = new NhanVienModel();
 		try {
 			String sql = "SELECT * FROM nhanvien where taikhoan='"+taikhoan+"'";
 			mySQLHelper helper = new mySQLHelper();
 			helper.open();
 			ResultSet rs = helper.executeQuery(sql);
-			while(rs.next()) {
-				
+			while(rs.next()) {	
 				tk.setId_Tk(rs.getInt("id_nv"));
 				tk.setManv(rs.getString("ma_nv"));
 				tk.setHoTen(rs.getString("ten_nv"));
@@ -53,31 +68,30 @@ public class nhanVienDAO {
 		}
 		return tk;
 	}
-	public static nhanVien getUserByManv(String manv){
-		nhanVien us = new nhanVien();
+	public static NhanVienModel getUserByManv(String manv){
+		NhanVienModel tk = new NhanVienModel();
 		try {
-			String sql = "SELECT * FROM nhanvien where manv='"+manv+"'";
+			String sql = "SELECT * FROM nhanvien where ma_nv='"+manv+"'";
 			mySQLHelper helper = new mySQLHelper();
 			helper.open();
 			ResultSet rs = helper.executeQuery(sql);
 			while(rs.next()) {
-				us.setId_Tk(rs.getInt("id_nv"));
-				us.setManv(rs.getString("manv"));
-				us.setHoTen(rs.getString("tennv"));
-				us.setEmail(rs.getString("email"));
-				us.setTaiKhoan(rs.getString("taikhoan"));
-				us.setMatKhau(rs.getString("matkhau"));
-				us.setSoDth(rs.getInt("sodth"));
-				us.setChucVu(rs.getString("chucvu"));
+				tk.setId_Tk(rs.getInt("id_nv"));
+				tk.setManv(rs.getString("ma_nv"));
+				tk.setHoTen(rs.getString("ten_nv"));
+				tk.setEmail(rs.getString("email"));
+				tk.setSoDth(rs.getInt("sodth"));
+				tk.setChucVu(rs.getString("ten_cv"));
+				tk.setPhoto(rs.getString("photo"));
 			}
 			helper.close();
 			
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
 		}
-		return us;
+		return tk;
 	}
-	public static int themUsers(nhanVien us) {
+	public static int themUsers(NhanVienModel us) {
 		int n=-1;
 		try {
 			String sql = String.format("INSERT INTO hoten(hoten,email,taikhoan,matkhau.sodth,chucvu) VALUES('%s','%s','%s','%s','%d','%s')"
@@ -102,8 +116,8 @@ public class nhanVienDAO {
 		}
 		return n;
 	}
-	public static nhanVien getUsersByID(int ID) {
-		nhanVien us = new nhanVien();
+	public static NhanVienModel getUsersByID(int ID) {
+		NhanVienModel us = new NhanVienModel();
 		try {
 			String sql = "SELECT * FROM users where id_user="+ID;
 			mySQLHelper helper = new mySQLHelper();
@@ -124,7 +138,7 @@ public class nhanVienDAO {
 		}
 		return us;
 	}
-	public static int chinhSuaUsers(int ID, nhanVien us) {
+	public static int chinhSuaUsers(int ID, NhanVienModel us) {
 		int n=-1;
 		try {
 			String sql = String.format("UPDATE users SET hoten='%s',email='%s',taikhoan='%s',matkhau='%s',sodth='%d',chucvu='%s' WHERE id_user='%d'"

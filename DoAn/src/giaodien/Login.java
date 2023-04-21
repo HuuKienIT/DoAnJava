@@ -42,7 +42,7 @@ public class Login extends JFrame {
 	}
 	public Login() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1044, 433);
+		setBounds(100, 100, 1044, 496);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -53,12 +53,12 @@ public class Login extends JFrame {
 		JLabel jlabel1 = new JLabel("\r\n");
 		jlabel1.setBackground(new Color(173, 216, 230));
 		jlabel1.setIcon(new ImageIcon(Login.class.getResource("/img/328746ab9fc0439e1ad1.jpg")));
-		jlabel1.setBounds(481, 0, 549, 396);
+		jlabel1.setBounds(481, 0, 549, 457);
 		contentPane.add(jlabel1);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(173, 216, 230));
-		panel.setBounds(0, 0, 482, 396);
+		panel.setBounds(0, 0, 482, 457);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -72,7 +72,7 @@ public class Login extends JFrame {
 		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnLogin.setBackground(new Color(224, 255, 255));
 		
-		btnLogin.setBounds(52, 296, 339, 38);
+		btnLogin.setBounds(53, 320, 339, 38);
 		panel.add(btnLogin);
 		
 		JLabel jlabel2 = new JLabel("LOGIN");
@@ -94,6 +94,15 @@ public class Login extends JFrame {
 		panel.add(lblNewLabel);
 		
 		txtTenDn = new JTextField();
+		Action action1 = new AbstractAction()
+		{
+		    @Override
+		    public void actionPerformed(ActionEvent e)
+		    {
+		        dangnhap();	
+		    }
+		};
+		txtTenDn.addActionListener( action1 );
 		txtTenDn.setFont(new Font("Tahoma", Font.BOLD, 16));
 		txtTenDn.setBackground(new Color(224, 255, 255));
 		txtTenDn.setBounds(28, 148, 385, 32);
@@ -109,7 +118,7 @@ public class Login extends JFrame {
 		checkLuuDN = new JCheckBox("Lưu đăng nhập\r\n");
 		checkLuuDN.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		checkLuuDN.setBackground(new Color(173, 216, 230));
-		checkLuuDN.setBounds(38, 266, 150, 23);
+		checkLuuDN.setBounds(39, 274, 150, 23);
 		panel.add(checkLuuDN);
 		
 		txtMatKhau = new JPasswordField();
@@ -119,7 +128,6 @@ public class Login extends JFrame {
 		    public void actionPerformed(ActionEvent e)
 		    {
 		        dangnhap();	
-//		        ghiTaiKhoan(txtTenDn.getText(),txtMatKhau.getText());
 		    }
 		};
         docTaiKhoan();
@@ -133,7 +141,7 @@ public class Login extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("Don't have an account?");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNewLabel_1.setForeground(new Color(248, 248, 255));
-		lblNewLabel_1.setBounds(89, 351, 148, 25);
+		lblNewLabel_1.setBounds(88, 389, 148, 25);
 		panel.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Sign Up");
@@ -147,7 +155,7 @@ public class Login extends JFrame {
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
 		lblNewLabel_2.setBackground(new Color(240, 240, 240));
 		lblNewLabel_2.setForeground(new Color(248, 248, 255));
-		lblNewLabel_2.setBounds(233, 353, 65, 18);
+		lblNewLabel_2.setBounds(232, 391, 65, 18);
 		panel.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("");
@@ -163,9 +171,7 @@ public class Login extends JFrame {
 		});
 		lblNewLabel_4.setIcon(new ImageIcon(Login.class.getResource("/icon/show.jpg")));
 		lblNewLabel_4.setBounds(425, 227, 30, 32);
-		panel.add(lblNewLabel_4);
-		
-		
+		panel.add(lblNewLabel_4);	
 	}
 	public void dangnhap() {
 		String tendn,matkhau;
@@ -175,7 +181,12 @@ public class Login extends JFrame {
 			JOptionPane.showMessageDialog(contentPane, "Không để trống tên đăng nhập hoặc mật khẩu");
 		}else {
 			if(DAO.nhanVienDAO.layMatKhau(tendn).equals(matkhau)) {
-				new trangchinh(DAO.nhanVienDAO.getUserByTaiKhoan(tendn)).setVisible(true);
+				if(checkLuuDN.isSelected()) {
+			        ghiTaiKhoan(txtTenDn.getText(),txtMatKhau.getText());
+		        }else {
+			        clearFile();
+		        }
+				new TrangChinh(DAO.nhanVienDAO.getUserByTaiKhoan(tendn)).setVisible(true);
 				dispose();
 			}else {
 				JOptionPane.showMessageDialog(contentPane, "Tên đăng nhập hoặc mật khẩu sai");
@@ -192,7 +203,6 @@ public class Login extends JFrame {
 			   txtMatKhau.setEchoChar('*');
 			show=1;
 		}
-	
 	}
 	public void docTaiKhoan() {
 		try {
@@ -203,11 +213,17 @@ public class Login extends JFrame {
             while ((line = bufferedReader.readLine()) != null) {
             		if(dem==0) {
             			txtTenDn.setText(line);
+            			if(!line.equals("")) {
+            				checkLuuDN.setSelected(true);
+            			}
             		}else {
             			txtMatKhau.setText(line);
+            			if(!line.equals("")) {
+            				checkLuuDN.setSelected(true);
+            			}
             		}
             		dem++;
-            checkLuuDN.setSelected(true);
+            
             }
             reader.close();
         } catch (IOException e) {
@@ -227,5 +243,14 @@ public class Login extends JFrame {
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
+	}
+	public void clearFile() {
+		try {
+            FileWriter fileWriter = new FileWriter("LuuDangNhap.txt");
+            fileWriter.write("");
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 }

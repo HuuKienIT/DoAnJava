@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import DAO.NhanHieuDAO;
 import DAO.loaiDAO;
 import model.loai;
-import model.sanPhamGH;
+import model.SanPhamGHModel;
 
 public class NhanHieu extends JPanel {
 	private JTextField textField_1;
@@ -77,7 +77,7 @@ public class NhanHieu extends JPanel {
 		panel_2.add(lblNewLabel);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("E:\\Picrure AT\\iconjava\\arrow.jpg"));
+		lblNewLabel_2.setIcon(new ImageIcon(NhanHieu.class.getResource("/icon/arrow.jpg")));
 		lblNewLabel_2.setBounds(20, 5, 46, 40);
 		panel_2.add(lblNewLabel_2);
 		
@@ -121,7 +121,7 @@ public class NhanHieu extends JPanel {
 	}
 	public void hienthi() {
 		model.setRowCount(0);
-		for(model.NhanHieu nh :NhanHieuDAO.getAllNhanHieu() ) {
+		for(model.NhanHieuModel nh :NhanHieuDAO.getAllNhanHieu() ) {
        		Object[] row = new Object[] {nh.getId_nh(),nh.getMa_nh(),nh.getTen_nh()} ;
        		model.addRow(row);
        	}
