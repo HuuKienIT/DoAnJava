@@ -665,6 +665,7 @@ public class BanHang extends JPanel {
  	 					SanPhamGHModel sp = new SanPhamGHModel();
  	 					sp.setId_sp(s.getId_sp());
  	 					sp.setMasp(s.getMasp());
+ 	 					sp.setTensp(s.getTensp());
  	 					sp.setNhanhieu(s.getNhanhieu());
  	 					sp.setGia(s.getGia());
  			 			sp.setSoluong(Integer.parseInt((txtSoLuongCT.getText())));

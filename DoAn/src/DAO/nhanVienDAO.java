@@ -94,7 +94,7 @@ public class nhanVienDAO {
 	public static int themUsers(NhanVienModel us) {
 		int n=-1;
 		try {
-			String sql = String.format("INSERT INTO hoten(hoten,email,taikhoan,matkhau.sodth,chucvu) VALUES('%s','%s','%s','%s','%d','%s')"
+			String sql = String.format("INSERT INTO nhanvien(hoten,email,taikhoan,matkhau.sodth,chucvu) VALUES('%s','%s','%s','%s','%d','%s')"
 					,us.getHoTen(),us.getEmail(),us.getTaiKhoan(),us.getMatKhau(),us.getSoDth(),us.getChucVu());
 			mySQLHelper helper = new mySQLHelper();
 			helper.open();
@@ -107,7 +107,7 @@ public class nhanVienDAO {
 	public static int xoaUsers(int ID) {
 		int n=-1;
 		try {
-			String sql = "DELETE FROM users where id_user="+ID;
+			String sql = "DELETE FROM users nhanvien id_nv="+ID;
 			mySQLHelper helper = new mySQLHelper();
 			helper.open();
 			n = helper.executeUpdate(sql);
@@ -117,26 +117,25 @@ public class nhanVienDAO {
 		return n;
 	}
 	public static NhanVienModel getUsersByID(int ID) {
-		NhanVienModel us = new NhanVienModel();
+		NhanVienModel tk = new NhanVienModel();
 		try {
-			String sql = "SELECT * FROM users where id_user="+ID;
+			String sql = "SELECT * FROM nhanvien where id_nv="+ID;
 			mySQLHelper helper = new mySQLHelper();
 			helper.open();
 			ResultSet rs = helper.executeQuery(sql);
 			while(rs.next()) {
-				us.setId_Tk(rs.getInt("id_user"));
-				us.setHoTen(rs.getString("hoten"));
-				us.setEmail(rs.getString("email"));
-				us.setTaiKhoan(rs.getString("taikhoan"));
-				us.setMatKhau(rs.getString("matkhau"));
-				us.setSoDth(rs.getInt("sodth"));
-				us.setChucVu(rs.getString("chucvu"));
+				tk.setId_Tk(rs.getInt("id_nv"));
+				tk.setManv(rs.getString("ma_nv"));
+				tk.setHoTen(rs.getString("ten_nv"));
+				tk.setEmail(rs.getString("email"));
+				tk.setSoDth(rs.getInt("sodth"));
+				tk.setChucVu(rs.getString("ten_cv"));
+				tk.setPhoto(rs.getString("photo"));
 			}
 			helper.close();
-			
 		} catch (Exception e) {
 		}
-		return us;
+		return tk;
 	}
 	public static int chinhSuaUsers(int ID, NhanVienModel us) {
 		int n=-1;

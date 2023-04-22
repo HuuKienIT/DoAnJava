@@ -2,7 +2,6 @@ package giaodien;
 
 import java.util.ArrayList;
 import java.util.Currency;
-
 import model.SanPhamGHModel;
 import java.awt.Color;
 import java.awt.Font;
@@ -24,8 +23,7 @@ import java.awt.SystemColor;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-
-import DAO.sanPhamDAO;
+import model.CTPhieuNhapModel;
 import model.NhanVienModel;
 import model.SanPhamModel;
 
@@ -49,6 +47,7 @@ public class NhapHang extends JPanel {
 	public DefaultTableModel modelGH = new DefaultTableModel();
 	
 	public ArrayList<SanPhamGHModel> GH = new ArrayList<SanPhamGHModel>();
+	public ArrayList<SanPhamModel> sp = DAO.sanPhamDAO.getAllSanPham();
 	private JTextField txtKiem;
 	private JLabel lblNewLabel_2;
 	private JTextField textField_1;
@@ -58,15 +57,20 @@ public class NhapHang extends JPanel {
 	JComboBox comboLoaiSp = new JComboBox();
 	
  	JLabel txtMaSPCT = new JLabel("");
- 	JLabel txtMaKH = new JLabel("");
+ 	JLabel txtNhanHieuCT = new JLabel("");
+ 	JLabel txtMaNCC = new JLabel("");
 	JLabel txtTenSPCT = new JLabel("");
 	JLabel txtDonGiaCT = new JLabel("");
-	
+ 	JLabel txtID_KH = new JLabel("");
  	JLabel txtTongTien = new JLabel("0");
  	JLabel txtTongsl = new JLabel("0");
+ 	
+ 	private NhanVienModel nv;
 
 	public NhapHang(NhanVienModel nv) {
-    	
+		this.nv=nv;
+		txtID_KH.setVisible(false);
+		
 		setForeground(SystemColor.text);
 		setBackground(SystemColor.control);
 		setLayout(null);
@@ -101,7 +105,7 @@ public class NhapHang extends JPanel {
 	 	txtSoLuongCT.setColumns(10);
 	 	
 	 	JButton btnThemGio = new cusButton("Thêm vào giỏ");
-	 	btnThemGio.setText("Thêm danh sách");
+	 	btnThemGio.setText("Thêm Danh Sách");
 	 	
 	 	btnThemGio.setBounds(166, 431, 191, 40);
 	 	panel_2.add(btnThemGio);
@@ -138,7 +142,7 @@ public class NhapHang extends JPanel {
 	 			txtSoLuongCT.setText(Integer.parseInt(txtSoLuongCT.getText())+1+"");
 	 		}
 	 	});
-	 	btnPlus.setIcon(new ImageIcon(NhapHang.class.getResource("/icon/plus.jpg")));
+	 	btnPlus.setIcon(new ImageIcon(BanHang.class.getResource("/icon/plus.jpg")));
 	 	btnPlus.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
 	 	btnPlus.setBounds(193, 165, 30, 30); 	
 	 	panel_2.add(btnPlus);
@@ -151,7 +155,7 @@ public class NhapHang extends JPanel {
 	 			txtSoLuongCT.setText(Integer.parseInt(txtSoLuongCT.getText())-1+"");
 	 		}
 	 	});
-	 	btnSubtract.setIcon(new ImageIcon(NhapHang.class.getResource("/icon/subtract.jpg")));
+	 	btnSubtract.setIcon(new ImageIcon(BanHang.class.getResource("/icon/subtract.jpg")));
 	 	btnSubtract.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
 	 	btnSubtract.setBounds(93, 165, 30, 30);
 	 	panel_2.add(btnSubtract);
@@ -163,8 +167,7 @@ public class NhapHang extends JPanel {
 	 	txtMaSPCT.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
 	 	txtMaSPCT.setBounds(20, 48, 150, 45);
 	 	panel_2.add(txtMaSPCT);
-	 	
-	 
+	 	 
 	 	txtTenSPCT.setBorder(new TitledBorder(null, "T\u00EAn S\u1EA3n Ph\u1EA9m", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 	 	txtTenSPCT.setHorizontalAlignment(SwingConstants.LEFT);
 	 	txtTenSPCT.setForeground(Color.RED);
@@ -172,7 +175,6 @@ public class NhapHang extends JPanel {
 	 	txtTenSPCT.setBounds(20, 99, 350, 45);
 	 	panel_2.add(txtTenSPCT);
 	 	
-	 
 	 	txtDonGiaCT.setBorder(new TitledBorder(null, "\u0110\u01A1n Gi\u00E1", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 	 	txtDonGiaCT.setHorizontalAlignment(SwingConstants.LEFT);
 	 	txtDonGiaCT.setForeground(Color.RED);
@@ -180,7 +182,7 @@ public class NhapHang extends JPanel {
 	 	txtDonGiaCT.setBounds(240, 160, 150, 45);
 	 	panel_2.add(txtDonGiaCT);
 	 	
-	 	JLabel txtNhanHieuCT = new JLabel("");
+
 	 	txtNhanHieuCT.setHorizontalAlignment(SwingConstants.LEFT);
 	 	txtNhanHieuCT.setForeground(Color.RED);
 	 	txtNhanHieuCT.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
@@ -193,17 +195,28 @@ public class NhapHang extends JPanel {
 	 	panel_3.setBounds(790, 520, 400, 350);
 	 	add(panel_3);
 	 	panel_3.setLayout(null);
-	 	
 	 	JButton btnXutnHng = new cusButton("Xuất đơn hàng");
-	 	btnXutnHng.setText("Nhập hàng");
+	 	btnXutnHng.setText("Nhập Hàng");
 	 	btnXutnHng.addActionListener(new ActionListener() {
 	 		public void actionPerformed(ActionEvent e) {
-	 			for(SanPhamGHModel u : GH ) {
-	 	       		
-	 	       	}
+	 			if(GH.size()==0) {
+					JOptionPane.showMessageDialog(null,"Giỏ Hàng đang trống");
+					return;
+				}
+				if(txtID_KH.getText().equals(""))
+				{
+					JOptionPane.showMessageDialog(null,"Chưa có thông tin Khách Hàng");
+					return;
+				}
+	 			int output = JOptionPane.showConfirmDialog(null, 
+                        "Bạn có muốn xuất đơn hàng không?", "",
+                        JOptionPane.YES_NO_OPTION);
+	 			if(output==JOptionPane.YES_OPTION){  
+	 				NhapHang();
+	 			}
 	 		}
 	 	});
-	 	btnXutnHng.setBounds(120, 290, 180, 40);
+	 	btnXutnHng.setBounds(119, 271, 180, 40);
 	 	panel_3.add(btnXutnHng);
 	 	btnXutnHng.setBackground(SystemColor.text);
 	 	btnXutnHng.setIcon(new ImageIcon("E:\\Picrure AT\\iconjava\\pdf.jpg"));
@@ -214,10 +227,10 @@ public class NhapHang extends JPanel {
 	 	txtTongTien.setBorder(new TitledBorder(null, "T\u1ED5ng Ti\u1EC1n", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 	 	txtTongTien.setForeground(Color.RED);
 	 	txtTongTien.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 18));
-	 	txtTongTien.setBounds(26, 194, 180, 50);
+	 	txtTongTien.setBounds(40, 196, 180, 50);
 	 	panel_3.add(txtTongTien);
 	 	
-	 	JLabel lblNewLabel_1 = new JLabel("THANH TOÁN");
+	 	JLabel lblNewLabel_1 = new JLabel("PHIẾU NHẬP");
 	 	lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 	 	lblNewLabel_1.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 20));
 	 	lblNewLabel_1.setBounds(0, 10, 400, 30);
@@ -228,7 +241,7 @@ public class NhapHang extends JPanel {
 	 	txtTongsl.setBorder(new TitledBorder(null, "S\u1ED1 L\u01B0\u1EE3ng", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 	 	txtTongsl.setForeground(Color.RED);
 	 	txtTongsl.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 18));
-	 	txtTongsl.setBounds(259, 194, 100, 50);
+	 	txtTongsl.setBounds(254, 196, 100, 50);
 	 	panel_3.add(txtTongsl);
 	 	
 	 	JLabel txtMaNV = new JLabel(nv.getManv());
@@ -247,12 +260,12 @@ public class NhapHang extends JPanel {
 	 	txtTenNV.setBounds(159, 51, 200, 45);
 	 	panel_3.add(txtTenNV);
 
-	 	txtMaKH.setHorizontalAlignment(SwingConstants.CENTER);
-	 	txtMaKH.setForeground(Color.GREEN);
-	 	txtMaKH.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
-	 	txtMaKH.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "M\u00E3 Nh\u00E0 Cung C\u1EA5p", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-	 	txtMaKH.setBounds(10, 116, 117, 45);
-	 	panel_3.add(txtMaKH);
+	 	txtMaNCC.setHorizontalAlignment(SwingConstants.CENTER);
+	 	txtMaNCC.setForeground(Color.GREEN);
+	 	txtMaNCC.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
+	 	txtMaNCC.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "M\u00E3 Nh\u00E0 Cung C\u1EA5p", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+	 	txtMaNCC.setBounds(10, 116, 117, 45);
+	 	panel_3.add(txtMaNCC);
 	 	
 	 	JLabel txtTenKH = new JLabel("");
 	 	txtTenKH.setHorizontalAlignment(SwingConstants.CENTER);
@@ -265,12 +278,17 @@ public class NhapHang extends JPanel {
 	 	JButton btnNewButton = new JButton("Chọn");
 	 	btnNewButton.addActionListener(new ActionListener() {
 	 		public void actionPerformed(ActionEvent e) {
-//	 			new ChonKhachHang(txtMaKH,txtTenKH).setVisible(true);
+	 			new ChonNhaCungCap(txtID_KH,txtMaNCC,txtTenKH).setVisible(true);
 	 		}
 	 	});
 	 	btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	 	btnNewButton.setBounds(335, 123, 50, 35);
 	 	panel_3.add(btnNewButton);
+	 	
+
+	 	txtID_KH.setBounds(100, 107, 20, 10);
+	 	panel_3.add(txtID_KH);
+	 	
 	 	
 	 	JPanel panel_4 = new RoundedJPanel(20);
 	 	panel_4.setBackground(SystemColor.text);
@@ -294,10 +312,11 @@ public class NhapHang extends JPanel {
 	 	
 	 	tableSP = new cusTable();
 	 	scrollPane.setViewportView(tableSP);
-	 	String[] columnNamesSP = {"Mã SP", "Tên SP", "Đơn giá", "Còn lại",""};
+	 	String[] columnNamesSP = {"Mã SP", "Tên SP", "Đơn giá", "Còn lại"};
        	modelSP.setColumnIdentifiers(columnNamesSP);
-    	for(SanPhamModel sp : sanPhamDAO.getAllSanPham() ) {
-       		Object[] row = new Object[] {sp.getMasp(),sp.getTensp(),intToMoney(sp.getGia()),sp.getConlai(),sp.getPhoto()} ;
+       	layDuLieu();
+    	for(SanPhamModel sp : sp ) {
+       		Object[] row = new Object[] {sp.getMasp(),sp.getTensp(),intToMoney(sp.getGia()),sp.getConlai()} ;
        		modelSP.addRow(row);
        	}
     	tableSP.setModel(modelSP);
@@ -305,9 +324,6 @@ public class NhapHang extends JPanel {
     	tableSP.getColumnModel().getColumn(1).setPreferredWidth(300);
     	tableSP.getColumnModel().getColumn(2).setPreferredWidth(200);
     	tableSP.getColumnModel().getColumn(3).setPreferredWidth(100);
-    	tableSP.getColumnModel().getColumn(4).setMinWidth(0);
-    	tableSP.getColumnModel().getColumn(4).setMaxWidth(0);
-    	tableSP.getColumnModel().getColumn(4).setWidth(0);
     	DefaultTableCellRenderer rendererRight = new DefaultTableCellRenderer();
         rendererRight.setHorizontalAlignment(SwingConstants.RIGHT);
     	tableSP.getColumnModel().getColumn(2).setCellRenderer(rendererRight);
@@ -316,11 +332,7 @@ public class NhapHang extends JPanel {
     	tableSP.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				txtMaSPCT.setText(tableSP.getValueAt(tableSP.getSelectedRow(), 0)+"");
-				txtTenSPCT.setText(tableSP.getValueAt(tableSP.getSelectedRow(), 1)+"");
-				txtDonGiaCT.setText(tableSP.getValueAt(tableSP.getSelectedRow(), 2)+"");
-				txtSoLuongCT.setText("1");	
-				hienhinh(tableSP.getValueAt(tableSP.getSelectedRow(), 4)+"");
+				HienChiTiet(tableSP.getValueAt(tableSP.getSelectedRow(), 0)+"");
 			}
 		});
 	 	
@@ -330,7 +342,7 @@ public class NhapHang extends JPanel {
 	 	add(panel_5);
 	 	panel_5.setLayout(null);
 	 	
-	 	JLabel lblGiHng = new JLabel("DANH SÁCH SẢN PHẨM NHẬP");
+	 	JLabel lblGiHng = new JLabel("DANH SÁCH HÀNG NHẬP");
 	 	lblGiHng.setBounds(0, 20, 770, 35);
 	 	lblGiHng.setHorizontalAlignment(SwingConstants.CENTER);
 	 	lblGiHng.setForeground(Color.BLACK);
@@ -358,10 +370,7 @@ public class NhapHang extends JPanel {
        	tableGH.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				txtMaSPCT.setText(tableGH.getValueAt(tableGH.getSelectedRow(), 0)+"");
-				txtTenSPCT.setText(tableGH.getValueAt(tableGH.getSelectedRow(), 1)+"");
-				txtDonGiaCT.setText(tableGH.getValueAt(tableGH.getSelectedRow(), 2)+"");
-				txtSoLuongCT.setText(tableGH.getValueAt(tableGH.getSelectedRow(), 3)+"");
+				HienChiTiet(tableGH.getValueAt(tableGH.getSelectedRow(), 0)+"");
 				btnXa.enable();
 			}
 		});
@@ -369,8 +378,7 @@ public class NhapHang extends JPanel {
     	panel.setBackground(Color.WHITE);
     	panel.setBounds(10, 10, 770, 60);
     	add(panel);
-    	panel.setLayout(null);
-    	
+    	panel.setLayout(null);  	
     	paneThayDoi.setAlignmentY(0.0f);
     	paneThayDoi.setAlignmentX(0.0f);
     	paneThayDoi.setBackground(SystemColor.text);
@@ -547,6 +555,7 @@ public class NhapHang extends JPanel {
 			txtDonGiaCT.setText("");
 			txtSoLuongCT.setText("0");
 			lblNewLabel_2.setIcon(null);
+			txtNhanHieuCT.setText("");
 	}
 	public void TinhTongTien() {
 		int tongtien=0;
@@ -601,7 +610,7 @@ public class NhapHang extends JPanel {
 		
 	}
 	public void hienhinh(String tenfile) {
-		ImageIcon imageIcon = new ImageIcon(new ImageIcon(NhapHang.class.getResource("/photo/"+tenfile)).getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH));
+		ImageIcon imageIcon = new ImageIcon(new ImageIcon(BanHang.class.getResource("/photo/"+tenfile)).getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH));
 		lblNewLabel_2.setIcon(imageIcon);
 		
 	}
@@ -615,17 +624,19 @@ public class NhapHang extends JPanel {
  				}
  			}
  			if(!co) {
- 				SanPhamGHModel sp = new SanPhamGHModel();
-		 			sp.setMasp(txtMaSPCT.getText());
-		 			sp.setTensp(txtTenSPCT.getText());
-		 			String money =txtDonGiaCT.getText();
-		 			try {
-					sp.setGia(moneyToInt(money));
-				} catch (ParseException e1) {
-					e1.printStackTrace();
-				}
-		 			sp.setSoluong(Integer.parseInt((txtSoLuongCT.getText())));
-		 			GH.add(sp);
+ 				for(SanPhamModel s :sp ) {
+ 	 				if(s.getMasp().equals(txtMaSPCT.getText())){
+ 	 					SanPhamGHModel sp = new SanPhamGHModel();
+ 	 					sp.setId_sp(s.getId_sp());
+ 	 					sp.setMasp(s.getMasp());
+ 	 					sp.setTensp(s.getTensp());
+ 	 					sp.setNhanhieu(s.getNhanhieu());
+ 	 					sp.setGia(s.getGia());
+ 			 			sp.setSoluong(Integer.parseInt((txtSoLuongCT.getText())));
+ 			 			GH.add(sp);
+ 			 			break;
+ 	 				}
+ 	 			}
  			}
  			hienthiGH();
  			TinhTongTien();
@@ -651,8 +662,6 @@ public class NhapHang extends JPanel {
 			giaMax=Integer.parseInt(textField_2.getText());
 		}
 		if(giaMin>giaMax) {
-//			giaMax=giaMin+2000000;
-//			textField_2.setText(giaMin+2000000+"");
 			return;
 		}
 		for(SanPhamModel sp :DAO.sanPhamDAO.getAllSanPham()) {
@@ -667,5 +676,44 @@ public class NhapHang extends JPanel {
       		modelSP.addRow(row);
 		}
 		tableSP.setModel(modelSP);
+	}
+	public void layDuLieu() {
+		for(SanPhamModel s :DAO.sanPhamDAO.getAllSanPham()) {
+			sp.add(s);
+		}
+	}
+	public void HienChiTiet(String ma_sp) {
+		for(SanPhamModel s: sp) {
+			if(s.getMasp().equals(ma_sp)) {
+				txtMaSPCT.setText(s.getMasp());
+				txtTenSPCT.setText(s.getTensp());
+				txtNhanHieuCT.setText(s.getNhanhieu());
+				txtDonGiaCT.setText(intToMoney(s.getGia()));
+				txtSoLuongCT.setText("1");	
+				hienhinh(s.getPhoto());
+			}
+		}
+		
+	}
+
+	public void NhapHang() {
+
+			model.PhieuNhapModel pn = new model.PhieuNhapModel();
+			pn.setId_nv(this.nv.getId_Tk());
+			pn.setId_ncc(Integer.parseInt(txtID_KH.getText()));
+			pn.setTongsl(Integer.parseInt(txtTongsl.getText()));
+			try {
+			pn.setTongtien(moneyToInt(txtTongTien.getText()));
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+			DAO.PhieuNhapDAO.themPhieuNhap(pn);
+			for(SanPhamGHModel u : GH ) {
+				CTPhieuNhapModel ctpn = new CTPhieuNhapModel();
+				ctpn.setId_sp(u.getId_sp());
+				ctpn.setSoluong(u.getSoluong());
+				ctpn.setGia(u.getGia());
+	       		DAO.CTPhieuNhapDAO.themCTPhieuNhap(ctpn);
+	       	}
 	}
 }

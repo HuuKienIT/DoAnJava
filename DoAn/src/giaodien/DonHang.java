@@ -31,6 +31,9 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import model.KhachHangModel;
+import model.NhanVienModel;
+
 public class DonHang extends JPanel {
 	JPanel panel_1 = new RoundedJPanel(20);
 	private JTable table;
@@ -193,12 +196,14 @@ public class DonHang extends JPanel {
 			}
 		));
 		layDulieu();
-		table.getColumnModel().getColumn(0).setPreferredWidth(50);
+		table.getColumnModel().getColumn(0).setMaxWidth(50);
     	table.getColumnModel().getColumn(1).setPreferredWidth(200);
     	table.getColumnModel().getColumn(2).setPreferredWidth(200);
     	table.getColumnModel().getColumn(3).setPreferredWidth(100);
+		table.getColumnModel().getColumn(4).setMaxWidth(80);
     	DefaultTableCellRenderer rendererRight = new DefaultTableCellRenderer();
         rendererRight.setHorizontalAlignment(SwingConstants.RIGHT);
+        table.getColumnModel().getColumn(0).setCellRenderer(new CenterAlignRenderer());
         table.getColumnModel().getColumn(3).setCellRenderer(new CenterAlignRenderer());
     	table.getColumnModel().getColumn(4).setCellRenderer(new CenterAlignRenderer());
     	table.getColumnModel().getColumn(5).setCellRenderer(rendererRight);
@@ -212,12 +217,13 @@ public class DonHang extends JPanel {
 			}
     		
 		});
-		
 	}
 	public void layDulieu() {
 		DefaultTableModel model =(DefaultTableModel) table.getModel();
 		for(model.DonHangModel dh : DAO.DonHangDAO.getAllDonHang()) {
-			Object[] row = new Object[] {dh.id_dh,dh.getId_kh(),dh.getId_nv(),dh.getNgayban(),dh.getTongsl(),intToMoney(dh.getTongtien())} ;
+			NhanVienModel nv = DAO.nhanVienDAO.getUsersByID(dh.getId_nv());
+			KhachHangModel kh = DAO.khachHangDAO.getKhachHangByid(dh.getId_kh());
+			Object[] row = new Object[] {dh.id_dh,kh.getMakh()+" - "+kh.getTenkh(),nv.getManv()+" - "+nv.getHoTen(),dh.getNgayban(),dh.getTongsl(),intToMoney(dh.getTongtien())} ;
        		model.addRow(row);
 		}
 		table.setModel(model);

@@ -15,15 +15,25 @@ import javax.swing.JTextField;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Currency;
+import java.util.Locale;
 
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import model.NhaCungCapModel;
+import model.NhanVienModel;
+import model.PhieuNhapModel;
 
 public class PhieuNhap extends JPanel {
 	private JTable table;
+	ArrayList<PhieuNhapModel> dsPN;
 	public PhieuNhap() {
 		setBackground(SystemColor.control);
 		setLayout(null);
@@ -61,22 +71,51 @@ public class PhieuNhap extends JPanel {
 		table = new cusTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null},
 			},
 			new String[] {
 				"ID", "Nh\u00E0 Cung C\u1EA5p", "Nh\u00E2n Vi\u00EAn", "Th\u1EDDi Gian", "T\u1ED5ng SL", "T\u1ED5ng Ti\u1EC1n"
 			}
 		));
-		table.getColumnModel().getColumn(0).setPreferredWidth(40);
+		layDuLieu();
+		
+		table.getColumnModel().getColumn(0).setMaxWidth(50);
+    	table.getColumnModel().getColumn(1).setPreferredWidth(200);
+    	table.getColumnModel().getColumn(2).setPreferredWidth(200);
+    	table.getColumnModel().getColumn(3).setPreferredWidth(100);
+		table.getColumnModel().getColumn(4).setMaxWidth(80);
+    	DefaultTableCellRenderer rendererRight = new DefaultTableCellRenderer();
+        rendererRight.setHorizontalAlignment(SwingConstants.RIGHT);
+        table.getColumnModel().getColumn(0).setCellRenderer(new CenterAlignRenderer());
+        table.getColumnModel().getColumn(3).setCellRenderer(new CenterAlignRenderer());
+    	table.getColumnModel().getColumn(4).setCellRenderer(new CenterAlignRenderer());
+    	table.getColumnModel().getColumn(5).setCellRenderer(rendererRight);
 		scrollPane.setViewportView(table);
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				 if (e.getClickCount() == 2) {
-					 new ChiTietPN().setVisible(true);
+					 new ChiTietPN(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0)+"")).setVisible(true);
                  }
 			}
-    		
 		});
+	}
+	public void layDuLieu() {
+		this.dsPN=DAO.PhieuNhapDAO.getAllPhieuNhap();
+		DefaultTableModel model =(DefaultTableModel) table.getModel();
+		model.setRowCount(0);
+		for(PhieuNhapModel pn:dsPN) {
+			NhanVienModel nv = DAO.nhanVienDAO.getUsersByID(pn.getId_nv());
+			NhaCungCapModel ncc = DAO.NhaCungCapDAO.getNCCByID(pn.getId_ncc());
+			Object[] row = new Object[] {pn.getId_pn(),ncc.getTen_ncc(),nv.getHoTen(),pn.getNgaynhap(),pn.getTongsl(),intToMoney(pn.getTongtien())} ;
+			model.addRow(row);
+		}
+		table.setModel(model);
+	}
+	public static String intToMoney(int value) {
+	    Locale locale = new Locale("vi", "VN");
+	    Currency currency = Currency.getInstance("VND");
+	    NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+	    currencyFormatter.setCurrency(currency);
+	    return currencyFormatter.format(value);
 	}
 }

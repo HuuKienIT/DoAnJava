@@ -11,6 +11,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import model.CTDonHangModel;
@@ -45,7 +46,7 @@ public class ChiTietDH extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("DANH SÁCH SẢN PHẨM ĐƠN HÀNG");
+		JLabel lblNewLabel = new JLabel("CHI TIẾT ĐƠN HÀNG");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 25));
 		lblNewLabel.setBounds(0, 10, 865, 30);
@@ -63,9 +64,17 @@ public class ChiTietDH extends JFrame {
 				"STT", "S\u1EA3n Ph\u1EA9m", "\u0110\u01A1n Gi\u00E1", "S\u1ED1 L\u01B0\u1EE3ng", "Th\u00E0nh Ti\u1EC1n"
 			}
 		));
-		table.getColumnModel().getColumn(0).setPreferredWidth(37);
+		table.getColumnModel().getColumn(0).setMaxWidth(50);
 		table.getColumnModel().getColumn(1).setPreferredWidth(250);
-		table.getColumnModel().getColumn(3).setPreferredWidth(40);
+		table.getColumnModel().getColumn(3).setMaxWidth(100);
+		table.getColumnModel().getColumn(3).setPreferredWidth(100);
+		DefaultTableCellRenderer rendererRight = new DefaultTableCellRenderer();
+        rendererRight.setHorizontalAlignment(SwingConstants.RIGHT);
+        table.getColumnModel().getColumn(0).setCellRenderer(new CenterAlignRenderer());
+        table.getColumnModel().getColumn(2).setCellRenderer(rendererRight);
+        table.getColumnModel().getColumn(3).setCellRenderer(new CenterAlignRenderer());
+        table.getColumnModel().getColumn(4).setCellRenderer(rendererRight);
+
 		scrollPane.setViewportView(table);
 		
 		JLabel txtTongSL = new JLabel("\r\n5");
