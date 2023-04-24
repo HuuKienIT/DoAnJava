@@ -93,7 +93,7 @@ public class NhanVien extends JPanel {
         lblNewLabel_3_1_1.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
-        		new NhanVienAdd("").setVisible(true);;
+        		new NhanVienAdd(0).setVisible(true);;
         	}
         });
         lblNewLabel_3_1_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -104,7 +104,7 @@ public class NhanVien extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				 if (e.getClickCount() == 2) { // Check if the click count is 2 (double-click)
-					 new NhanVienAdd(table.getValueAt(table.getSelectedRow(), 1)+"").setVisible(true);
+					 new NhanVienAdd((int) table.getValueAt(table.getSelectedRow(), 0)).setVisible(true);
                  }
 			}
 		});
@@ -129,7 +129,7 @@ public class NhanVien extends JPanel {
 		model.setRowCount(0);
 		for(NhanVienModel u : nhanVienDAO.getAllUsers() ) {
        		String rows[] = new String[5];
-       		rows[0] = u.getId_Tk()+"";
+       		rows[0] = u.getId_nv()+"";
        		rows[1] = u.getHoTen();
        		rows[2] = u.getEmail();
        		rows[2] = u.getMatKhau();
@@ -139,7 +139,7 @@ public class NhanVien extends JPanel {
 	}
 	public void layDuLieu() {
        	for( NhanVienModel u : dsNV) {
-       		Object[] row = new Object[] {u.getId_Tk(),u.getManv()+"",u.getHoTen(),u.getEmail(),"0"+u.getSoDth(),u.getChucVu()} ;
+       		Object[] row = new Object[] {u.getId_nv(),u.getHoTen(),u.getEmail(),"0"+u.getSoDth(),u.getChucVu()} ;
        		model.addRow(row);
        	}
        	table.setModel(model);

@@ -1,8 +1,7 @@
 package model;
 
 public class NhanVienModel {
-	public int id_Tk;
-	public String manv;
+	public int id_nv;
 	public String hoTen;
 	public String namSinh;
 	public String gioiTinh;
@@ -14,8 +13,7 @@ public class NhanVienModel {
 	public String photo;
 
 	public NhanVienModel() {
-		this.id_Tk=0;
-		this.manv=new String();
+		this.id_nv=0;
 		this.hoTen=new String();
 		this.namSinh=new String();
 		this.gioiTinh= new String();
@@ -28,8 +26,7 @@ public class NhanVienModel {
 		
 	}
 	public NhanVienModel(int id,String manv,String hoTen,String namSinh, String gioitinh, String taiKhoan, String matKhau,String email, int soDth,String chucVu) {
-		this.id_Tk=id;
-		this.manv=manv;
+		this.id_nv=id;
 		this.hoTen=hoTen;
 		this.namSinh=namSinh;
 		this.gioiTinh=gioiTinh;
@@ -57,17 +54,12 @@ public class NhanVienModel {
 	public void setGioiTinh(String gioiTinh) {
 		this.gioiTinh = gioiTinh;
 	}
-	public int getId_Tk() {
-		return id_Tk;
+
+	public final int getId_nv() {
+		return id_nv;
 	}
-	public void setId_Tk(int id_Tk) {
-		this.id_Tk = id_Tk;
-	}
-	public String getManv() {
-		return manv;
-	}
-	public void setManv(String manv) {
-		this.manv = manv;
+	public final void setId_nv(int id_nv) {
+		this.id_nv = id_nv;
 	}
 	public String getHoTen() {
 		return hoTen;

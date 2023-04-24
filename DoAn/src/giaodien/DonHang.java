@@ -223,7 +223,7 @@ public class DonHang extends JPanel {
 		for(model.DonHangModel dh : DAO.DonHangDAO.getAllDonHang()) {
 			NhanVienModel nv = DAO.nhanVienDAO.getUsersByID(dh.getId_nv());
 			KhachHangModel kh = DAO.khachHangDAO.getKhachHangByid(dh.getId_kh());
-			Object[] row = new Object[] {dh.id_dh,kh.getMakh()+" - "+kh.getTenkh(),nv.getManv()+" - "+nv.getHoTen(),dh.getNgayban(),dh.getTongsl(),intToMoney(dh.getTongtien())} ;
+			Object[] row = new Object[] {dh.id_dh,kh.getMakh()+" - "+kh.getTenkh(),nv.getId_nv()+" - "+nv.getHoTen(),dh.getNgayban(),dh.getTongsl(),intToMoney(dh.getTongtien())} ;
        		model.addRow(row);
 		}
 		table.setModel(model);

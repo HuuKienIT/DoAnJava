@@ -72,7 +72,6 @@ public class TrangChinh extends JFrame {
 		getContentPane().add(panel, "name_1983022305675100");
 		panel.setLayout(null);
 		getRootPane().setBorder(BorderFactory.createMatteBorder(0,2, 0, 0, Color.BLACK));
-
 		
 		this.setUndecorated(true);
 		this.setShape(new RoundRectangle2D.Double(0, 0, 1509,939, 50, 50));	

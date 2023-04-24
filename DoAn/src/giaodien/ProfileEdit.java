@@ -35,7 +35,7 @@ import java.awt.event.ActionEvent;
 public class ProfileEdit extends JFrame {
 	private NhanVienModel nv;
 	private JPanel contentPane;
-	JLabel txtManv;
+	JLabel txtID_NV;
 	private JTextField txtHoTen;
 	private JTextField txtEmail;
 	private JTextField txtSoDth;
@@ -65,7 +65,7 @@ public class ProfileEdit extends JFrame {
 		lblNewLabel.setBounds(10, 20, 727, 30);
 		panel.add(lblNewLabel);
 		
-		JLabel lblSinThoi = new JLabel("Mã NV");
+		JLabel lblSinThoi = new JLabel("ID");
 		lblSinThoi.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblSinThoi.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 18));
 		lblSinThoi.setEnabled(true);
@@ -125,12 +125,12 @@ public class ProfileEdit extends JFrame {
 		btnChonAnh.setBounds(507, 314, 150, 40);
 		panel.add(btnChonAnh);
 		
-		txtManv = new JLabel("NV-01");
-		txtManv.setHorizontalAlignment(SwingConstants.LEFT);
-		txtManv.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 18));
-		txtManv.setEnabled(true);
-		txtManv.setBounds(171, 84, 150, 30);
-		panel.add(txtManv);
+		txtID_NV = new JLabel("NV-01");
+		txtID_NV.setHorizontalAlignment(SwingConstants.LEFT);
+		txtID_NV.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 18));
+		txtID_NV.setEnabled(true);
+		txtID_NV.setBounds(171, 84, 150, 30);
+		panel.add(txtID_NV);
 		
 		JLabel lblEmail_1 = new JLabel("Email");
 		lblEmail_1.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -160,7 +160,7 @@ public class ProfileEdit extends JFrame {
 		hienThongTin();
 	}
 	public void hienThongTin() {
-		txtManv.setText(nv.getManv());
+		txtID_NV.setText(nv.getId_nv()+"");
 		txtHoTen.setText(nv.getHoTen());
 		txtEmail.setText(nv.getEmail());
 		txtSoDth.setText(nv.getSoDth()+"");
@@ -202,7 +202,7 @@ public class ProfileEdit extends JFrame {
 	        String sourceDirectoryPath = System.getProperty("user.dir");
 	        String packageDirectoryPath = sourceDirectoryPath + "/src/photo";
 	        Path sourcePath = selectedFile.toPath();
-	        Path targetPath = Paths.get(packageDirectoryPath, "user-"+nv.getId_Tk()+".jpg");
+	        Path targetPath = Paths.get(packageDirectoryPath, "user-"+nv.getId_nv()+".jpg");
 
 	        try {
 	            Files.createDirectories(targetPath.getParent()); 

@@ -35,7 +35,7 @@ public class ChonKhachHang extends JFrame {
 	JLabel txtTenKH ;
 	JLabel txtMaKH ;
 	JLabel txtID_KH;
-	public ChonKhachHang(JLabel txtID_KH,JLabel MaKH,JLabel TenKH) {
+	public ChonKhachHang(JLabel MaKH,JLabel TenKH) {
 		setBounds(100, 100, 936, 525);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -93,8 +93,7 @@ public class ChonKhachHang extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				 if (e.getClickCount() == 2) { // Check if the click count is 2 (double-click)
-					 txtID_KH.setText(table.getValueAt(table.getSelectedRow(), 0)+"");
-					 MaKH.setText(table.getValueAt(table.getSelectedRow(), 1)+"");
+					 MaKH.setText(table.getValueAt(table.getSelectedRow(), 0)+"");
 					 TenKH.setText(table.getValueAt(table.getSelectedRow(), 2)+"");
 					 
 					 dispose();

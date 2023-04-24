@@ -31,8 +31,7 @@ public class nhanVienDAO {
 			ResultSet rs = helper.executeQuery(sql);
 			while(rs.next()) {
 				NhanVienModel tk = new NhanVienModel();
-				tk.setId_Tk(rs.getInt("id_nv"));
-				tk.setManv(rs.getString("ma_nv"));
+				tk.setId_nv(rs.getInt("id_nv"));
 				tk.setHoTen(rs.getString("ten_nv"));
 				tk.setEmail(rs.getString("email"));
 				tk.setSoDth(rs.getInt("sodth"));
@@ -49,13 +48,12 @@ public class nhanVienDAO {
 	public static NhanVienModel getUserByTaiKhoan(String taikhoan){
 		NhanVienModel tk = new NhanVienModel();
 		try {
-			String sql = "SELECT * FROM nhanvien where taikhoan='"+taikhoan+"'";
+			String sql = "SELECT * FROM nhanvien join chucvu on nhanvien.id_cv=chucvu.id_cv where taikhoan='"+taikhoan+"'";
 			mySQLHelper helper = new mySQLHelper();
 			helper.open();
 			ResultSet rs = helper.executeQuery(sql);
 			while(rs.next()) {	
-				tk.setId_Tk(rs.getInt("id_nv"));
-				tk.setManv(rs.getString("ma_nv"));
+				tk.setId_nv(rs.getInt("id_nv"));
 				tk.setHoTen(rs.getString("ten_nv"));
 				tk.setEmail(rs.getString("email"));
 				tk.setSoDth(rs.getInt("sodth"));
@@ -65,29 +63,7 @@ public class nhanVienDAO {
 			helper.close();
 			
 		} catch (Exception e) {
-		}
-		return tk;
-	}
-	public static NhanVienModel getUserByManv(String manv){
-		NhanVienModel tk = new NhanVienModel();
-		try {
-			String sql = "SELECT * FROM nhanvien where ma_nv='"+manv+"'";
-			mySQLHelper helper = new mySQLHelper();
-			helper.open();
-			ResultSet rs = helper.executeQuery(sql);
-			while(rs.next()) {
-				tk.setId_Tk(rs.getInt("id_nv"));
-				tk.setManv(rs.getString("ma_nv"));
-				tk.setHoTen(rs.getString("ten_nv"));
-				tk.setEmail(rs.getString("email"));
-				tk.setSoDth(rs.getInt("sodth"));
-				tk.setChucVu(rs.getString("ten_cv"));
-				tk.setPhoto(rs.getString("photo"));
-			}
-			helper.close();
-			
-		} catch (Exception e) {
-			System.out.print(e.getMessage());
+			System.out.println(e.getMessage());
 		}
 		return tk;
 	}
@@ -124,12 +100,11 @@ public class nhanVienDAO {
 			helper.open();
 			ResultSet rs = helper.executeQuery(sql);
 			while(rs.next()) {
-				tk.setId_Tk(rs.getInt("id_nv"));
-				tk.setManv(rs.getString("ma_nv"));
+				tk.setId_nv(rs.getInt("id_nv"));
 				tk.setHoTen(rs.getString("ten_nv"));
 				tk.setEmail(rs.getString("email"));
 				tk.setSoDth(rs.getInt("sodth"));
-				tk.setChucVu(rs.getString("ten_cv"));
+//				tk.setChucVu(rs.getString("ten_cv"));
 				tk.setPhoto(rs.getString("photo"));
 			}
 			helper.close();

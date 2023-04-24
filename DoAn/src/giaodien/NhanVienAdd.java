@@ -31,9 +31,9 @@ public class NhanVienAdd extends JFrame {
 	RoundJTextField txtID = new RoundJTextField(15);
 	JComboBox comboChucVu = new JComboBox();
 	JLabel lblNewLabel = new JLabel("");
-	public String ma_nv;
-	public NhanVienAdd(String ma_nv) {
-		this.ma_nv=ma_nv;
+	public int id_nv;
+	public NhanVienAdd(int id_nv) {
+		this.id_nv=id_nv;;
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 734, 540);
 		contentPane = new JPanel();
@@ -137,8 +137,8 @@ public class NhanVienAdd extends JFrame {
 		layDuLieu();
 	}
 	public void layDuLieu() {
-		NhanVienModel u = nhanVienDAO.getUserByManv(ma_nv);
-		txtID.setText(ma_nv);
+		NhanVienModel u = nhanVienDAO.getUsersByID(id_nv);
+		txtID.setText(id_nv+"");
    		txtHoTen.setText(u.getHoTen());
    		txtEmail.setText(u.getEmail());
    		txtSodth.setText(u.getSoDth()+"");

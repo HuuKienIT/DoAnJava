@@ -16,7 +16,6 @@ public class NhanHieuDAO {
 			while(rs.next()) {
 				NhanHieuModel nh = new NhanHieuModel();
 				nh.setId_nh(rs.getInt("id_nh"));
-				nh.setMa_nh(rs.getString("ma_nh"));
 				nh.setTen_nh(rs.getString("ten_nh"));
 				ds.add(nh);
 			}

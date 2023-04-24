@@ -244,7 +244,7 @@ public class NhapHang extends JPanel {
 	 	txtTongsl.setBounds(254, 196, 100, 50);
 	 	panel_3.add(txtTongsl);
 	 	
-	 	JLabel txtMaNV = new JLabel(nv.getManv());
+	 	JLabel txtMaNV = new JLabel(nv.getId_nv()+"");
 	 	txtMaNV.setBorder(new TitledBorder(null, "M\u00E3 Nh\u00E2n Vi\u00EAn", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 	 	txtMaNV.setForeground(Color.BLUE);
 	 	txtMaNV.setHorizontalAlignment(SwingConstants.CENTER);
@@ -699,7 +699,7 @@ public class NhapHang extends JPanel {
 	public void NhapHang() {
 
 			model.PhieuNhapModel pn = new model.PhieuNhapModel();
-			pn.setId_nv(this.nv.getId_Tk());
+			pn.setId_nv(this.nv.getId_nv());
 			pn.setId_ncc(Integer.parseInt(txtID_KH.getText()));
 			pn.setTongsl(Integer.parseInt(txtTongsl.getText()));
 			try {

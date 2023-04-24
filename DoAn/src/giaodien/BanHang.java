@@ -88,10 +88,9 @@ public class BanHang extends JPanel {
 	
  	JLabel txtMaSPCT = new JLabel("");
  	JLabel txtNhanHieuCT = new JLabel("");
- 	JLabel txtMaKH = new JLabel("");
+ 	JLabel txtID_KH = new JLabel("");
 	JLabel txtTenSPCT = new JLabel("");
 	JLabel txtDonGiaCT = new JLabel("");
- 	JLabel txtID_KH = new JLabel("");
  	JLabel txtTongTien = new JLabel("0");
  	JLabel txtTongsl = new JLabel("0");
  	
@@ -99,7 +98,6 @@ public class BanHang extends JPanel {
 
 	public BanHang(NhanVienModel nv) {
 		this.nv=nv;
-		txtID_KH.setVisible(false);
 		
 		setForeground(SystemColor.text);
 		setBackground(SystemColor.control);
@@ -272,13 +270,13 @@ public class BanHang extends JPanel {
 	 	txtTongsl.setBounds(259, 229, 100, 50);
 	 	panel_3.add(txtTongsl);
 	 	
-	 	JLabel txtMaNV = new JLabel(nv.getManv());
-	 	txtMaNV.setBorder(new TitledBorder(null, "M\u00E3 Nh\u00E2n Vi\u00EAn", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-	 	txtMaNV.setForeground(Color.BLUE);
-	 	txtMaNV.setHorizontalAlignment(SwingConstants.CENTER);
-	 	txtMaNV.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
-	 	txtMaNV.setBounds(10, 51, 117, 45);
-	 	panel_3.add(txtMaNV);
+	 	JLabel txtID_NV = new JLabel(nv.id_nv+"");
+	 	txtID_NV.setBorder(new TitledBorder(null, "ID Nhân Viên", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+	 	txtID_NV.setForeground(Color.BLUE);
+	 	txtID_NV.setHorizontalAlignment(SwingConstants.CENTER);
+	 	txtID_NV.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
+	 	txtID_NV.setBounds(10, 51, 117, 45);
+	 	panel_3.add(txtID_NV);
 	 	
 	 	JLabel txtTenNV = new JLabel(nv.getHoTen());
 	 	txtTenNV.setHorizontalAlignment(SwingConstants.CENTER);
@@ -288,12 +286,12 @@ public class BanHang extends JPanel {
 	 	txtTenNV.setBounds(159, 51, 200, 45);
 	 	panel_3.add(txtTenNV);
 
-	 	txtMaKH.setHorizontalAlignment(SwingConstants.CENTER);
-	 	txtMaKH.setForeground(Color.GREEN);
-	 	txtMaKH.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
-	 	txtMaKH.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "M\u00E3 Kh\u00E1ch H\u00E0ng", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-	 	txtMaKH.setBounds(10, 116, 117, 45);
-	 	panel_3.add(txtMaKH);
+	 	txtID_KH.setHorizontalAlignment(SwingConstants.CENTER);
+	 	txtID_KH.setForeground(Color.GREEN);
+	 	txtID_KH.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
+	 	txtID_KH.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "ID Khách Hàng", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+	 	txtID_KH.setBounds(10, 116, 117, 45);
+	 	panel_3.add(txtID_KH);
 	 	
 	 	JLabel txtTenKH = new JLabel("");
 	 	txtTenKH.setHorizontalAlignment(SwingConstants.CENTER);
@@ -314,16 +312,13 @@ public class BanHang extends JPanel {
 	 	JButton btnNewButton = new JButton("Chọn");
 	 	btnNewButton.addActionListener(new ActionListener() {
 	 		public void actionPerformed(ActionEvent e) {
-	 			new ChonKhachHang(txtID_KH,txtMaKH,txtTenKH).setVisible(true);
+	 			new ChonKhachHang(txtID_KH,txtTenKH).setVisible(true);
 	 		}
 	 	});
 	 	btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	 	btnNewButton.setBounds(335, 123, 50, 35);
 	 	panel_3.add(btnNewButton);
-	 	
 
-	 	txtID_KH.setBounds(100, 107, 20, 10);
-	 	panel_3.add(txtID_KH);
 	 	
 	 	
 	 	JPanel panel_4 = new RoundedJPanel(20);
@@ -735,9 +730,7 @@ public class BanHang extends JPanel {
 	public void XuatDonHang() {
 
 			model.DonHangModel dh = new model.DonHangModel();
-
-			dh.setId_nv(this.nv.getId_Tk());
-			dh.setId_kh(Integer.parseInt(txtID_KH.getText()));
+			dh.setId_nv(this.nv.getId_nv());
 			dh.setTongsl(Integer.parseInt(txtTongsl.getText()));
 			try {
 			dh.setTongtien(moneyToInt(txtTongTien.getText()));

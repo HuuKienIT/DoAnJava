@@ -180,7 +180,7 @@ public class PhanQuyen extends JPanel {
 		String[] columnNames = {"Mã NV", "Ho Ten", "Email", "Mat Khau", "Chuc Vu"};
        	model.setColumnIdentifiers(columnNames);
        	for(NhanVienModel u : nhanVienDAO.getAllUsers() ) {
-       		Object[] row = new Object[] {u.getManv()+"",u.getHoTen(),u.getEmail(),u.getMatKhau(),u.getChucVu()} ;
+       		Object[] row = new Object[] {u.getId_nv(),u.getHoTen(),u.getEmail(),u.getMatKhau(),u.getChucVu()} ;
        		model.addRow(row);
        	}
         
@@ -257,7 +257,7 @@ public class PhanQuyen extends JPanel {
 		model.setRowCount(0);
 		for(NhanVienModel u : nhanVienDAO.getAllUsers() ) {
        		String rows[] = new String[5];
-       		rows[0] = u.getId_Tk()+"";
+       		rows[0] = u.getId_nv()+"";
        		rows[1] = u.getHoTen();
        		rows[2] = u.getEmail();
        		rows[2] = u.getMatKhau();
