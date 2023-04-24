@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import java.awt.SystemColor;
 
-import DAO.nhanVienDAO;
+import DAO.NhanVienDAO;
 import model.NhanVienModel;
 
 import javax.swing.JScrollPane;
@@ -179,7 +179,7 @@ public class PhanQuyen extends JPanel {
 		panel_1.add(separator_2);
 		String[] columnNames = {"Mã NV", "Ho Ten", "Email", "Mat Khau", "Chuc Vu"};
        	model.setColumnIdentifiers(columnNames);
-       	for(NhanVienModel u : nhanVienDAO.getAllUsers() ) {
+       	for(NhanVienModel u : NhanVienDAO.getAllUsers() ) {
        		Object[] row = new Object[] {u.getId_nv(),u.getHoTen(),u.getEmail(),u.getMatKhau(),u.getChucVu()} ;
        		model.addRow(row);
        	}
@@ -255,7 +255,7 @@ public class PhanQuyen extends JPanel {
 	}
 	public void hienthi() {
 		model.setRowCount(0);
-		for(NhanVienModel u : nhanVienDAO.getAllUsers() ) {
+		for(NhanVienModel u : NhanVienDAO.getAllUsers() ) {
        		String rows[] = new String[5];
        		rows[0] = u.getId_nv()+"";
        		rows[1] = u.getHoTen();

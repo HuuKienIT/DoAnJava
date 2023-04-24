@@ -99,7 +99,7 @@ public class ChiTietPN extends JFrame {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		int stt=1;
 		for(CTPhieuNhapModel ctpn: DAO.CTPhieuNhapDAO.getCTPhieuNhapByID(this.id_dh) ) {
-       		Object[] row = new Object[] {stt++,DAO.sanPhamDAO.getTenSanPhamByIdSP(ctpn.getId_sp()),intToMoney(ctpn.getGia()),ctpn.getSoluong(),intToMoney(ctpn.getSoluong()*ctpn.getGia())} ;
+       		Object[] row = new Object[] {stt++,DAO.SanPhamDAO.getTenSanPhamByIdSP(ctpn.getId_sp()),intToMoney(ctpn.getGia()),ctpn.getSoluong(),intToMoney(ctpn.getSoluong()*ctpn.getGia())} ;
        		model.addRow(row);
        	}
 		table.setModel(model);

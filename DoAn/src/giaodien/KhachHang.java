@@ -35,7 +35,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import DAO.nhanVienDAO;
+import DAO.NhanVienDAO;
 import model.KhachHangModel;
 import model.NhanVienModel;
 
@@ -171,7 +171,7 @@ public class KhachHang extends JPanel {
 		paneGia.add(txtMax);
 	}
 	public void layDuLieu() {
-		for(KhachHangModel kh :DAO.khachHangDAO.getAllKH() ) {
+		for(KhachHangModel kh :DAO.KhachHangDAO.getAllKH() ) {
        		Object[] row = new Object[] {kh.getId_kh(),kh.getMakh(),kh.getTenkh(),"0"+kh.getSodth(),kh.getDiemtl()} ;
        		model.addRow(row);
        	}

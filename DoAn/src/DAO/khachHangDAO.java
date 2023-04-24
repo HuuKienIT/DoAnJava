@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import model.KhachHangModel;
 
-public class khachHangDAO {
+public class KhachHangDAO {
 	public static int demTongSoKH() {
 		int dem=0;
 		try {

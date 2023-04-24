@@ -18,7 +18,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 
-import DAO.nhanVienDAO;
+import DAO.NhanVienDAO;
 import model.NhanVienModel;
 
 import javax.swing.JScrollPane;
@@ -33,7 +33,7 @@ public class NhanVien extends JPanel {
 	public JComboBox comboLoaiSp = new JComboBox();
 	private JTextField txtMax;
 	private JTextField txtMin;
-	public ArrayList<NhanVienModel> dsNV = nhanVienDAO.getAllUsers();
+	public ArrayList<NhanVienModel> dsNV = NhanVienDAO.getAllUsers();
 	
 	public NhanVien() {
 		setBackground(SystemColor.control);
@@ -127,7 +127,7 @@ public class NhanVien extends JPanel {
 	}
 	public void hienthi() {
 		model.setRowCount(0);
-		for(NhanVienModel u : nhanVienDAO.getAllUsers() ) {
+		for(NhanVienModel u : NhanVienDAO.getAllUsers() ) {
        		String rows[] = new String[5];
        		rows[0] = u.getId_nv()+"";
        		rows[1] = u.getHoTen();

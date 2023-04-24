@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import model.SanPhamModel;
 
 
-public class sanPhamDAO {
+public class SanPhamDAO {
 	public static ArrayList<SanPhamModel> getAllSanPham(){
 		ArrayList<SanPhamModel> ds = new ArrayList<SanPhamModel>();
 		try {

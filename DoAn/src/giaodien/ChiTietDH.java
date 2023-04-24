@@ -98,7 +98,7 @@ public class ChiTietDH extends JFrame {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		int stt=1;
 		for(CTDonHangModel ctdh: DAO.CTDonHangDAO.getCTDonHangByID(this.id_dh) ) {
-       		Object[] row = new Object[] {stt++,DAO.sanPhamDAO.getTenSanPhamByIdSP(ctdh.getId_sp()),intToMoney(ctdh.getGia()),ctdh.getSoluong(),intToMoney(ctdh.getSoluong()*ctdh.getGia())} ;
+       		Object[] row = new Object[] {stt++,DAO.SanPhamDAO.getTenSanPhamByIdSP(ctdh.getId_sp()),intToMoney(ctdh.getGia()),ctdh.getSoluong(),intToMoney(ctdh.getSoluong()*ctdh.getGia())} ;
        		model.addRow(row);
        	}
 		table.setModel(model);

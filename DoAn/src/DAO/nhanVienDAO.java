@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import model.NhanVienModel;
 
-public class nhanVienDAO {
+public class NhanVienDAO {
 	public static int demTongSoNV() {
 		int dem=0;
 		try {

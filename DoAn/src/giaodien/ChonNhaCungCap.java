@@ -16,7 +16,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import DAO.nhanVienDAO;
+import DAO.NhanVienDAO;
 import model.NhaCungCapModel;
 import model.NhanVienModel;
 

@@ -5,8 +5,6 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import DAO.loaiDAO;
-import model.loai;
 
 import java.awt.Font;
 import java.awt.Color;

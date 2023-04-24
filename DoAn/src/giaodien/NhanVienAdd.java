@@ -17,7 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.border.MatteBorder;
 
-import DAO.nhanVienDAO;
+import DAO.NhanVienDAO;
 import model.NhanVienModel;
 
 import javax.swing.SwingConstants;
@@ -137,7 +137,7 @@ public class NhanVienAdd extends JFrame {
 		layDuLieu();
 	}
 	public void layDuLieu() {
-		NhanVienModel u = nhanVienDAO.getUsersByID(id_nv);
+		NhanVienModel u = NhanVienDAO.getUsersByID(id_nv);
 		txtID.setText(id_nv+"");
    		txtHoTen.setText(u.getHoTen());
    		txtEmail.setText(u.getEmail());

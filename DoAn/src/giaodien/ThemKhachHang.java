@@ -94,7 +94,7 @@ public class ThemKhachHang extends JFrame {
 		layDuLieu();
 	}
 	public void layDuLieu() {
-		KhachHangModel kh =DAO.khachHangDAO.getKhachHangByid(id_kh);
+		KhachHangModel kh =DAO.KhachHangDAO.getKhachHangByid(id_kh);
 		txtMaKh.setText(kh.getMakh());
 		txtHoTen.setText(kh.getTenkh());
 		txtSoDth.setText(kh.getSodth()+"");

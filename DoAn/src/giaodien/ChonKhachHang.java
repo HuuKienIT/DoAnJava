@@ -16,7 +16,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import DAO.nhanVienDAO;
+import DAO.NhanVienDAO;
 import model.KhachHangModel;
 import model.NhanVienModel;
 
@@ -107,7 +107,7 @@ public class ChonKhachHang extends JFrame {
 		
 	}
 	public void layDuLieu() {
-		for(KhachHangModel kh :DAO.khachHangDAO.getAllKH() ) {
+		for(KhachHangModel kh :DAO.KhachHangDAO.getAllKH() ) {
        		Object[] row = new Object[] {kh.getId_kh(),kh.getMakh(),kh.getTenkh(),"0"+kh.getSodth(),kh.getDiemtl()} ;
        		model.addRow(row);
        	}

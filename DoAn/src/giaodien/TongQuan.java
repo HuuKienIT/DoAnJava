@@ -284,9 +284,9 @@ public class TongQuan extends JPanel {
     
     
     public void hienThongSo() {
-    	txtSanPham.setText(DAO.sanPhamDAO.demTongSoSP()+"");
-    	txtKhachHang.setText(DAO.khachHangDAO.demTongSoKH()+"");
-    	txtNhanVien.setText(DAO.nhanVienDAO.demTongSoNV()+"");
+    	txtSanPham.setText(DAO.SanPhamDAO.demTongSoSP()+"");
+    	txtKhachHang.setText(DAO.KhachHangDAO.demTongSoKH()+"");
+    	txtNhanVien.setText(DAO.NhanVienDAO.demTongSoNV()+"");
     	txtDoanhThu.setText(intToMoney(DAO.DonHangDAO.tongDoanhThu()));
     }
 	public static String intToMoney(int value) {

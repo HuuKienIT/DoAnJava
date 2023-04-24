@@ -26,8 +26,8 @@ import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
-import DAO.nhanVienDAO;
-import DAO.sanPhamDAO;
+import DAO.NhanVienDAO;
+import DAO.SanPhamDAO;
 import model.NhanVienModel;
 import model.SanPhamModel;
 
@@ -177,7 +177,7 @@ public class SanPhamAdd extends JFrame {
 	}
 
 	public void setDuLieu() {
-		SanPhamModel sp = sanPhamDAO.getSanPhamByIdSP(id);
+		SanPhamModel sp = SanPhamDAO.getSanPhamByIdSP(id);
 		txtMaSP.setText(sp.getMasp());
 //		txtTenSP.setText(sp.getTensp());
 		txtTenSP.append(sp.getTensp());

@@ -43,11 +43,11 @@ public class ThongKeSanPham extends JPanel {
 		panel_7.setLayout(null);
 		
 		DefaultPieDataset dataset = new DefaultPieDataset();
-		int TongSL =DAO.sanPhamDAO.demTongSoLuong();
+		int TongSL =DAO.SanPhamDAO.demTongSoLuong();
 		ArrayList<model.NhanHieuModel> dsNH = DAO.NhanHieuDAO.getAllNhanHieu();
 		for(model.NhanHieuModel nh :dsNH) {
 //			if(DAO.sanPhamDAO.demSanPhamByNhanHieu(nh.getTen_nh())!=0) {
-				dataset.setValue(nh.getTen_nh(), DAO.sanPhamDAO.demSanPhamByNhanHieu(nh.getTen_nh())*100/TongSL);
+				dataset.setValue(nh.getTen_nh(), DAO.SanPhamDAO.demSanPhamByNhanHieu(nh.getTen_nh())*100/TongSL);
 //			}
 		}
 

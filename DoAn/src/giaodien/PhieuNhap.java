@@ -104,7 +104,7 @@ public class PhieuNhap extends JPanel {
 		DefaultTableModel model =(DefaultTableModel) table.getModel();
 		model.setRowCount(0);
 		for(PhieuNhapModel pn:dsPN) {
-			NhanVienModel nv = DAO.nhanVienDAO.getUsersByID(pn.getId_nv());
+			NhanVienModel nv = DAO.NhanVienDAO.getUsersByID(pn.getId_nv());
 			NhaCungCapModel ncc = DAO.NhaCungCapDAO.getNCCByID(pn.getId_ncc());
 			Object[] row = new Object[] {pn.getId_pn(),ncc.getTen_ncc(),nv.getHoTen(),pn.getNgaynhap(),pn.getTongsl(),intToMoney(pn.getTongtien())} ;
 			model.addRow(row);

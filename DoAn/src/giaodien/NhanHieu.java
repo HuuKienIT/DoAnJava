@@ -18,8 +18,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import DAO.NhanHieuDAO;
-import DAO.loaiDAO;
-import model.loai;
 import model.SanPhamGHModel;
 
 public class NhanHieu extends JPanel {

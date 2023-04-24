@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import DAO.NhanHieuDAO;
-import DAO.sanPhamDAO;
+import DAO.SanPhamDAO;
 import model.SanPhamModel;
 import model.SanPhamGHModel;
 
@@ -61,7 +61,7 @@ public class SanPham extends JPanel {
 	private JTextField txtMax;
 	private JTable table;
 	public DefaultTableModel modelSP = new DefaultTableModel();
-	ArrayList<SanPhamModel> dsSP = sanPhamDAO.getAllSanPham();
+	ArrayList<SanPhamModel> dsSP = SanPhamDAO.getAllSanPham();
 
 	public SanPham() {
 		setBackground(SystemColor.control);

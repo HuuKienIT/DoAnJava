@@ -180,13 +180,13 @@ public class Login extends JFrame {
 		if(tendn.equals("")||matkhau.equals("")) {
 			JOptionPane.showMessageDialog(contentPane, "Không để trống tên đăng nhập hoặc mật khẩu");
 		}else {
-			if(DAO.nhanVienDAO.layMatKhau(tendn).equals(matkhau)) {
+			if(DAO.NhanVienDAO.layMatKhau(tendn).equals(matkhau)) {
 				if(checkLuuDN.isSelected()) {
 			        ghiTaiKhoan(txtTenDn.getText(),txtMatKhau.getText());
 		        }else {
 			        clearFile();
 		        }
-				new TrangChinh(DAO.nhanVienDAO.getUserByTaiKhoan(tendn)).setVisible(true);
+				new TrangChinh(DAO.NhanVienDAO.getUserByTaiKhoan(tendn)).setVisible(true);
 				dispose();
 			}else {
 				JOptionPane.showMessageDialog(contentPane, "Tên đăng nhập hoặc mật khẩu sai");

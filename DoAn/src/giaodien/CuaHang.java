@@ -43,11 +43,7 @@ public class CuaHang extends JPanel {
 		tsp.setLayout(null);
 		tsp.setVisible(true);
 		body.add(tsp);
-		
-		// add panel ql loai sp
-		Loai qlloaisp = new Loai();
-		qlloaisp.setLayout(null);
-		qlloaisp.setVisible(true);
+
 		
 		// add panel ql nhà cung cấp
 		NhaCungCap tncc = new NhaCungCap();

@@ -41,9 +41,9 @@ import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import DAO.sanPhamDAO;
-import DAO.khachHangDAO;
-import DAO.nhanVienDAO;
+import DAO.SanPhamDAO;
+import DAO.KhachHangDAO;
+import DAO.NhanVienDAO;
 import model.CTDonHangModel;
 import model.KhachHangModel;
 import model.NhanVienModel;
@@ -77,7 +77,7 @@ public class BanHang extends JPanel {
 	public DefaultTableModel modelGH = new DefaultTableModel();
 	
 	public ArrayList<SanPhamGHModel> GH = new ArrayList<SanPhamGHModel>();
-	public ArrayList<SanPhamModel> sp = DAO.sanPhamDAO.getAllSanPham();
+	public ArrayList<SanPhamModel> sp = DAO.SanPhamDAO.getAllSanPham();
 	private JTextField txtKiem;
 	private JLabel lblNewLabel_2;
 	private JTextField textField_1;
@@ -695,7 +695,7 @@ public class BanHang extends JPanel {
 		if(giaMin>giaMax) {
 			return;
 		}
-		for(SanPhamModel sp :DAO.sanPhamDAO.getAllSanPham()) {
+		for(SanPhamModel sp :DAO.SanPhamDAO.getAllSanPham()) {
 			if(sp.getTensp().toLowerCase().contains(tenSP.toLowerCase())&& sp.getNhanhieu().toLowerCase().contains(nhanHieu.toLowerCase())&&sp.getGia()>=giaMin && sp.getGia()<=giaMax) 
 			{
 				spLoc.add(sp);
@@ -709,7 +709,7 @@ public class BanHang extends JPanel {
 		tableSP.setModel(modelSP);
 	}
 	public void layDuLieu() {
-		for(SanPhamModel s :DAO.sanPhamDAO.getAllSanPham()) {
+		for(SanPhamModel s :DAO.SanPhamDAO.getAllSanPham()) {
 			sp.add(s);
 		}
 	}
