@@ -83,7 +83,7 @@ public class NhanHieu extends JPanel {
 		lblNewLabel_1_2_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new NhanHieuAdd().setVisible(true);
+				new NhanHieuAdd(0).setVisible(true);
 			}
 		});
 		lblNewLabel_1_2_2.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));

@@ -19,7 +19,9 @@ public class NhanHieuAdd extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
-	public NhanHieuAdd() {
+	public int id_nh;
+	public NhanHieuAdd(int id_nh) {
+		this.id_nh=id_nh;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 591, 345);
 		contentPane = new JPanel();
