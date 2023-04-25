@@ -170,6 +170,7 @@ public class SanPhamAdd extends JFrame {
 		btnNewButton_1_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String idsp= String.valueOf(DAO.SanPhamDAO.demTongSoSP()+1);
+				String idsp_sua= String.valueOf(DAO.SanPhamDAO.demTongSoSP());
 				String masp=txtMaSP.getText();
 				String tensp=txtTenSP.getText();
 				String manh=String.valueOf(NhanHieuDAO.Id_NhByName(txtNhanHieu.getText())) ;
@@ -177,15 +178,29 @@ public class SanPhamAdd extends JFrame {
 				String sl="0";
 				String tenfile="";
 				tenfile=filename;
-				String sql="insert into sanpham values('"+idsp+"','"+masp+"','"+tensp+"','"+gia+"','"+sl+"','"+manh+"','"+tenfile+"')";
-				mySQLHelper conn=new mySQLHelper();
-				conn.open();
-				int n=conn.executeUpdate(sql);
-				if(n!=-1) {
-					JOptionPane.showMessageDialog(null, "Thêm thành công");
-					setVisible(false);
+				if(id==0){
+					String sql="insert into sanpham values('"+idsp+"','"+masp+"','"+tensp+"','"+gia+"','"+sl+"','"+manh+"','"+tenfile+"')";
+					mySQLHelper conn=new mySQLHelper();
+					conn.open();
+					int n=conn.executeUpdate(sql);
+					if(n!=-1) {
+						JOptionPane.showMessageDialog(null, "Thêm thành công");
+						setVisible(false);
+					}
+					conn.close();
 				}
-				conn.close();
+				else {
+					
+					String sql="update sanpham set ma_sp='"+masp+"',ten_sp='"+tensp+"',gia='"+gia+"',soluong='"+sl+"',id_nh='"+manh+"',photo='"+tenfile+"' where id_sp='"+idsp_sua+"'";
+					mySQLHelper conn=new mySQLHelper();
+					conn.open();
+					int n=conn.executeUpdate(sql);
+					if(n!=-1) {
+						JOptionPane.showMessageDialog(null, "Sửa thành công");
+						setVisible(false);
+					}
+					conn.close();
+				}
 				dsSP=SanPhamDAO.getAllSanPham();
 			}
 		});
