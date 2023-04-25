@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -22,12 +23,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
+import com.mysql.jdbc.PreparedStatement;
+
+import DAO.NhanHieuDAO;
 import DAO.NhanVienDAO;
 import DAO.SanPhamDAO;
+import DAO.mySQLHelper;
 import model.NhanVienModel;
 import model.SanPhamModel;
 
@@ -46,7 +52,8 @@ public class SanPhamAdd extends JFrame {
 	private JTextField txtDonGia;
 	public int id;
 	JLabel hinhanh = new JLabel("");
-
+	ArrayList<SanPhamModel> dsSP = SanPhamDAO.getAllSanPham();
+	String filename;
 	public SanPhamAdd(int id) {
 		this.id=id;
 		setType(Type.UTILITY);
@@ -72,7 +79,13 @@ public class SanPhamAdd extends JFrame {
 		txtMaSP = new RoundJTextField(15);
 		txtMaSP.setColumns(10);
 		txtMaSP.setBounds(200, 50, 125, 35);
-		txtMaSP.setEditable(false);
+		if(id==0) {
+			txtMaSP.setEditable(true);
+		}
+		else {
+			txtMaSP.setEditable(false);
+		}
+		
 		panel_1.add(txtMaSP);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Tên sp");
@@ -110,25 +123,33 @@ public class SanPhamAdd extends JFrame {
 		        int returnValue = fileChooser.showOpenDialog(null);
 		        if (returnValue == JFileChooser.APPROVE_OPTION) {
 		            File selectedFile = fileChooser.getSelectedFile();
-		            
 		            String fileUrl = null;
 		            try {
 		                fileUrl = selectedFile.toURI().toURL().toString();
 		            } catch (Exception ex) {
 		                ex.printStackTrace();
 		            }
-		           
+		            filename=selectedFile.getName().toString();
 		            System.out.println("Selected file URL: " + fileUrl);
 
 		            // do something with the selected file
 		            String sourceDirectoryPath = System.getProperty("user.dir");
+		            System.out.println("1"+sourceDirectoryPath);
 		            String packageDirectoryPath = sourceDirectoryPath + "/src/photo";
+		            System.out.println("2"+packageDirectoryPath);
 		            Path sourcePath = selectedFile.toPath();
-		            Path targetPath = Paths.get(packageDirectoryPath, "sp-1.wedp");
+		            System.out.println("3"+sourcePath);
+		            Path targetPath = Paths.get(packageDirectoryPath,filename);
+		            System.out.println("4"+targetPath);
 		            try {
-		                Files.createDirectories(targetPath.getParent()); // create the package directory if it doesn't exist
-		                Files.move(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
-		                System.out.println("File moved successfully to " + targetPath.toAbsolutePath());
+		            	if(sourcePath.toString().equals(targetPath.toString())){
+		            		hienhinh(filename);
+		            	}
+		            	else {
+		            		Files.createDirectories(targetPath.getParent()); // create the package directory if it doesn't exist
+			                Files.move(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
+			                System.out.println("File moved successfully to " + targetPath.toAbsolutePath());
+		            	}
 		            } catch (IOException ex) {
 		                ex.printStackTrace();
 		            }
@@ -140,11 +161,34 @@ public class SanPhamAdd extends JFrame {
 		btnNewButton_1.setBounds(690, 354, 125, 40);
 		panel_1.add(btnNewButton_1);
 		
+		
 		JButton btnNewButton_1_1_1 = new JButton("Lưu");
 		btnNewButton_1_1_1.setBackground(SystemColor.text);
 		btnNewButton_1_1_1.setIcon(new ImageIcon("E:\\Picrure AT\\iconjava\\save.jpg"));
 		btnNewButton_1_1_1.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 15));
 		btnNewButton_1_1_1.setBounds(245, 354, 150, 50);
+		btnNewButton_1_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String idsp= String.valueOf(DAO.SanPhamDAO.demTongSoSP()+1);
+				String masp=txtMaSP.getText();
+				String tensp=txtTenSP.getText();
+				String manh=String.valueOf(NhanHieuDAO.Id_NhByName(txtNhanHieu.getText())) ;
+				String gia=String.valueOf(txtDonGia.getText());
+				String sl="0";
+				String tenfile="";
+				tenfile=filename;
+				String sql="insert into sanpham values('"+idsp+"','"+masp+"','"+tensp+"','"+gia+"','"+sl+"','"+manh+"','"+tenfile+"')";
+				mySQLHelper conn=new mySQLHelper();
+				conn.open();
+				int n=conn.executeUpdate(sql);
+				if(n!=-1) {
+					JOptionPane.showMessageDialog(null, "Thêm thành công");
+					setVisible(false);
+				}
+				conn.close();
+				dsSP=SanPhamDAO.getAllSanPham();
+			}
+		});
 		panel_1.add(btnNewButton_1_1_1);
 		
 
@@ -182,24 +226,17 @@ public class SanPhamAdd extends JFrame {
 //		txtTenSP.setText(sp.getTensp());
 		txtTenSP.append(sp.getTensp());
 		txtNhanHieu.setText(sp.getNhanhieu());
-		txtDonGia.setText(sp.getGia()+"");
-		
+		txtDonGia.setText(sp.getGia()+"");		
 		hienhinh(sp.getPhoto());
 	}
 	public void hienhinh(String tenfile) {
-	 	BufferedImage originalImage = null;
-	 	if(tenfile.equals("")) {
+	 	
+	 	if(tenfile.equals("null")) {
 	 		hinhanh.setIcon(null);
 	 	}else {
-	 		try {
-	            InputStream inputStream = BanHang.class.getResourceAsStream("/photo/"+tenfile);
-				originalImage = ImageIO.read(inputStream);
-				Image resizedImage = originalImage.getScaledInstance(300, 300, Image.SCALE_SMOOTH);
-		        ImageIcon icon = new ImageIcon(resizedImage);
-			 	hinhanh.setIcon(icon);
-			} catch (IOException e2) {
-				e2.printStackTrace();
-			}
+	 		ImageIcon imageIcon = new ImageIcon(new ImageIcon(BanHang.class.getResource
+					("/photo/"+tenfile)).getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH));
+			hinhanh.setIcon(imageIcon);
 	 	}
 	}
 	
