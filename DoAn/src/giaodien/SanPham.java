@@ -95,8 +95,9 @@ public class SanPham extends JPanel {
     	table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				 if (e.getClickCount() == 2) { // Check if the click count is 2 (double-click)
+				 if (e.getClickCount() == 2) { // Check if the click count is 2 (double-click) 
 					 new SanPhamAdd(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0)+"")).setVisible(true);
+					 
                  }
 			}		
 		});

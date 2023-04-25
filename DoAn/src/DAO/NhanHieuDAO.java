@@ -25,6 +25,24 @@ public class NhanHieuDAO {
 		}
 		return ds;
 	}
+	public static int Id_NhByName(String tennh) {
+		ArrayList<NhanHieuModel> ds = new ArrayList<NhanHieuModel>();
+		int kq=0;
+		try {
+			String sql="select id_nh from nhanhieu where ten_nh='"+tennh+"'";
+			System.out.println(sql);
+			mySQLHelper helper = new mySQLHelper();
+			helper.open();
+			ResultSet rs = helper.executeQuery(sql);
+			if(rs.next()) {
+				kq= rs.getInt("id_nh");
+			}
+			helper.close();
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return kq;
+	}
 //	public static ArrayList<loai> timKiemUsers(String taikhoan){
 //		ArrayList<loai> ds = new ArrayList<loai>();
 //		try {
