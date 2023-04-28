@@ -25,7 +25,7 @@ public class NhanVienDAO {
 	public static ArrayList<NhanVienModel> getAllUsers(){
 		ArrayList<NhanVienModel> ds = new ArrayList<NhanVienModel>();
 		try {
-			String sql = "SELECT * FROM nhanvien";
+			String sql = "SELECT * FROM nhanvien join chucvu on nhanvien.id_cv=chucvu.id_cv";
 			mySQLHelper helper = new mySQLHelper();
 			helper.open();
 			ResultSet rs = helper.executeQuery(sql);

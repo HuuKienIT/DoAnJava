@@ -49,14 +49,13 @@ public class NhanHieu extends JPanel {
 		
 		table = new cusTable();
 	 	scrollPane.setViewportView(table);
-	 	String[] columnNamesGH = {"ID","Mã NH" ,"Nhãn Hiệu", };
+	 	String[] columnNamesGH = {"ID" ,"Nhãn Hiệu", };
        	model.setColumnIdentifiers(columnNamesGH);
        	table.setModel(model);
        	hienthi();
        	
 		table.getColumnModel().getColumn(0).setPreferredWidth(100);
-		table.getColumnModel().getColumn(1).setPreferredWidth(100);
-    	table.getColumnModel().getColumn(2).setPreferredWidth(400);
+    	table.getColumnModel().getColumn(1).setPreferredWidth(400);
     	table.getColumnModel().getColumn(0).setCellRenderer(new CenterAlignRenderer());
     	table.getColumnModel().getColumn(1).setCellRenderer(new CenterAlignRenderer());
 		scrollPane.setViewportView(table);
@@ -120,7 +119,7 @@ public class NhanHieu extends JPanel {
 	public void hienthi() {
 		model.setRowCount(0);
 		for(model.NhanHieuModel nh :NhanHieuDAO.getAllNhanHieu() ) {
-       		Object[] row = new Object[] {nh.getId_nh(),nh.getMa_nh(),nh.getTen_nh()} ;
+       		Object[] row = new Object[] {nh.getId_nh(),nh.getTen_nh()} ;
        		model.addRow(row);
        	}
 	}

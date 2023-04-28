@@ -58,15 +58,15 @@ public class NhanVien extends JPanel {
 		scrollPane.getViewport().setBackground(Color.WHITE);
 		
 		table = new cusTable();	
-		String[] columnNames = {"ID","Mã NV", "Họ Tên", "Email", "Số Điện Thoại","Chức Vụ"};
+		String[] columnNames = {"ID", "Họ Tên", "Email", "Số Điện Thoại","Chức Vụ"};
        	model.setColumnIdentifiers(columnNames);
        	layDuLieu();
         table.setModel(model);
         	table.getColumnModel().getColumn(0).setMaxWidth(70);
-        	table.getColumnModel().getColumn(1).setMaxWidth(100);
+        	table.getColumnModel().getColumn(1).setPreferredWidth(100);
         	table.getColumnModel().getColumn(2).setPreferredWidth(100);
         	table.getColumnModel().getColumn(3).setPreferredWidth(100);
-        	table.getColumnModel().getColumn(4).setPreferredWidth(100);
+        	//table.getColumnModel().getColumn(4).setPreferredWidth(100);
         	table.getColumnModel().getColumn(0).setCellRenderer(new CenterAlignRenderer());
         	table.getColumnModel().getColumn(4).setCellRenderer(new CenterAlignRenderer());
 
