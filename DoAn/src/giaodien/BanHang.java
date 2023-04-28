@@ -728,7 +728,6 @@ public class BanHang extends JPanel {
 	}
 
 	public void XuatDonHang() {
-
 			model.DonHangModel dh = new model.DonHangModel();
 			dh.setId_nv(this.nv.getId_nv());
 			dh.setTongsl(Integer.parseInt(txtTongsl.getText()));
