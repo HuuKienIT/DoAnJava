@@ -17,7 +17,8 @@ public class NhaCungCapDAO {
 			while(rs.next()) {
 				ncc.setId_ncc(rs.getInt("id_ncc"));
 				ncc.setTen_ncc(rs.getString("ten_ncc"));
-//				ncc.setEmail(rs.getString("email"));
+				ncc.setEmail(rs.getString("sdth"));
+				ncc.setEmail(rs.getString("email"));
 			}
 			helper.close();	
 		} catch (Exception e) {
@@ -37,7 +38,8 @@ public class NhaCungCapDAO {
 
 				ncc.setId_ncc(rs.getInt("id_ncc"));
 				ncc.setTen_ncc(rs.getString("ten_ncc"));
-//				ncc.setEmail(rs.getString("email"));
+				ncc.setEmail(rs.getString("sdth"));
+				ncc.setEmail(rs.getString("email"));
 				ds.add(ncc);
 			}
 			helper.close();	
@@ -46,6 +48,21 @@ public class NhaCungCapDAO {
 		}
 		return ds;
 	}
-	
+	public static int demTongSoNCC() {
+		int dem=0;
+		try {
+			String sql = "SELECT count(*) as soluong FROM nhacungcap";
+			mySQLHelper helper = new mySQLHelper();
+			helper.open();
+			ResultSet rs = helper.executeQuery(sql);
+			while(rs.next()) {
+				dem=rs.getInt("soluong");
+			}
+			helper.close();	
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return dem;
+	}
 
 }
