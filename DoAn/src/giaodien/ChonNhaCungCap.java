@@ -24,6 +24,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 
 public class ChonNhaCungCap extends JFrame {
 
@@ -53,7 +54,7 @@ public class ChonNhaCungCap extends JFrame {
 		textField = new JTextField();
 		textField.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "T\u00EAn Nh\u00E0 Cung C\u1EA5p", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField.setBounds(230, 5, 200, 40);
+		textField.setBounds(164, 5, 200, 40);
 		panel.add(textField);
 		textField.setColumns(10);
 		
@@ -61,18 +62,24 @@ public class ChonNhaCungCap extends JFrame {
 		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		textField_1.setColumns(10);
 		textField_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "S\u1ED1 \u0110i\u1EC7n Tho\u1EA1i", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		textField_1.setBounds(473, 5, 200, 40);
+		textField_1.setBounds(404, 5, 200, 40);
 		panel.add(textField_1);
 		
 		JButton btnNewButton = new JButton("Tìm");
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnNewButton.setBounds(704, 10, 89, 30);
+		btnNewButton.setBounds(647, 8, 89, 35);
 		panel.add(btnNewButton);
 		
 		JLabel lblNewLabel = new JLabel("Tìm Kiếm");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblNewLabel.setBounds(20, 10, 150, 30);
 		panel.add(lblNewLabel);
+		
+		JButton btnNew = new JButton("New");
+		btnNew.setIcon(new ImageIcon(ChonNhaCungCap.class.getResource("/icon/add.jpg")));
+		btnNew.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNew.setBounds(750, 8, 120, 35);
+		panel.add(btnNew);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);
@@ -113,6 +120,4 @@ public class ChonNhaCungCap extends JFrame {
        	}
 		table.setModel(model);
 	}
-	
- 
 }
