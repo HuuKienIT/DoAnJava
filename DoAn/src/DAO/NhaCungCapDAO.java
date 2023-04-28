@@ -38,7 +38,7 @@ public class NhaCungCapDAO {
 
 				ncc.setId_ncc(rs.getInt("id_ncc"));
 				ncc.setTen_ncc(rs.getString("ten_ncc"));
-				ncc.setEmail(rs.getString("sdth"));
+				ncc.setEmail(rs.getString("sodth"));
 				ncc.setEmail(rs.getString("email"));
 				ds.add(ncc);
 			}
