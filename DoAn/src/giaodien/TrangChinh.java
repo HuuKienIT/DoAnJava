@@ -113,7 +113,7 @@ public class TrangChinh extends JFrame {
 		content.add(bh);
 		
 		txtTenNv = new JLabel("Tên NV");
-		txtTenNv.setForeground(Color.WHITE);
+		txtTenNv.setForeground(Color.BLACK);
 		txtTenNv.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTenNv.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 23));
 		txtTenNv.setBounds(0, 220, 300, 30);
@@ -239,7 +239,7 @@ public class TrangChinh extends JFrame {
 		lblNewLabel_2.setBounds(1405, 0, 50, 50);
 		panel_1.add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_3 = new JLabel("MINISHOP");
+		JLabel lblNewLabel_3 = new JLabel("CỬA HÀNG ĐỒNG HỒ");
 		lblNewLabel_3.setForeground(Color.WHITE);
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 25));

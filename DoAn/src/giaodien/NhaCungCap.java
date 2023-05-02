@@ -5,6 +5,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import model.NhaCungCapModel;
 
 import java.awt.Font;
 import java.awt.Color;
@@ -18,6 +19,8 @@ import javax.swing.JTable;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class NhaCungCap extends JPanel {
 	private JTextField textField_1;
@@ -59,16 +62,16 @@ public class NhaCungCap extends JPanel {
 		lblNewLabel_2.setBounds(20, 5, 46, 40);
 		panel_2.add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_1_2_2 = new JLabel("Thêm mới");
-		lblNewLabel_1_2_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		JButton btnNewButton = new JButton("New");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				new NhaCungCapAdd().setVisible(true);
 			}
 		});
-		lblNewLabel_1_2_2.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
-		lblNewLabel_1_2_2.setBounds(1080, 5, 100, 40);
-		panel_2.add(lblNewLabel_1_2_2);
+		btnNewButton.setIcon(new ImageIcon(NhaCungCap.class.getResource("/icon/add.jpg")));
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNewButton.setBounds(1060, 5, 100, 40);
+		panel_2.add(btnNewButton);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(Color.WHITE);
@@ -105,21 +108,31 @@ public class NhaCungCap extends JPanel {
 	 	scrollPane.setViewportView(table);
 	 	String[] columnNamesGH = {"ID",  "Tên Nhà cung cấp"};
        	model.setColumnIdentifiers(columnNamesGH);
-       	hienthi();
-       	table.setModel(model);
+       	layDuLieu();
        	if(model !=null) {
        		table.getColumnModel().getColumn(0).setPreferredWidth(100);
         	table.getColumnModel().getColumn(1).setPreferredWidth(300);
         	table.getColumnModel().getColumn(0).setCellRenderer(new CenterAlignRenderer());
        	}
 		scrollPane.setViewportView(table);
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				 if (e.getClickCount() == 2) { // Check if the click count is 2 (double-click)
+					 NhaCungCapAdd ncc =new NhaCungCapAdd();
+					 ncc.setDuLieu(table.getValueAt(table.getSelectedRow(), 0)+"",table.getValueAt(table.getSelectedRow(), 1)+"");
+					 ncc.setVisible(true);
+					 
+                 }
+			}
+		});
 
 	}
-	public void hienthi() {
-//		model.setRowCount(0);
-//		for(loai l :loaiDAO.getAllLoai() ) {
-//       		Object[] row = new Object[] {l.getId_loai(),l.getTen_loai()} ;
-//       		model.addRow(row);
-//       	}
+	public void layDuLieu() {
+		for(NhaCungCapModel ncc :DAO.NhaCungCapDAO.getAllNCC() ) {
+       		Object[] row = new Object[] {ncc.getId_ncc(),ncc.getTen_ncc()} ;
+       		model.addRow(row);
+       	}
+		table.setModel(model);
 	}
 }

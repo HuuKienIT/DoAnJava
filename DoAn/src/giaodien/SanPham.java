@@ -96,8 +96,9 @@ public class SanPham extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				 if (e.getClickCount() == 2) { // Check if the click count is 2 (double-click) 
-					 new SanPhamAdd(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0)+"")).setVisible(true);
-					 
+					 SanPhamAdd spa = new SanPhamAdd();
+					 spa.setDuLieu(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0)+""));
+					 spa.setVisible(true);
                  }
 			}		
 		});
@@ -126,17 +127,17 @@ public class SanPham extends JPanel {
 		lblNewLabel.setBounds(20, 5, 46, 40);
 		panelHeader.add(lblNewLabel);
 		
-		JLabel lblNewLabel_3_1_1 = new JLabel("Thêm SP");
-		lblNewLabel_3_1_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				new SanPhamAdd(0).setVisible(true);
+		JButton btnNewButton_2 = new JButton("New");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SanPhamAdd spa =new SanPhamAdd();
+				spa.setVisible(true);
 			}
 		});
-		lblNewLabel_3_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3_1_1.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 20));
-		lblNewLabel_3_1_1.setBounds(1048, 5, 109, 40);
-		panelHeader.add(lblNewLabel_3_1_1);
+		btnNewButton_2.setIcon(new ImageIcon(SanPham.class.getResource("/icon/add.jpg")));
+		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNewButton_2.setBounds(1060, 5, 100, 40);
+		panelHeader.add(btnNewButton_2);
 		
 		RoundedJPanel panelTimKiem = new RoundedJPanel(20);
 		panelTimKiem.setLayout(null);

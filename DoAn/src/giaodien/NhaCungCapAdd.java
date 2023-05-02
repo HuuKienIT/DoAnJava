@@ -18,6 +18,7 @@ public class NhaCungCapAdd extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
+	JButton btnNewButton;
 	public NhaCungCapAdd() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 591, 321);
@@ -67,10 +68,16 @@ public class NhaCungCapAdd extends JFrame {
 		textField_1.setBounds(230, 130, 200, 30);
 		panel.add(textField_1);
 		
-		JButton btnNewButton = new JButton("Thêm");
+		btnNewButton = new JButton("Thêm");
 		btnNewButton.setBackground(Color.WHITE);
 		btnNewButton.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
-		btnNewButton.setBounds(217, 197, 100, 30);
+		btnNewButton.setBounds(217, 197, 150, 30);
 		panel.add(btnNewButton);
 	}
+	public void setDuLieu(String id, String ten) {
+		textField.setText(id);
+		textField_1.setText(ten);
+		btnNewButton.setText("Cập Nhật");
+	}
+	
 }

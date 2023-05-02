@@ -54,7 +54,7 @@ public class SanPhamAdd extends JFrame {
 	JLabel hinhanh = new JLabel("");
 	ArrayList<SanPhamModel> dsSP = SanPhamDAO.getAllSanPham();
 	String filename;
-	public SanPhamAdd(int id) {
+	public SanPhamAdd() {
 		this.id=id;
 		setType(Type.UTILITY);
 		setBounds(100, 100, 1000,600);
@@ -232,13 +232,11 @@ public class SanPhamAdd extends JFrame {
 		lblNewLabel_1_6.setBounds(0, 5, 965, 40);
 		lblNewLabel_1_6.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 25));
 		panel.add(lblNewLabel_1_6);
-		setDuLieu();
 	}
 
-	public void setDuLieu() {
+	public void setDuLieu(int id) {
 		SanPhamModel sp = SanPhamDAO.getSanPhamByIdSP(id);
 		txtMaSP.setText(sp.getMasp());
-//		txtTenSP.setText(sp.getTensp());
 		txtTenSP.append(sp.getTensp());
 		txtNhanHieu.setText(sp.getNhanhieu());
 		txtDonGia.setText(sp.getGia()+"");		

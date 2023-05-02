@@ -17,17 +17,16 @@ import java.awt.event.MouseEvent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import DAO.NhanHieuDAO;
+import DAO.loaiDAO;
+import model.loai;
 import model.SanPhamGHModel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
-public class NhanHieu extends JPanel {
+public class Loai extends JPanel {
 	private JTextField textField_1;
 	private JTable table;
 	DefaultTableModel model = new DefaultTableModel();
 
-	public NhanHieu() {
+	public Loai() {
 		setBackground(SystemColor.control);
 		setLayout(null);
 		
@@ -37,7 +36,7 @@ public class NhanHieu extends JPanel {
 		add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblDanhSchLoi = new JLabel("DANH SÁCH NHÃN HIỆU\r\n");
+		JLabel lblDanhSchLoi = new JLabel("DANH SÁCH LOẠI SẢN PHẨM\r\n");
 		lblDanhSchLoi.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDanhSchLoi.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 22));
 		lblDanhSchLoi.setBackground(new Color(173, 255, 47));
@@ -51,27 +50,16 @@ public class NhanHieu extends JPanel {
 		
 		table = new cusTable();
 	 	scrollPane.setViewportView(table);
-	 	String[] columnNamesGH = {"ID" ,"Nhãn Hiệu", };
+	 	String[] columnNamesGH = {"ID",  "Tên Loại sản phẩm"};
        	model.setColumnIdentifiers(columnNamesGH);
-       	table.setModel(model);
        	hienthi();
-       	
-		table.getColumnModel().getColumn(0).setPreferredWidth(100);
-    	table.getColumnModel().getColumn(1).setPreferredWidth(400);
-    	table.getColumnModel().getColumn(0).setCellRenderer(new CenterAlignRenderer());
-    	table.getColumnModel().getColumn(1).setCellRenderer(new CenterAlignRenderer());
+       	table.setModel(model);
+       	if(model !=null) {
+       		table.getColumnModel().getColumn(0).setPreferredWidth(100);
+        	table.getColumnModel().getColumn(1).setPreferredWidth(300);
+        	table.getColumnModel().getColumn(0).setCellRenderer(new CenterAlignRenderer());
+       	}
 		scrollPane.setViewportView(table);
-		table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				 if (e.getClickCount() == 2) { // Check if the click count is 2 (double-click)
-					 NhanHieuAdd ncc =new NhanHieuAdd();
-					 ncc.setDuLieu(table.getValueAt(table.getSelectedRow(), 0)+"",table.getValueAt(table.getSelectedRow(), 1)+"");
-					 ncc.setVisible(true);
-					 
-                 }
-			}
-		});
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.WHITE);
@@ -79,7 +67,7 @@ public class NhanHieu extends JPanel {
 		add(panel_2);
 		panel_2.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("QUẢN LÝ NHÃN HIỆU");
+		JLabel lblNewLabel = new JLabel("QUẢN LÝ LOẠI SẢN PHẨM");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 25));
 		lblNewLabel.setBackground(new Color(173, 255, 47));
@@ -87,20 +75,20 @@ public class NhanHieu extends JPanel {
 		panel_2.add(lblNewLabel);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon(NhanHieu.class.getResource("/icon/arrow.jpg")));
+		lblNewLabel_2.setIcon(new ImageIcon("E:\\Picrure AT\\iconjava\\arrow.jpg"));
 		lblNewLabel_2.setBounds(20, 5, 46, 40);
 		panel_2.add(lblNewLabel_2);
 		
-		JButton btnNewButton = new JButton("New");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new NhanHieuAdd().setVisible(true);
+		JLabel lblNewLabel_1_2_2 = new JLabel("Thêm mới");
+		lblNewLabel_1_2_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				new LoaiAdd().setVisible(true);
 			}
 		});
-		btnNewButton.setIcon(new ImageIcon(NhanHieu.class.getResource("/icon/add.jpg")));
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnNewButton.setBounds(1060, 5, 100, 40);
-		panel_2.add(btnNewButton);
+		lblNewLabel_1_2_2.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
+		lblNewLabel_1_2_2.setBounds(1080, 5, 100, 40);
+		panel_2.add(lblNewLabel_1_2_2);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(Color.WHITE);
@@ -131,8 +119,8 @@ public class NhanHieu extends JPanel {
 	}
 	public void hienthi() {
 		model.setRowCount(0);
-		for(model.NhanHieuModel nh :NhanHieuDAO.getAllNhanHieu() ) {
-       		Object[] row = new Object[] {nh.getId_nh(),nh.getTen_nh()} ;
+		for(loai l :loaiDAO.getAllLoai() ) {
+       		Object[] row = new Object[] {l.getId_loai(),l.getTen_loai()} ;
        		model.addRow(row);
        	}
 	}

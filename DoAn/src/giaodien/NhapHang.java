@@ -58,10 +58,9 @@ public class NhapHang extends JPanel {
 	
  	JLabel txtMaSPCT = new JLabel("");
  	JLabel txtNhanHieuCT = new JLabel("");
- 	JLabel txtMaNCC = new JLabel("");
+ 	JLabel txtIDncc = new JLabel("");
 	JLabel txtTenSPCT = new JLabel("");
 	JLabel txtDonGiaCT = new JLabel("");
- 	JLabel txtID_KH = new JLabel("");
  	JLabel txtTongTien = new JLabel("0");
  	JLabel txtTongsl = new JLabel("0");
  	
@@ -69,8 +68,7 @@ public class NhapHang extends JPanel {
 
 	public NhapHang(NhanVienModel nv) {
 		this.nv=nv;
-		txtID_KH.setVisible(false);
-		
+
 		setForeground(SystemColor.text);
 		setBackground(SystemColor.control);
 		setLayout(null);
@@ -135,7 +133,7 @@ public class NhapHang extends JPanel {
 	 	lblNewLabel_2.setBounds(127, 245, 150, 150);
 	 	panel_2.add(lblNewLabel_2);
 	 	
-	 	JLabel btnPlus = new JLabel("\r\n");
+	 	JButton btnPlus = new JButton("");
 	 	btnPlus.addMouseListener(new MouseAdapter() {
 	 		@Override
 	 		public void mouseClicked(MouseEvent e) {
@@ -147,7 +145,7 @@ public class NhapHang extends JPanel {
 	 	btnPlus.setBounds(193, 165, 30, 30); 	
 	 	panel_2.add(btnPlus);
 	 	
-	 	JLabel btnSubtract = new JLabel("");
+	 	JButton btnSubtract = new JButton("");
 	 	btnSubtract.addMouseListener(new MouseAdapter() {
 	 		@Override
 	 		public void mouseClicked(MouseEvent e) {
@@ -203,16 +201,23 @@ public class NhapHang extends JPanel {
 					JOptionPane.showMessageDialog(null,"Giỏ Hàng đang trống");
 					return;
 				}
-				if(txtID_KH.getText().equals(""))
+				if(txtIDncc.getText().equals(""))
 				{
-					JOptionPane.showMessageDialog(null,"Chưa có thông tin Khách Hàng");
+					JOptionPane.showMessageDialog(null,"Chưa có thông tin Nhà Cung Cấp");
 					return;
 				}
 	 			int output = JOptionPane.showConfirmDialog(null, 
-                        "Bạn có muốn xuất đơn hàng không?", "",
+                        "Bạn có muốn nhập hàng không?", "",
                         JOptionPane.YES_NO_OPTION);
 	 			if(output==JOptionPane.YES_OPTION){  
-	 				NhapHang();
+	 				int tongtien = 0;
+					try {
+						tongtien = moneyToInt(txtTongTien.getText());
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	 				BUS.NhapHangBUS.NhapHang(GH,nv,Integer.parseInt(txtTongsl.getText()),tongtien,Integer.parseInt(txtIDncc.getText()));
 	 			}
 	 		}
 	 	});
@@ -260,12 +265,12 @@ public class NhapHang extends JPanel {
 	 	txtTenNV.setBounds(159, 51, 200, 45);
 	 	panel_3.add(txtTenNV);
 
-	 	txtMaNCC.setHorizontalAlignment(SwingConstants.CENTER);
-	 	txtMaNCC.setForeground(Color.GREEN);
-	 	txtMaNCC.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
-	 	txtMaNCC.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "M\u00E3 Nh\u00E0 Cung C\u1EA5p", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-	 	txtMaNCC.setBounds(10, 116, 117, 45);
-	 	panel_3.add(txtMaNCC);
+	 	txtIDncc.setHorizontalAlignment(SwingConstants.CENTER);
+	 	txtIDncc.setForeground(Color.GREEN);
+	 	txtIDncc.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
+	 	txtIDncc.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "ID Nh\u00E0 Cung C\u1EA5p", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+	 	txtIDncc.setBounds(10, 116, 117, 45);
+	 	panel_3.add(txtIDncc);
 	 	
 	 	JLabel txtTenKH = new JLabel("");
 	 	txtTenKH.setHorizontalAlignment(SwingConstants.CENTER);
@@ -278,17 +283,12 @@ public class NhapHang extends JPanel {
 	 	JButton btnNewButton = new JButton("Chọn");
 	 	btnNewButton.addActionListener(new ActionListener() {
 	 		public void actionPerformed(ActionEvent e) {
-	 			new ChonNhaCungCap(txtID_KH,txtMaNCC,txtTenKH).setVisible(true);
+	 			new ChonNhaCungCap(txtIDncc,txtTenKH).setVisible(true);
 	 		}
 	 	});
 	 	btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	 	btnNewButton.setBounds(335, 123, 50, 35);
-	 	panel_3.add(btnNewButton);
-	 	
-
-	 	txtID_KH.setBounds(100, 107, 20, 10);
-	 	panel_3.add(txtID_KH);
-	 	
+	 	panel_3.add(btnNewButton); 	
 	 	
 	 	JPanel panel_4 = new RoundedJPanel(20);
 	 	panel_4.setBackground(SystemColor.text);
@@ -315,10 +315,7 @@ public class NhapHang extends JPanel {
 	 	String[] columnNamesSP = {"Mã SP", "Tên SP", "Đơn giá", "Còn lại"};
        	modelSP.setColumnIdentifiers(columnNamesSP);
        	layDuLieu();
-    	for(SanPhamModel sp : sp ) {
-       		Object[] row = new Object[] {sp.getMasp(),sp.getTensp(),intToMoney(sp.getGia()),sp.getConlai()} ;
-       		modelSP.addRow(row);
-       	}
+    	hienSanPham(sp);
     	tableSP.setModel(modelSP);
     	tableSP.getColumnModel().getColumn(0).setPreferredWidth(100);
     	tableSP.getColumnModel().getColumn(1).setPreferredWidth(300);
@@ -403,16 +400,19 @@ public class NhapHang extends JPanel {
     	textField_1.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				TimKiem();
+				ArrayList<SanPhamModel> spLoc = BUS.NhapHangBUS.TimKiem(sp,txtKiem.getText(),(String) comboLoaiSp.getSelectedItem(),textField_1.getText(), textField_2.getText());
+				hienSanPham(spLoc);
 			}
 			@Override
 			public void keyPressed(KeyEvent e) {
-				TimKiem();
+				ArrayList<SanPhamModel> spLoc = BUS.NhapHangBUS.TimKiem(sp,txtKiem.getText(),(String) comboLoaiSp.getSelectedItem(),textField_1.getText(), textField_2.getText());
+				hienSanPham(spLoc);
 			}
 			
 			@Override
 			public void keyReleased(KeyEvent e) {
-				TimKiem();
+				ArrayList<SanPhamModel> spLoc = BUS.NhapHangBUS.TimKiem(sp,txtKiem.getText(),(String) comboLoaiSp.getSelectedItem(),textField_1.getText(), textField_2.getText());
+				hienSanPham(spLoc);
 			}
 		});
     	textField_1.addKeyListener(new KeyAdapter() {
@@ -440,16 +440,19 @@ public class NhapHang extends JPanel {
     	textField_2.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				TimKiem();
+				ArrayList<SanPhamModel> spLoc = BUS.NhapHangBUS.TimKiem(sp,txtKiem.getText(),(String) comboLoaiSp.getSelectedItem(),textField_1.getText(), textField_2.getText());
+				hienSanPham(spLoc);
 			}
 			@Override
 			public void keyPressed(KeyEvent e) {
-				TimKiem();
+				ArrayList<SanPhamModel> spLoc = BUS.NhapHangBUS.TimKiem(sp,txtKiem.getText(),(String) comboLoaiSp.getSelectedItem(),textField_1.getText(), textField_2.getText());
+				hienSanPham(spLoc);
 			}
 			
 			@Override
 			public void keyReleased(KeyEvent e) {
-				TimKiem();
+				ArrayList<SanPhamModel> spLoc = BUS.NhapHangBUS.TimKiem(sp,txtKiem.getText(),(String) comboLoaiSp.getSelectedItem(),textField_1.getText(), textField_2.getText());
+				hienSanPham(spLoc);
 			}
 		});
     	textField_2.addKeyListener(new KeyAdapter() {
@@ -479,7 +482,8 @@ public class NhapHang extends JPanel {
     	}
     	comboLoaiSp.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
-    			TimKiem();
+    			ArrayList<SanPhamModel> spLoc = BUS.NhapHangBUS.TimKiem(sp,txtKiem.getText(),(String) comboLoaiSp.getSelectedItem(),textField_1.getText(), textField_2.getText());
+				hienSanPham(spLoc);
     		}
     	});
     	DefaultComboBoxModel chon = new DefaultComboBoxModel();
@@ -521,16 +525,19 @@ public class NhapHang extends JPanel {
     	txtKiem.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				TimKiem();
+				ArrayList<SanPhamModel> spLoc = BUS.NhapHangBUS.TimKiem(sp,txtKiem.getText(),(String) comboLoaiSp.getSelectedItem(),textField_1.getText(), textField_2.getText());
+				hienSanPham(spLoc);
 			}
 			@Override
 			public void keyPressed(KeyEvent e) {
-				TimKiem();
+				ArrayList<SanPhamModel> spLoc = BUS.NhapHangBUS.TimKiem(sp,txtKiem.getText(),(String) comboLoaiSp.getSelectedItem(),textField_1.getText(), textField_2.getText());
+				hienSanPham(spLoc);
 			}
 			
 			@Override
 			public void keyReleased(KeyEvent e) {
-				TimKiem();
+				ArrayList<SanPhamModel> spLoc = BUS.NhapHangBUS.TimKiem(sp,txtKiem.getText(),(String) comboLoaiSp.getSelectedItem(),textField_1.getText(), textField_2.getText());
+				hienSanPham(spLoc);
 			}
 		});
     	txtKiem.setBounds(84, 0, 231, 30);
@@ -540,12 +547,21 @@ public class NhapHang extends JPanel {
     	txtKiem.setColumns(15);
     	btnThemGio.addActionListener(new ActionListener() {
 	 		public void actionPerformed(ActionEvent e) {
-	 			ThemGioHang();
+	 			if(txtMaSPCT.getText().equals("")==false) {
+	 				GH = BUS.BanHangBUS.themGioHang(sp,GH,txtMaSPCT.getText(),Integer.parseInt(txtSoLuongCT.getText()));
+	 			}else {
+	 				JOptionPane.showMessageDialog(null,"Chưa chọn sản phẩm");
+	 			}
+	 			hienthiGH();
+	 			TinhTongTien();
+	 			reset();
 	 		}
 	 	});
 	 	btnXa.addActionListener(new ActionListener() {
 	 		public void actionPerformed(ActionEvent e) {
-	 			xoaGH(txtMaSPCT.getText());
+	 			GH=BUS.NhapHangBUS.xoaGH(GH,txtMaSPCT.getText());
+	 			hienthiGH();
+ 				TinhTongTien();
 	 		}
 	 	});
 	}
@@ -587,96 +603,13 @@ public class NhapHang extends JPanel {
 	    Number number = currencyFormatter.parse(value);
 	    return number.intValue();
 	}
-	public void xoaGH(String ma_sp) {
-		int co=0;
-		for(SanPhamGHModel sp :GH ) {
-			if(sp.getMasp().equals(ma_sp)){		
-				int output = JOptionPane.showConfirmDialog(null, 
-                        "Bạn có muốn xóa không?", "",
-                        JOptionPane.YES_NO_OPTION);
-	 			if(output==JOptionPane.YES_OPTION){  
-	 				GH.remove(sp);
-	 				hienthiGH();
-	 				TinhTongTien();
-	 			}	
-				co=1;
-				break;
-			}
-       	}
-		if(co==0) {
-			
-			JOptionPane.showMessageDialog(null,"Sản phẩm không tồn tại trong giỏ hàng");
-		}
-		
-	}
+
 	public void hienhinh(String tenfile) {
 		ImageIcon imageIcon = new ImageIcon(new ImageIcon(BanHang.class.getResource("/photo/"+tenfile)).getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH));
 		lblNewLabel_2.setIcon(imageIcon);
 		
 	}
-	public void ThemGioHang() {
-		if(txtMaSPCT.getText().equals("")==false) {
-				boolean co=false;
- 			for(SanPhamGHModel spc :GH ) {
- 				if(spc.getMasp().equals(txtMaSPCT.getText())){
- 					co=true;
- 					spc.setSoluong(spc.getSoluong()+ Integer.parseInt((txtSoLuongCT.getText())));
- 				}
- 			}
- 			if(!co) {
- 				for(SanPhamModel s :sp ) {
- 	 				if(s.getMasp().equals(txtMaSPCT.getText())){
- 	 					SanPhamGHModel sp = new SanPhamGHModel();
- 	 					sp.setId_sp(s.getId_sp());
- 	 					sp.setMasp(s.getMasp());
- 	 					sp.setTensp(s.getTensp());
- 	 					sp.setNhanhieu(s.getNhanhieu());
- 	 					sp.setGia(s.getGia());
- 			 			sp.setSoluong(Integer.parseInt((txtSoLuongCT.getText())));
- 			 			GH.add(sp);
- 			 			break;
- 	 				}
- 	 			}
- 			}
- 			hienthiGH();
- 			TinhTongTien();
- 			reset();
- 		}	
-	}
-	public void TimKiem() {
-		ArrayList<SanPhamModel> spLoc = new ArrayList<SanPhamModel>();
-		String tenSP = txtKiem.getText();
-		if(tenSP.equals("Nhập tên Sản Phẩm")) {
-			tenSP="";
-		}
-		String nhanHieu = (String) comboLoaiSp.getSelectedItem();
-		if(nhanHieu.equals("Tất cả Nhãn Hiệu")) {
-			nhanHieu="";
-		}
-		int giaMin=0;
-		if(!textField_1.getText().equals("")) {
-			giaMin=Integer.parseInt(textField_1.getText());
-		}
-		int giaMax=10000000;
-		if(!textField_2.getText().equals("")) {
-			giaMax=Integer.parseInt(textField_2.getText());
-		}
-		if(giaMin>giaMax) {
-			return;
-		}
-		for(SanPhamModel sp :DAO.SanPhamDAO.getAllSanPham()) {
-			if(sp.getTensp().toLowerCase().contains(tenSP.toLowerCase())&& sp.getNhanhieu().toLowerCase().contains(nhanHieu.toLowerCase())&&sp.getGia()>=giaMin && sp.getGia()<=giaMax) 
-			{
-				spLoc.add(sp);
-			}
-		}	
-		modelSP.setRowCount(0);
-		for(SanPhamModel sp : spLoc ) {
-			Object[] row = new Object[] {sp.getMasp(),sp.getTensp(),intToMoney(sp.getGia()),sp.getConlai()} ;
-      		modelSP.addRow(row);
-		}
-		tableSP.setModel(modelSP);
-	}
+	
 	public void layDuLieu() {
 		for(SanPhamModel s :DAO.SanPhamDAO.getAllSanPham()) {
 			sp.add(s);
@@ -695,25 +628,13 @@ public class NhapHang extends JPanel {
 		}
 		
 	}
-
-	public void NhapHang() {
-
-			model.PhieuNhapModel pn = new model.PhieuNhapModel();
-			pn.setId_nv(this.nv.getId_nv());
-			pn.setId_ncc(Integer.parseInt(txtID_KH.getText()));
-			pn.setTongsl(Integer.parseInt(txtTongsl.getText()));
-			try {
-			pn.setTongtien(moneyToInt(txtTongTien.getText()));
-		} catch (ParseException e1) {
-			e1.printStackTrace();
+	public void hienSanPham(ArrayList<SanPhamModel> spLoc) {
+		modelSP.setRowCount(0);
+		for(SanPhamModel sp : spLoc ) {
+			Object[] row = new Object[] {sp.getMasp(),sp.getTensp(),intToMoney(sp.getGia()),sp.getConlai()} ;
+      		modelSP.addRow(row);
 		}
-			DAO.PhieuNhapDAO.themPhieuNhap(pn);
-			for(SanPhamGHModel u : GH ) {
-				CTPhieuNhapModel ctpn = new CTPhieuNhapModel();
-				ctpn.setId_sp(u.getId_sp());
-				ctpn.setSoluong(u.getSoluong());
-				ctpn.setGia(u.getGia());
-	       		DAO.CTPhieuNhapDAO.themCTPhieuNhap(ctpn);
-	       	}
+		tableSP.setModel(modelSP);
 	}
+
 }

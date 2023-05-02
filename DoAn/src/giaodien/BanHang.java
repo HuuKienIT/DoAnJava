@@ -162,7 +162,7 @@ public class BanHang extends JPanel {
 	 	lblNewLabel_2.setBounds(127, 245, 150, 150);
 	 	panel_2.add(lblNewLabel_2);
 	 	
-	 	JLabel btnPlus = new JLabel("\r\n");
+	 	JButton btnPlus = new JButton("");
 	 	btnPlus.addMouseListener(new MouseAdapter() {
 	 		@Override
 	 		public void mouseClicked(MouseEvent e) {
@@ -174,7 +174,7 @@ public class BanHang extends JPanel {
 	 	btnPlus.setBounds(193, 165, 30, 30); 	
 	 	panel_2.add(btnPlus);
 	 	
-	 	JLabel btnSubtract = new JLabel("");
+	 	JButton btnSubtract = new JButton("");
 	 	btnSubtract.addMouseListener(new MouseAdapter() {
 	 		@Override
 	 		public void mouseClicked(MouseEvent e) {
@@ -238,7 +238,14 @@ public class BanHang extends JPanel {
                         "Bạn có muốn xuất đơn hàng không?", "",
                         JOptionPane.YES_NO_OPTION);
 	 			if(output==JOptionPane.YES_OPTION){  
-	 				XuatDonHang();
+	 				int tongtien = 0;
+					try {
+						tongtien = moneyToInt(txtTongTien.getText());
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	 				BUS.BanHangBUS.XuatDonHang(GH,nv,Integer.parseInt(txtTongsl.getText()),tongtien,Integer.parseInt(txtID_KH.getText()));
 	 			}
 	 		}
 	 	});
@@ -270,7 +277,7 @@ public class BanHang extends JPanel {
 	 	txtTongsl.setBounds(259, 229, 100, 50);
 	 	panel_3.add(txtTongsl);
 	 	
-	 	JLabel txtID_NV = new JLabel(nv.id_nv+"");
+	 	JLabel txtID_NV = new JLabel(nv.getId_nv()+"");
 	 	txtID_NV.setBorder(new TitledBorder(null, "ID Nhân Viên", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 	 	txtID_NV.setForeground(Color.BLUE);
 	 	txtID_NV.setHorizontalAlignment(SwingConstants.CENTER);
@@ -318,9 +325,7 @@ public class BanHang extends JPanel {
 	 	btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	 	btnNewButton.setBounds(335, 123, 50, 35);
 	 	panel_3.add(btnNewButton);
-
-	 	
-	 	
+	
 	 	JPanel panel_4 = new RoundedJPanel(20);
 	 	panel_4.setBackground(SystemColor.text);
 	 	panel_4.setBounds(10, 80, 770, 400);
@@ -346,10 +351,7 @@ public class BanHang extends JPanel {
 	 	String[] columnNamesSP = {"Mã SP", "Tên SP", "Đơn giá", "Còn lại"};
        	modelSP.setColumnIdentifiers(columnNamesSP);
        	layDuLieu();
-    	for(SanPhamModel sp : sp ) {
-       		Object[] row = new Object[] {sp.getMasp(),sp.getTensp(),intToMoney(sp.getGia()),sp.getConlai()} ;
-       		modelSP.addRow(row);
-       	}
+    	hienSanPham(sp);
     	tableSP.setModel(modelSP);
     	tableSP.getColumnModel().getColumn(0).setPreferredWidth(100);
     	tableSP.getColumnModel().getColumn(1).setPreferredWidth(300);
@@ -434,16 +436,19 @@ public class BanHang extends JPanel {
     	textField_1.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				TimKiem();
+				ArrayList<SanPhamModel> spLoc = BUS.BanHangBUS.TimKiem(sp,txtKiem.getText(),(String) comboLoaiSp.getSelectedItem(),textField_1.getText(), textField_2.getText());
+				hienSanPham(spLoc);
 			}
 			@Override
 			public void keyPressed(KeyEvent e) {
-				TimKiem();
+				ArrayList<SanPhamModel> spLoc = BUS.BanHangBUS.TimKiem(sp,txtKiem.getText(),(String) comboLoaiSp.getSelectedItem(),textField_1.getText(), textField_2.getText());
+				hienSanPham(spLoc);
 			}
 			
 			@Override
 			public void keyReleased(KeyEvent e) {
-				TimKiem();
+				ArrayList<SanPhamModel> spLoc = BUS.BanHangBUS.TimKiem(sp,txtKiem.getText(),(String) comboLoaiSp.getSelectedItem(),textField_1.getText(), textField_2.getText());
+				hienSanPham(spLoc);
 			}
 		});
     	textField_1.addKeyListener(new KeyAdapter() {
@@ -471,16 +476,19 @@ public class BanHang extends JPanel {
     	textField_2.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				TimKiem();
+				ArrayList<SanPhamModel> spLoc = BUS.BanHangBUS.TimKiem(sp,txtKiem.getText(),(String) comboLoaiSp.getSelectedItem(),textField_1.getText(), textField_2.getText());
+				hienSanPham(spLoc);
 			}
 			@Override
 			public void keyPressed(KeyEvent e) {
-				TimKiem();
+				ArrayList<SanPhamModel> spLoc = BUS.BanHangBUS.TimKiem(sp,txtKiem.getText(),(String) comboLoaiSp.getSelectedItem(),textField_1.getText(), textField_2.getText());
+				hienSanPham(spLoc);
 			}
 			
 			@Override
 			public void keyReleased(KeyEvent e) {
-				TimKiem();
+				ArrayList<SanPhamModel> spLoc = BUS.BanHangBUS.TimKiem(sp,txtKiem.getText(),(String) comboLoaiSp.getSelectedItem(),textField_1.getText(), textField_2.getText());
+				hienSanPham(spLoc);
 			}
 		});
     	textField_2.addKeyListener(new KeyAdapter() {
@@ -510,7 +518,8 @@ public class BanHang extends JPanel {
     	}
     	comboLoaiSp.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
-    			TimKiem();
+    			ArrayList<SanPhamModel> spLoc = BUS.BanHangBUS.TimKiem(sp,txtKiem.getText(),(String) comboLoaiSp.getSelectedItem(),textField_1.getText(), textField_2.getText());
+				hienSanPham(spLoc);
     		}
     	});
     	DefaultComboBoxModel chon = new DefaultComboBoxModel();
@@ -552,16 +561,19 @@ public class BanHang extends JPanel {
     	txtKiem.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				TimKiem();
+				ArrayList<SanPhamModel> spLoc = BUS.BanHangBUS.TimKiem(sp,txtKiem.getText(),(String) comboLoaiSp.getSelectedItem(),textField_1.getText(), textField_2.getText());
+				hienSanPham(spLoc);
 			}
 			@Override
 			public void keyPressed(KeyEvent e) {
-				TimKiem();
+				ArrayList<SanPhamModel> spLoc = BUS.BanHangBUS.TimKiem(sp,txtKiem.getText(),(String) comboLoaiSp.getSelectedItem(),textField_1.getText(), textField_2.getText());
+				hienSanPham(spLoc);
 			}
 			
 			@Override
 			public void keyReleased(KeyEvent e) {
-				TimKiem();
+				ArrayList<SanPhamModel> spLoc = BUS.BanHangBUS.TimKiem(sp,txtKiem.getText(),(String) comboLoaiSp.getSelectedItem(),textField_1.getText(), textField_2.getText());
+				hienSanPham(spLoc);
 			}
 		});
     	txtKiem.setBounds(84, 0, 231, 30);
@@ -571,17 +583,26 @@ public class BanHang extends JPanel {
     	txtKiem.setColumns(15);
     	btnThemGio.addActionListener(new ActionListener() {
 	 		public void actionPerformed(ActionEvent e) {
-	 			ThemGioHang();
+	 			if(txtMaSPCT.getText().equals("")==false) {
+	 				GH = BUS.BanHangBUS.themGioHang(sp,GH,txtMaSPCT.getText(),Integer.parseInt(txtSoLuongCT.getText()));
+	 			}else {
+	 				JOptionPane.showMessageDialog(null,"Chưa chọn sản phẩm");
+	 			}
+	 			hienthiGH();
+	 			TinhTongTien();
+	 			reset();
 	 		}
 	 	});
 	 	btnXa.addActionListener(new ActionListener() {
 	 		public void actionPerformed(ActionEvent e) {
-	 			xoaGH(txtMaSPCT.getText());
+	 			GH=BUS.BanHangBUS.xoaGH(GH,txtMaSPCT.getText());
+	 			hienthiGH();
+ 				TinhTongTien();
 	 		}
 	 	});
 	}
 	public void reset() {
-		txtMaSPCT.setText("");
+			txtMaSPCT.setText("");
 			txtTenSPCT.setText("");
 			txtDonGiaCT.setText("");
 			txtSoLuongCT.setText("0");
@@ -618,89 +639,13 @@ public class BanHang extends JPanel {
 	    Number number = currencyFormatter.parse(value);
 	    return number.intValue();
 	}
-	public void xoaGH(String ma_sp) {
-		int co=0;
-		for(SanPhamGHModel sp :GH ) {
-			if(sp.getMasp().equals(ma_sp)){		
-				int output = JOptionPane.showConfirmDialog(null, 
-                        "Bạn có muốn xóa không?", "",
-                        JOptionPane.YES_NO_OPTION);
-	 			if(output==JOptionPane.YES_OPTION){  
-	 				GH.remove(sp);
-	 				hienthiGH();
-	 				TinhTongTien();
-	 			}	
-				co=1;
-				break;
-			}
-       	}
-		if(co==0) {
-			
-			JOptionPane.showMessageDialog(null,"Sản phẩm không tồn tại trong giỏ hàng");
-		}
-		
-	}
+	
 	public void hienhinh(String tenfile) {
 		ImageIcon imageIcon = new ImageIcon(new ImageIcon(BanHang.class.getResource("/photo/"+tenfile)).getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH));
-		lblNewLabel_2.setIcon(imageIcon);
-		
+		lblNewLabel_2.setIcon(imageIcon);	
 	}
-	public void ThemGioHang() {
-		if(txtMaSPCT.getText().equals("")==false) {
-				boolean co=false;
- 			for(SanPhamGHModel spc :GH ) {
- 				if(spc.getMasp().equals(txtMaSPCT.getText())){
- 					co=true;
- 					spc.setSoluong(spc.getSoluong()+ Integer.parseInt((txtSoLuongCT.getText())));
- 				}
- 			}
- 			if(!co) {
- 				for(SanPhamModel s :sp ) {
- 	 				if(s.getMasp().equals(txtMaSPCT.getText())){
- 	 					SanPhamGHModel sp = new SanPhamGHModel();
- 	 					sp.setId_sp(s.getId_sp());
- 	 					sp.setMasp(s.getMasp());
- 	 					sp.setTensp(s.getTensp());
- 	 					sp.setNhanhieu(s.getNhanhieu());
- 	 					sp.setGia(s.getGia());
- 			 			sp.setSoluong(Integer.parseInt((txtSoLuongCT.getText())));
- 			 			GH.add(sp);
- 			 			break;
- 	 				}
- 	 			}
- 			}
- 			hienthiGH();
- 			TinhTongTien();
- 			reset();
- 		}	
-	}
-	public void TimKiem() {
-		ArrayList<SanPhamModel> spLoc = new ArrayList<SanPhamModel>();
-		String tenSP = txtKiem.getText();
-		if(tenSP.equals("Nhập tên Sản Phẩm")) {
-			tenSP="";
-		}
-		String nhanHieu = (String) comboLoaiSp.getSelectedItem();
-		if(nhanHieu.equals("Tất cả Nhãn Hiệu")) {
-			nhanHieu="";
-		}
-		int giaMin=0;
-		if(!textField_1.getText().equals("")) {
-			giaMin=Integer.parseInt(textField_1.getText());
-		}
-		int giaMax=10000000;
-		if(!textField_2.getText().equals("")) {
-			giaMax=Integer.parseInt(textField_2.getText());
-		}
-		if(giaMin>giaMax) {
-			return;
-		}
-		for(SanPhamModel sp :DAO.SanPhamDAO.getAllSanPham()) {
-			if(sp.getTensp().toLowerCase().contains(tenSP.toLowerCase())&& sp.getNhanhieu().toLowerCase().contains(nhanHieu.toLowerCase())&&sp.getGia()>=giaMin && sp.getGia()<=giaMax) 
-			{
-				spLoc.add(sp);
-			}
-		}	
+	
+	public void hienSanPham(ArrayList<SanPhamModel> spLoc) {
 		modelSP.setRowCount(0);
 		for(SanPhamModel sp : spLoc ) {
 			Object[] row = new Object[] {sp.getMasp(),sp.getTensp(),intToMoney(sp.getGia()),sp.getConlai()} ;
@@ -708,6 +653,7 @@ public class BanHang extends JPanel {
 		}
 		tableSP.setModel(modelSP);
 	}
+	
 	public void layDuLieu() {
 		for(SanPhamModel s :DAO.SanPhamDAO.getAllSanPham()) {
 			sp.add(s);
@@ -727,22 +673,5 @@ public class BanHang extends JPanel {
 		
 	}
 
-	public void XuatDonHang() {
-			model.DonHangModel dh = new model.DonHangModel();
-			dh.setId_nv(this.nv.getId_nv());
-			dh.setTongsl(Integer.parseInt(txtTongsl.getText()));
-			try {
-			dh.setTongtien(moneyToInt(txtTongTien.getText()));
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-		}
-			DAO.DonHangDAO.themDonHang(dh);
-			for(SanPhamGHModel u : GH ) {
-				CTDonHangModel ctdh = new CTDonHangModel();
-				ctdh.setId_sp(u.getId_sp());
-				ctdh.setSoluong(u.getSoluong());
-				ctdh.setGia(u.getGia());
-	       		DAO.CTDonHangDAO.themCTDonHang(ctdh);
-	       	}
-	}
+	
 }
