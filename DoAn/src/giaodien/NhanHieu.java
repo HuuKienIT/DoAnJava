@@ -26,7 +26,7 @@ public class NhanHieu extends JPanel {
 	private JTextField textField_1;
 	private JTable table;
 	DefaultTableModel model = new DefaultTableModel();
-
+	public static int id;
 	public NhanHieu() {
 		setBackground(SystemColor.control);
 		setLayout(null);
@@ -65,10 +65,10 @@ public class NhanHieu extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				 if (e.getClickCount() == 2) { // Check if the click count is 2 (double-click)
-					 NhanHieuAdd ncc =new NhanHieuAdd();
-					 ncc.setDuLieu(table.getValueAt(table.getSelectedRow(), 0)+"",table.getValueAt(table.getSelectedRow(), 1)+"");
-					 ncc.setVisible(true);
-					 
+					 NhanHieuAdd nh =new NhanHieuAdd();
+					 nh.setDuLieu(table.getValueAt(table.getSelectedRow(), 0)+"",table.getValueAt(table.getSelectedRow(), 1)+"");
+					 nh.setVisible(true);
+					 hienthi();
                  }
 			}
 		});
@@ -95,6 +95,7 @@ public class NhanHieu extends JPanel {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new NhanHieuAdd().setVisible(true);
+				hienthi();
 			}
 		});
 		btnNewButton.setIcon(new ImageIcon(NhanHieu.class.getResource("/icon/add.jpg")));

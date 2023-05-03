@@ -62,7 +62,7 @@ public class SanPham extends JPanel {
 	private JTable table;
 	public DefaultTableModel modelSP = new DefaultTableModel();
 	ArrayList<SanPhamModel> dsSP = SanPhamDAO.getAllSanPham();
-
+	public static int id;
 	public SanPham() {
 		setBackground(SystemColor.control);
 		setLayout(null);
@@ -99,6 +99,10 @@ public class SanPham extends JPanel {
 					 SanPhamAdd spa = new SanPhamAdd();
 					 spa.setDuLieu(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0)+""));
 					 spa.setVisible(true);
+					 spa.txtMaSP.setEditable(false);
+					 id=Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
+					 System.out.print(id);
+					 layDuLieu();
                  }
 			}		
 		});
@@ -132,6 +136,7 @@ public class SanPham extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				SanPhamAdd spa =new SanPhamAdd();
 				spa.setVisible(true);
+				layDuLieu();
 			}
 		});
 		btnNewButton_2.setIcon(new ImageIcon(SanPham.class.getResource("/icon/add.jpg")));

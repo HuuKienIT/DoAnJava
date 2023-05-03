@@ -3,10 +3,12 @@ package model;
 public class NhaCungCapModel {
 	public int id_ncc;
 	public String ten_ncc;
+	public String sodth;
 	public String email;
 	public NhaCungCapModel() {
 		this.id_ncc= 0;
 		this.ten_ncc=new String();
+		this.sodth=new String();
 		this.email=new String();
 	}
 	public final int getId_ncc() {
@@ -26,5 +28,11 @@ public class NhaCungCapModel {
 	}
 	public final void setEmail(String email) {
 		this.email = email;
+	}
+	public final String getSDT() {
+		return sodth;
+	}
+	public final void setSodth(String sodth) {
+		this.sodth = sodth;
 	}
 }

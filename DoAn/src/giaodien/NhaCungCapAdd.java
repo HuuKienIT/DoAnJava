@@ -16,8 +16,10 @@ import javax.swing.JButton;
 public class NhaCungCapAdd extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField txtidncc;
+	private JTextField txttenncc;
+	private JTextField txtsdt;
+	private JTextField txtemail;
 	JButton btnNewButton;
 	public NhaCungCapAdd() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
