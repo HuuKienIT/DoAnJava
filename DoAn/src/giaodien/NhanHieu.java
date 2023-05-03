@@ -2,6 +2,7 @@ package giaodien;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Color;
@@ -14,6 +15,9 @@ import javax.swing.JScrollPane;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.text.ParseException;
+
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -104,12 +108,42 @@ public class NhanHieu extends JPanel {
 		panel_2.add(btnNewButton);
 		
 		JButton btnNhpExcel = new JButton("Nhập Excel");
+		btnNhpExcel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int output = JOptionPane.showConfirmDialog(null, 
+                        "Bạn có muốn Nhập File Excel không?", "",
+                        JOptionPane.YES_NO_OPTION);
+	 			if(output==JOptionPane.YES_OPTION){  
+	 				try {
+						BUS.NhanHieuBUS.nhapExcel();
+						JOptionPane.showMessageDialog(null,"Nhập thành công");
+					} catch (IOException e1) {
+						JOptionPane.showMessageDialog(null,"Nhập thất bại");
+					}
+	 			}
+			}
+		});
 		btnNhpExcel.setIcon(new ImageIcon(NhanHieu.class.getResource("/icon/import.jpg")));
 		btnNhpExcel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNhpExcel.setBounds(750, 5, 150, 40);
 		panel_2.add(btnNhpExcel);
 		
 		JButton btnXutExcel = new JButton("Xuất Excel");
+		btnXutExcel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int output = JOptionPane.showConfirmDialog(null, 
+                        "Bạn có muốn xuất File Excel không?", "",
+                        JOptionPane.YES_NO_OPTION);
+	 			if(output==JOptionPane.YES_OPTION){  
+	 				try {
+						BUS.NhanHieuBUS.xuatExcel(NhanHieuDAO.getAllNhanHieu());
+						JOptionPane.showMessageDialog(null,"Xuất File thành công");
+					} catch (IOException e1) {
+						JOptionPane.showMessageDialog(null,"Xuất File thất bại");
+					}
+	 			}
+			}
+		});
 		btnXutExcel.setIcon(new ImageIcon(NhanHieu.class.getResource("/icon/export.jpg")));
 		btnXutExcel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnXutExcel.setBounds(905, 5, 150, 40);

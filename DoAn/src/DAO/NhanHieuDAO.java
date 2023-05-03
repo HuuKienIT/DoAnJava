@@ -63,7 +63,7 @@ public class NhanHieuDAO {
 	public static int themNhanHieu(NhanHieuModel nh) {
 		int n = -1;
 		try {
-			String sql = "insert into nhanhieu values('"+nh.id_nh+"','"+nh.ten_nh+"')";
+			String sql = "insert into nhanhieu(ten_nh) values('"+nh.ten_nh+"')";
 			mySQLHelper helper = new mySQLHelper();
 			helper.open();
 			n = helper.executeUpdate(sql);

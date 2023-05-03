@@ -28,10 +28,9 @@ public class NhanHieuAdd extends JFrame {
 	private JTextField textField;
 	private JTextField textField_2;
 	JButton btnNewButton;
-	public int id_nh;
 	ArrayList<NhanHieuModel> dsNH=NhanHieuDAO.getAllNhanHieu();
 	public NhanHieuAdd() {
-		this.id_nh=id_nh;
+
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 591, 345);
 		contentPane = new JPanel();
@@ -91,15 +90,15 @@ public class NhanHieuAdd extends JFrame {
                     textField_2.requestFocus();
                     return;
                 }
-				int idnh=NhanHieuDAO.demTongSoNH()+1;
+				int id_nh=Integer.parseInt(textField.getText());
 				String tennh=textField_2.getText();
 				if(!checkExistTenNH(tennh)) {
-					if(BUS.NhanHieuBUS.addNH(idnh,tennh)) {
+					if(BUS.NhanHieuBUS.addNH(tennh)) {
 						setVisible(false);
 					}
 				}
 				else {
-					if(BUS.NhanHieuBUS.updateNH(idnh,tennh)) {
+					if(BUS.NhanHieuBUS.updateNH(id_nh,tennh)) {
 						setVisible(false);
 					}
 				}
