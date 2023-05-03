@@ -121,13 +121,7 @@ public class NhaCungCap extends JPanel {
 		String[] columnNamesGH = { "ID", "Tên Nhà cung cấp" };
 		model.setColumnIdentifiers(columnNamesGH);
 		layDuLieu();
-		if (model != null) {
-			table.getColumnModel().getColumn(0).setPreferredWidth(100);
-			table.getColumnModel().getColumn(1).setPreferredWidth(300);
-			table.getColumnModel().getColumn(2).setPreferredWidth(200);
-			table.getColumnModel().getColumn(3).setPreferredWidth(200);
-			table.getColumnModel().getColumn(0).setCellRenderer(new CenterAlignRenderer());
-		}
+
 		scrollPane.setViewportView(table);
 		table.addMouseListener(new MouseAdapter() {
 			@Override
