@@ -6,9 +6,8 @@ import model.NhanHieuModel;
 import model.SanPhamModel;
 
 public class NhanHieuBUS {
-	public static boolean addNH(int idnh,String tennh) {
+	public static boolean addNH(String tennh) {
 		NhanHieuModel nh = new NhanHieuModel();
-		nh.setId_nh(idnh);
 		nh.setTen_nh(tennh);
 		int ktra=DAO.NhanHieuDAO.themNhanHieu(nh);
 		if(ktra!=-1) {

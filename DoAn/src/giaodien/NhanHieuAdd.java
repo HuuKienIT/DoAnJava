@@ -89,10 +89,10 @@ public class NhanHieuAdd extends JFrame {
                     textField_2.requestFocus();
                     return;
                 }
-				int idnh=NhanHieuDAO.demTongSoNH()+1;
+				int idnh=Integer.parseInt(textField.getText());
 				String tennh=textField_2.getText();
 				if(!checkExistTenNH(tennh)) {
-					if(BUS.NhanHieuBUS.addNH(idnh,tennh)) {
+					if(BUS.NhanHieuBUS.addNH(tennh)) {
 						setVisible(false);
 					}
 				}
