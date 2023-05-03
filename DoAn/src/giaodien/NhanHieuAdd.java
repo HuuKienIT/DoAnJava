@@ -5,9 +5,18 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import DAO.NhanHieuDAO;
+import model.NhanHieuModel;
+
 import java.awt.Window.Type;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
@@ -20,6 +29,7 @@ public class NhanHieuAdd extends JFrame {
 	private JTextField textField_2;
 	JButton btnNewButton;
 	public int id_nh;
+	ArrayList<NhanHieuModel> dsNH=NhanHieuDAO.getAllNhanHieu();
 	public NhanHieuAdd() {
 		this.id_nh=id_nh;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -74,11 +84,40 @@ public class NhanHieuAdd extends JFrame {
 		btnNewButton.setBackground(Color.WHITE);
 		btnNewButton.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
 		btnNewButton.setBounds(215, 200, 150, 30);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (textField_2.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Nhập Tên nhãn hiệu");
+                    textField_2.requestFocus();
+                    return;
+                }
+				int idnh=NhanHieuDAO.demTongSoNH()+1;
+				String tennh=textField_2.getText();
+				if(!checkExistTenNH(tennh)) {
+					if(BUS.NhanHieuBUS.addNH(idnh,tennh)) {
+						setVisible(false);
+					}
+				}
+				else {
+					if(BUS.NhanHieuBUS.updateNH(idnh,tennh)) {
+						setVisible(false);
+					}
+				}
+			}
+		});
 		panel.add(btnNewButton);
 	}
 	public void setDuLieu(String id, String ten) {
 		textField.setText(id);
 		textField_2.setText(ten);
 		btnNewButton.setText("Cập Nhật");
+	}
+	public boolean checkExistTenNH(String tennh) {
+		for(int i=0;i<dsNH.size();i++) {
+			if(dsNH.get(i).getTen_nh().equalsIgnoreCase(tennh)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

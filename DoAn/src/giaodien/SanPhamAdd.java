@@ -46,16 +46,16 @@ import javax.swing.JTextArea;
 public class SanPhamAdd extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtMaSP;
+	public JTextField txtMaSP;
 	JTextArea txtTenSP = new JTextArea();
 	private JTextField txtNhanHieu;
 	private JTextField txtDonGia;
-	public int id;
 	JLabel hinhanh = new JLabel("");
 	ArrayList<SanPhamModel> dsSP = SanPhamDAO.getAllSanPham();
-	String filename;
+	String filename = "null";
+	boolean doianh=false;
+	JButton btnNewButton_1_1_1;
 	public SanPhamAdd() {
-		this.id=id;
 		setType(Type.UTILITY);
 		setBounds(100, 100, 1000,600);
 		contentPane = new JPanel();
@@ -79,12 +79,6 @@ public class SanPhamAdd extends JFrame {
 		txtMaSP = new RoundJTextField(15);
 		txtMaSP.setColumns(10);
 		txtMaSP.setBounds(200, 50, 125, 35);
-		if(id==0) {
-			txtMaSP.setEditable(true);
-		}
-		else {
-			txtMaSP.setEditable(false);
-		}
 		
 		panel_1.add(txtMaSP);
 		
@@ -119,6 +113,7 @@ public class SanPhamAdd extends JFrame {
 		JButton btnNewButton_1 = new JButton("Chọn ảnh");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				doianh=true;
 				JFileChooser fileChooser = new JFileChooser();
 		        int returnValue = fileChooser.showOpenDialog(null);
 		        if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -162,46 +157,56 @@ public class SanPhamAdd extends JFrame {
 		panel_1.add(btnNewButton_1);
 		
 		
-		JButton btnNewButton_1_1_1 = new JButton("Lưu");
+		btnNewButton_1_1_1 = new JButton("Lưu");
 		btnNewButton_1_1_1.setBackground(SystemColor.text);
 		btnNewButton_1_1_1.setIcon(new ImageIcon("E:\\Picrure AT\\iconjava\\save.jpg"));
 		btnNewButton_1_1_1.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 15));
 		btnNewButton_1_1_1.setBounds(245, 354, 150, 50);
 		btnNewButton_1_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String idsp= String.valueOf(DAO.SanPhamDAO.demTongSoSP()+1);
-				String idsp_sua= String.valueOf(DAO.SanPhamDAO.demTongSoSP());
+				if (txtMaSP.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Nhập Mã sản phẩm");
+                    txtMaSP.requestFocus();
+                    return;
+                }
+				if (txtTenSP.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Nhập Tên sản phẩm");
+                    txtTenSP.requestFocus();
+                    return;
+                }
+				if (txtDonGia.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Nhập Giá sản phẩm");
+                    txtDonGia.requestFocus();
+                    return;
+                }
+				if (txtNhanHieu.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Nhập Nhãn hiệu sản phẩm");
+                    txtNhanHieu.requestFocus();
+                    return;
+                }
 				String masp=txtMaSP.getText();
 				String tensp=txtTenSP.getText();
 				String manh=String.valueOf(NhanHieuDAO.Id_NhByName(txtNhanHieu.getText())) ;
-				String gia=String.valueOf(txtDonGia.getText());
-				String sl="0";
+				int gia=Integer.valueOf(txtDonGia.getText());
 				String tenfile="";
-				tenfile=filename;
-				if(id==0){
-					String sql="insert into sanpham values('"+idsp+"','"+masp+"','"+tensp+"','"+gia+"','"+sl+"','"+manh+"','"+tenfile+"')";
-					mySQLHelper conn=new mySQLHelper();
-					conn.open();
-					int n=conn.executeUpdate(sql);
-					if(n!=-1) {
-						JOptionPane.showMessageDialog(null, "Thêm thành công");
+				if(!checkExistSP(masp)){
+					tenfile=filename;
+					if(BUS.SanPhamBUS.addSP(masp, tensp, manh, gia, tenfile)) {
 						setVisible(false);
 					}
-					conn.close();
 				}
 				else {
-					
-					String sql="update sanpham set ma_sp='"+masp+"',ten_sp='"+tensp+"',gia='"+gia+"',soluong='"+sl+"',id_nh='"+manh+"',photo='"+tenfile+"' where id_sp='"+idsp_sua+"'";
-					mySQLHelper conn=new mySQLHelper();
-					conn.open();
-					int n=conn.executeUpdate(sql);
-					if(n!=-1) {
-						JOptionPane.showMessageDialog(null, "Sửa thành công");
+					if(doianh==true) {
+						tenfile=filename;
+					}
+					else {
+						SanPhamModel sp = SanPhamDAO.getSanPhamByIdSP(SanPham.id);
+						tenfile=sp.getPhoto();
+					}
+					if(BUS.SanPhamBUS.updateSP(masp, tensp, manh, gia, tenfile)) {
 						setVisible(false);
 					}
-					conn.close();
 				}
-				dsSP=SanPhamDAO.getAllSanPham();
 			}
 		});
 		panel_1.add(btnNewButton_1_1_1);
@@ -239,35 +244,49 @@ public class SanPhamAdd extends JFrame {
 		txtMaSP.setText(sp.getMasp());
 		txtTenSP.append(sp.getTensp());
 		txtNhanHieu.setText(sp.getNhanhieu());
-		txtDonGia.setText(sp.getGia()+"");		
+		txtDonGia.setText(sp.getGia() + "");
 		hienhinh(sp.getPhoto());
+		btnNewButton_1_1_1.setText("Cập nhật");
 	}
+
 	public void hienhinh(String tenfile) {
-	 	
-	 	if(tenfile.equals("null")) {
-	 		hinhanh.setIcon(null);
-	 	}else {
-	 		ImageIcon imageIcon = new ImageIcon(new ImageIcon(BanHang.class.getResource
-					("/photo/"+tenfile)).getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH));
+
+		if (tenfile.equals("null")) {
+			hinhanh.setIcon(null);
+		} else {
+			ImageIcon imageIcon = new ImageIcon(new ImageIcon(BanHang.class.getResource("/photo/" + tenfile)).getImage()
+					.getScaledInstance(300, 300, Image.SCALE_SMOOTH));
 			hinhanh.setIcon(imageIcon);
-	 	}
+		}
 	}
-	
-	public void moveFile(String urlup,String ten) {
+
+	public boolean checkExistSP(String masp) {
+
+		for (int i = 0; i < dsSP.size(); i++) {
+			if (dsSP.get(i).getMasp().equalsIgnoreCase(masp)) {
+				return true;
+			}
+		}
+		return false;
+
+	}
+
+	public void moveFile(String urlup, String ten) {
 		File uploadedFile = new File(urlup);
 		String newDirectory = "/photo";
 		String newFilename = ten;
 		try {
-		    File newFile = moveUploadedFile(uploadedFile, newDirectory, newFilename);
-		    System.out.println("File moved to: " + newFile.getAbsolutePath());
+			File newFile = moveUploadedFile(uploadedFile, newDirectory, newFilename);
+			System.out.println("File moved to: " + newFile.getAbsolutePath());
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
+
 	public File moveUploadedFile(File uploadedFile, String newDirectory, String newFilename) throws IOException {
-	    Path source = uploadedFile.toPath();
-	    Path destination = Paths.get(newDirectory, newFilename);
-	    Files.move(source, destination);
-	    return destination.toFile();
+		Path source = uploadedFile.toPath();
+		Path destination = Paths.get(newDirectory, newFilename);
+		Files.move(source, destination);
+		return destination.toFile();
 	}
 }
