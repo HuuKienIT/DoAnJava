@@ -6,9 +6,8 @@ import model.NhaCungCapModel;
 
 public class NhaCungCapBUS {
 
-	public static boolean addNCC(int idncc, String tenncc, String sdt, String email) {
+	public static boolean addNCC(String tenncc, String sdt, String email) {
 		NhaCungCapModel ncc = new NhaCungCapModel();
-		ncc.setId_ncc(idncc);
 		ncc.setTen_ncc(tenncc);
 		ncc.setEmail(email);
 		ncc.setSodth(sdt);

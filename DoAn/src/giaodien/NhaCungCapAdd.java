@@ -116,12 +116,11 @@ public class NhaCungCapAdd extends JFrame {
 					txtemail.requestFocus();
 					return;
 				}
-				int idncc = NhaCungCapDAO.demTongSoNCC() + 1;
 				String tenncc = txttenncc.getText();
 				String sdt = txtsdt.getText();
 				String email = txtemail.getText();
-				if (!checkExistIdNCC(idncc)) {
-					if (BUS.NhaCungCapBUS.addNCC(idncc, tenncc, sdt, email)) {
+				if (!checkExistIdNCC(Integer.valueOf(txtidncc.getText()))) {
+					if (BUS.NhaCungCapBUS.addNCC(tenncc, sdt, email)) {
 						setVisible(false);
 					}
 				} else {

@@ -18,7 +18,7 @@ public class NhaCungCapDAO {
 				ncc.setId_ncc(rs.getInt("id_ncc"));
 				ncc.setTen_ncc(rs.getString("ten_ncc"));
 				ncc.setEmail(rs.getString("email"));
-				ncc.setEmail(rs.getString("sodth"));
+				ncc.setSodth(rs.getString("sodth"));
 			}
 			helper.close();
 		} catch (Exception e) {
@@ -40,7 +40,7 @@ public class NhaCungCapDAO {
 				ncc.setId_ncc(rs.getInt("id_ncc"));
 				ncc.setTen_ncc(rs.getString("ten_ncc"));
 				ncc.setEmail(rs.getString("email"));
-				ncc.setEmail(rs.getString("sodth"));
+				ncc.setSodth(rs.getString("sodth"));
 				ds.add(ncc);
 			}
 			helper.close();
@@ -70,8 +70,7 @@ public class NhaCungCapDAO {
 	public static int themNCC(NhaCungCapModel ncc) {
 		int n = -1;
 		try {
-			String sql = "insert into nhacungcap values('" + ncc.id_ncc + "','" + ncc.ten_ncc + "','" + ncc.sodth
-					+ "','" + ncc.email + "')";
+			String sql = "insert into nhacungcap values('" + ncc.ten_ncc + "','" + ncc.sodth + "','" + ncc.email + "')";
 			mySQLHelper helper = new mySQLHelper();
 			helper.open();
 			n = helper.executeUpdate(sql);
@@ -84,8 +83,8 @@ public class NhaCungCapDAO {
 	public static int suaNCC(NhaCungCapModel ncc) {
 		int n = -1;
 		try {
-			String sql = "update nhancungcap set ten_nh='" + ncc.ten_ncc + "' sodth='" + ncc.sodth + "' email='"
-					+ ncc.email + "' where id_nh='" + ncc.id_ncc + "'";
+			String sql = "update nhacungcap set ten_ncc='" + ncc.ten_ncc + "' ,sodth='" + ncc.sodth + "' ,email='"
+					+ ncc.email + "' where id_ncc='" + ncc.id_ncc +"'";
 			mySQLHelper helper = new mySQLHelper();
 			helper.open();
 			n = helper.executeUpdate(sql);

@@ -118,10 +118,13 @@ public class NhaCungCap extends JPanel {
 
 		table = new cusTable();
 		scrollPane.setViewportView(table);
-		String[] columnNamesGH = { "ID", "Tên Nhà cung cấp" };
+		String[] columnNamesGH = { "ID", "Tên Nhà cung cấp","Số Điện Thoại","Email"};
 		model.setColumnIdentifiers(columnNamesGH);
 		layDuLieu();
-
+		table.getColumnModel().getColumn(0).setPreferredWidth(100);
+    	table.getColumnModel().getColumn(1).setPreferredWidth(200);
+    	table.getColumnModel().getColumn(2).setPreferredWidth(200);
+    	table.getColumnModel().getColumn(3).setPreferredWidth(200);
 		scrollPane.setViewportView(table);
 		table.addMouseListener(new MouseAdapter() {
 			@Override
@@ -132,8 +135,7 @@ public class NhaCungCap extends JPanel {
 							table.getValueAt(table.getSelectedRow(), 1) + "",
 							table.getValueAt(table.getSelectedRow(), 2) + "",
 							table.getValueAt(table.getSelectedRow(), 3) + "");
-					ncc.setVisible(true);
-					layDuLieu();
+					ncc.setVisible(true);					
 				}
 			}
 		});
@@ -142,7 +144,7 @@ public class NhaCungCap extends JPanel {
 
 	public void layDuLieu() {
 		for (NhaCungCapModel ncc : DAO.NhaCungCapDAO.getAllNCC()) {
-			Object[] row = new Object[] {ncc.getId_ncc(),ncc.getTen_ncc(),ncc.getSDT(),ncc.getEmail()} ;
+			Object[] row = new Object[] {ncc.getId_ncc(),ncc.getTen_ncc(),ncc.getSDT(),ncc.getEmail()};
 			model.addRow(row);
 		}
 		table.setModel(model);
