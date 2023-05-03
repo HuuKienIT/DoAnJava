@@ -102,6 +102,18 @@ public class NhanHieu extends JPanel {
 		btnNewButton.setBounds(1060, 5, 100, 40);
 		panel_2.add(btnNewButton);
 		
+		JButton btnNhpExcel = new JButton("Nhập Excel");
+		btnNhpExcel.setIcon(new ImageIcon(NhanHieu.class.getResource("/icon/import.jpg")));
+		btnNhpExcel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNhpExcel.setBounds(750, 5, 150, 40);
+		panel_2.add(btnNhpExcel);
+		
+		JButton btnXutExcel = new JButton("Xuất Excel");
+		btnXutExcel.setIcon(new ImageIcon(NhanHieu.class.getResource("/icon/export.jpg")));
+		btnXutExcel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnXutExcel.setBounds(905, 5, 150, 40);
+		panel_2.add(btnXutExcel);
+		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(Color.WHITE);
 		panel_3.setBounds(10, 70, 1180, 50);

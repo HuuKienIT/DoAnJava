@@ -139,6 +139,18 @@ public class SanPham extends JPanel {
 		btnNewButton_2.setBounds(1060, 5, 100, 40);
 		panelHeader.add(btnNewButton_2);
 		
+		JButton btnNewButton_2_1 = new JButton("Nhập Excel");
+		btnNewButton_2_1.setIcon(new ImageIcon(SanPham.class.getResource("/icon/import.jpg")));
+		btnNewButton_2_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNewButton_2_1.setBounds(750, 5, 150, 40);
+		panelHeader.add(btnNewButton_2_1);
+		
+		JButton btnNewButton_2_2 = new JButton("Xuất Excel");
+		btnNewButton_2_2.setIcon(new ImageIcon(SanPham.class.getResource("/icon/export.jpg")));
+		btnNewButton_2_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNewButton_2_2.setBounds(905, 5, 150, 40);
+		panelHeader.add(btnNewButton_2_2);
+		
 		RoundedJPanel panelTimKiem = new RoundedJPanel(20);
 		panelTimKiem.setLayout(null);
 		panelTimKiem.setBackground(Color.WHITE);

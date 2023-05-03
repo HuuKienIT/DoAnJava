@@ -3,11 +3,9 @@ package model;
 public class QuyenModel {
 	public int id_q;
 	public String ten_q;
-	public String mota;
 	public QuyenModel() {
 		this.id_q=0;
 		this.ten_q=new String();
-		this.mota=new String();
 	}
 	public final int getId_q() {
 		return id_q;
@@ -20,12 +18,6 @@ public class QuyenModel {
 	}
 	public final void setTen_q(String ten_q) {
 		this.ten_q = ten_q;
-	}
-	public final String getMota() {
-		return mota;
-	}
-	public final void setMota(String mota) {
-		this.mota = mota;
 	}
 	
 }

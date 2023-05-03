@@ -21,11 +21,10 @@ public class ThemKhachHang extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtHoTen;
 	private JTextField txtSoDth;
-	public int id_kh;
 	private JTextField txtMaKh;
+	JButton btnNewButton;
+	public ThemKhachHang() {
 
-	public ThemKhachHang(int id_kh) {
-		this.id_kh= id_kh;
 		setType(Type.UTILITY);
 		setBounds(100, 100, 591, 345);
 		contentPane = new JPanel();
@@ -73,7 +72,7 @@ public class ThemKhachHang extends JFrame {
 		txtSoDth.setBounds(226, 178, 200, 30);
 		panel.add(txtSoDth);
 		
-		JButton btnNewButton = new JButton("Thêm");
+		btnNewButton = new JButton("Thêm");
 		btnNewButton.setBackground(Color.WHITE);
 		btnNewButton.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
 		btnNewButton.setBounds(224, 230, 100, 30);
@@ -91,12 +90,12 @@ public class ThemKhachHang extends JFrame {
 		akbask.setEnabled(true);
 		akbask.setBounds(42, 80, 150, 30);
 		panel.add(akbask);
-		layDuLieu();
 	}
-	public void layDuLieu() {
+	public void setDuLieu(int id_kh) {
 		KhachHangModel kh =DAO.KhachHangDAO.getKhachHangByid(id_kh);
 		txtMaKh.setText(kh.getMakh());
 		txtHoTen.setText(kh.getTenkh());
 		txtSoDth.setText(kh.getSodth()+"");
+		btnNewButton.setText("Cập nhật");
 	}
 }

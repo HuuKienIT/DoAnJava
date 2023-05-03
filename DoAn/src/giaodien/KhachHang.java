@@ -98,22 +98,35 @@ public class KhachHang extends JPanel {
         lblNewLabel_2.setBounds(20, 5, 50, 40);
         panel_2.add(lblNewLabel_2);
         
-        JLabel lblNewLabel_3_1_1 = new JLabel("Thêm KH");
-        lblNewLabel_3_1_1.addMouseListener(new MouseAdapter() {
-        	@Override
-        	public void mouseClicked(MouseEvent e) {
-        		new ThemKhachHang(0).setVisible(true);
+        JButton btnNewButton = new JButton("New");
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		new ThemKhachHang().setVisible(true);;
         	}
         });
-        lblNewLabel_3_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_3_1_1.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 20));
-        lblNewLabel_3_1_1.setBounds(1050, 7, 109, 40);
-        panel_2.add(lblNewLabel_3_1_1);
+        btnNewButton.setIcon(new ImageIcon(KhachHang.class.getResource("/icon/add.jpg")));
+        btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        btnNewButton.setBounds(1060, 5, 100, 40);
+        panel_2.add(btnNewButton);
+        
+        JButton btnNhpExcel = new JButton("Nhập Excel");
+        btnNhpExcel.setIcon(new ImageIcon(KhachHang.class.getResource("/icon/import.jpg")));
+        btnNhpExcel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        btnNhpExcel.setBounds(750, 5, 150, 40);
+        panel_2.add(btnNhpExcel);
+        
+        JButton btnXutExcel = new JButton("Xuất Excel");
+        btnXutExcel.setIcon(new ImageIcon(KhachHang.class.getResource("/icon/export.jpg")));
+        btnXutExcel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        btnXutExcel.setBounds(905, 5, 150, 40);
+        panel_2.add(btnXutExcel);
         table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				 if (e.getClickCount() == 2) { // Check if the click count is 2 (double-click)
-					 new ThemKhachHang(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0)+"")).setVisible(true);
+					 ThemKhachHang tkh = new ThemKhachHang();
+					 tkh.setDuLieu(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0)+""));
+					 tkh.setVisible(true);
                  }
 			}
 		});

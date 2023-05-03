@@ -24,6 +24,9 @@ import model.NhanVienModel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JComboBox;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class NhanVien extends JPanel {
 	private JTable table;
@@ -89,22 +92,35 @@ public class NhanVien extends JPanel {
         lblNewLabel_2.setBounds(20, 5, 50, 40);
         panel_2.add(lblNewLabel_2);
         
-        JLabel lblNewLabel_3_1_1 = new JLabel("Thêm NV");
-        lblNewLabel_3_1_1.addMouseListener(new MouseAdapter() {
-        	@Override
-        	public void mouseClicked(MouseEvent e) {
-        		new NhanVienAdd(0).setVisible(true);;
+        JButton btnNewButton = new JButton("New");
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		new NhanVienAdd().setVisible(true);
         	}
         });
-        lblNewLabel_3_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_3_1_1.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 20));
-        lblNewLabel_3_1_1.setBounds(1050, 5, 109, 40);
-        panel_2.add(lblNewLabel_3_1_1);
+        btnNewButton.setIcon(new ImageIcon(NhanVien.class.getResource("/icon/add.jpg")));
+        btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        btnNewButton.setBounds(1060, 5, 100, 40);
+        panel_2.add(btnNewButton);
+        
+        JButton btnNhpExcel = new JButton("Nhập Excel");
+        btnNhpExcel.setIcon(new ImageIcon(NhanVien.class.getResource("/icon/import.jpg")));
+        btnNhpExcel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        btnNhpExcel.setBounds(745, 5, 150, 40);
+        panel_2.add(btnNhpExcel);
+        
+        JButton btnXutExcel = new JButton("Xuất Excel");
+        btnXutExcel.setIcon(new ImageIcon(NhanVien.class.getResource("/icon/export.jpg")));
+        btnXutExcel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        btnXutExcel.setBounds(905, 5, 150, 40);
+        panel_2.add(btnXutExcel);
         table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				 if (e.getClickCount() == 2) { // Check if the click count is 2 (double-click)
-					 new NhanVienAdd((int) table.getValueAt(table.getSelectedRow(), 0)).setVisible(true);
+					 NhanVienAdd nva = new NhanVienAdd();
+					 nva.setDuLieu((int) table.getValueAt(table.getSelectedRow(), 0));
+					 nva.setVisible(true);
                  }
 			}
 		});

@@ -3,17 +3,10 @@ package model;
 public class ChucVuModel {
 	public int id_cv;
 	public String ten_cv;
-	public String mota;
-	public final String getMota() {
-		return mota;
-	}
-	public final void setMota(String mota) {
-		this.mota = mota;
-	}
+
 	public ChucVuModel() {
 		this.id_cv=0;
 		this.ten_cv=new String();
-		this.mota=new String();
 	}
 	public final int getId_cv() {
 		return id_cv;

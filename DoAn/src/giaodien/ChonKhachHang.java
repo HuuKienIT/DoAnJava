@@ -80,7 +80,7 @@ public class ChonKhachHang extends JFrame {
 		JButton btnNew = new JButton("New");
 		btnNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new ThemKhachHang(0).setVisible(true);
+				new ThemKhachHang().setVisible(true);
 			}
 		});
 		btnNew.setIcon(new ImageIcon(ChonKhachHang.class.getResource("/icon/add.jpg")));

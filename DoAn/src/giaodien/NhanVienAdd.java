@@ -31,9 +31,8 @@ public class NhanVienAdd extends JFrame {
 	RoundJTextField txtID = new RoundJTextField(15);
 	JComboBox comboChucVu = new JComboBox();
 	JLabel lblNewLabel = new JLabel("");
-	public int id_nv;
-	public NhanVienAdd(int id_nv) {
-		this.id_nv=id_nv;;
+	JButton btnLu;
+	public NhanVienAdd() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 734, 540);
 		contentPane = new JPanel();
@@ -49,7 +48,7 @@ public class NhanVienAdd extends JFrame {
 		contentPane.add(panel);
 		setLocationRelativeTo(null);
 		
-		JButton btnLu = new JButton("Cập nhật");
+		btnLu = new JButton("Thêm");
 		btnLu.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 18));
 		btnLu.setBackground(Color.WHITE);
 		btnLu.setBounds(239, 310, 150, 40);
@@ -134,14 +133,14 @@ public class NhanVienAdd extends JFrame {
 		lblNewLabel_1_4_1.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
 		lblNewLabel_1_4_1.setBounds(245, 5, 300, 40);
 		panel_1.add(lblNewLabel_1_4_1);
-		layDuLieu();
 	}
-	public void layDuLieu() {
+	public void setDuLieu(int id_nv) {
 		NhanVienModel u = NhanVienDAO.getUsersByID(id_nv);
 		txtID.setText(id_nv+"");
    		txtHoTen.setText(u.getHoTen());
    		txtEmail.setText(u.getEmail());
    		txtSodth.setText(u.getSoDth()+"");
+   		btnLu.setText("Cập Nhật");
    		layChucVu();
    		comboChucVu.setSelectedItem(u.getChucVu());
    		hienhinh(u.getPhoto());
