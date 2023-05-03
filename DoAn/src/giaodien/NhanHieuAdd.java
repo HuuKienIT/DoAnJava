@@ -28,10 +28,8 @@ public class NhanHieuAdd extends JFrame {
 	private JTextField textField;
 	private JTextField textField_2;
 	JButton btnNewButton;
-	public int id_nh;
 	ArrayList<NhanHieuModel> dsNH=NhanHieuDAO.getAllNhanHieu();
 	public NhanHieuAdd() {
-		this.id_nh=id_nh;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 591, 345);
 		contentPane = new JPanel();
@@ -99,7 +97,7 @@ public class NhanHieuAdd extends JFrame {
 					}
 				}
 				else {
-					if(BUS.NhanHieuBUS.updateNH(idnh,tennh)) {
+					if(BUS.NhanHieuBUS.updateNH(Integer.valueOf(textField.getText()),tennh)) {
 						setVisible(false);
 					}
 				}

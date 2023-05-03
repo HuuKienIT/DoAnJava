@@ -68,6 +68,7 @@ public class NhanHieu extends JPanel {
 					 NhanHieuAdd nh =new NhanHieuAdd();
 					 nh.setDuLieu(table.getValueAt(table.getSelectedRow(), 0)+"",table.getValueAt(table.getSelectedRow(), 1)+"");
 					 nh.setVisible(true);
+					 id=Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0)+"");
 					 hienthi();
                  }
 			}

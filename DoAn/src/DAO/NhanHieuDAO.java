@@ -75,7 +75,7 @@ public class NhanHieuDAO {
 	public static int suaNhanHieu(NhanHieuModel nh) {
 		int n = -1;
 		try {
-			String sql="update sanpham set ten_nh='"+nh.ten_nh+"' where id_nh='"+nh.id_nh+"'";
+			String sql="update nhanhieu set ten_nh='"+nh.ten_nh+"' where id_nh='"+nh.id_nh+"'";
 			mySQLHelper helper=new mySQLHelper();
 			helper.open();
 			n=helper.executeUpdate(sql);

@@ -26,7 +26,7 @@ public class NhaCungCap extends JPanel {
 	private JTextField textField_1;
 	private JTable table;
 	DefaultTableModel model = new DefaultTableModel();
-
+	public static int id;
 	public NhaCungCap() {
 		setBackground(SystemColor.control);
 		setLayout(null);
@@ -66,6 +66,7 @@ public class NhaCungCap extends JPanel {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new NhaCungCapAdd().setVisible(true);
+				layDuLieu();
 			}
 		});
 		btnNewButton.setIcon(new ImageIcon(NhaCungCap.class.getResource("/icon/add.jpg")));
@@ -118,12 +119,14 @@ public class NhaCungCap extends JPanel {
 		
 		table = new cusTable();
 	 	scrollPane.setViewportView(table);
-	 	String[] columnNamesGH = {"ID",  "Tên Nhà cung cấp"};
+	 	String[] columnNamesGH = {"ID",  "Tên Nhà cung cấp","Số Điện Thoại","Email"};
        	model.setColumnIdentifiers(columnNamesGH);
        	layDuLieu();
        	if(model !=null) {
        		table.getColumnModel().getColumn(0).setPreferredWidth(100);
-        	table.getColumnModel().getColumn(1).setPreferredWidth(300);
+        	table.getColumnModel().getColumn(1).setPreferredWidth(200);
+        	table.getColumnModel().getColumn(2).setPreferredWidth(200);
+        	table.getColumnModel().getColumn(3).setPreferredWidth(200);
         	table.getColumnModel().getColumn(0).setCellRenderer(new CenterAlignRenderer());
        	}
 		scrollPane.setViewportView(table);
@@ -132,9 +135,11 @@ public class NhaCungCap extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				 if (e.getClickCount() == 2) { // Check if the click count is 2 (double-click)
 					 NhaCungCapAdd ncc =new NhaCungCapAdd();
-					 ncc.setDuLieu(table.getValueAt(table.getSelectedRow(), 0)+"",table.getValueAt(table.getSelectedRow(), 1)+"");
+					 ncc.setDuLieu(table.getValueAt(table.getSelectedRow(), 0)+"",table.getValueAt(table.getSelectedRow(), 1)+"",
+							 table.getValueAt(table.getSelectedRow(), 2)+"",table.getValueAt(table.getSelectedRow(), 3)+"");
 					 ncc.setVisible(true);
-					 
+					 id=Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0)+"");
+					 layDuLieu();
                  }
 			}
 		});
@@ -142,7 +147,7 @@ public class NhaCungCap extends JPanel {
 	}
 	public void layDuLieu() {
 		for(NhaCungCapModel ncc :DAO.NhaCungCapDAO.getAllNCC() ) {
-       		Object[] row = new Object[] {ncc.getId_ncc(),ncc.getTen_ncc()} ;
+       		Object[] row = new Object[] {ncc.getId_ncc(),ncc.getTen_ncc(),ncc.getSDT(),ncc.getEmail()} ;
        		model.addRow(row);
        	}
 		table.setModel(model);
