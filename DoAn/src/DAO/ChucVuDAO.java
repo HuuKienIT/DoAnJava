@@ -25,7 +25,7 @@ public class ChucVuDAO {
 	public static int getidChucVuByName(String tencv) {
 		int id_cv=0;
 		try {
-			String sql = "SELECT id_cv FROM chucvu where ten_cv regexp '"+tencv +"'";
+			String sql = "SELECT id_cv FROM chucvu where ten_cv regexp '"+tencv+"'";
 			mySQLHelper helper = new mySQLHelper();
 			helper.open();
 			ResultSet rs = helper.executeQuery(sql);
