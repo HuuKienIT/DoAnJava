@@ -4,11 +4,11 @@ public class NhanVienModel {
 	public int id_nv;
 	public String hoTen;
 	public String namSinh;
-	public String gioiTinh;
+	public int gioiTinh;
 	public String taiKhoan;
 	public String matKhau;
 	public String email;
-	public int soDth;
+	public String soDth;
 	public String chucVu;
 	public String photo;
 
@@ -16,20 +16,20 @@ public class NhanVienModel {
 		this.id_nv=0;
 		this.hoTen=new String();
 		this.namSinh=new String();
-		this.gioiTinh= new String();
+		this.gioiTinh= 0;
 		this.taiKhoan=new String();
 		this.email=new String();
 		this.matKhau=new String();
-		this.soDth=0;
+		this.soDth=new String();
 		this.chucVu=new String();
 		this.photo=new String();
 		
 	}
-	public NhanVienModel(int id,String manv,String hoTen,String namSinh, String gioitinh, String taiKhoan, String matKhau,String email, int soDth,String chucVu) {
+	public NhanVienModel(int id,String manv,String hoTen,String namSinh, int gioitinh, String taiKhoan, String matKhau,String email, String soDth,String chucVu) {
 		this.id_nv=id;
 		this.hoTen=hoTen;
 		this.namSinh=namSinh;
-		this.gioiTinh=gioiTinh;
+		this.gioiTinh=gioitinh;
 		this.taiKhoan=taiKhoan;
 		this.email=email;
 		this.matKhau=matKhau;
@@ -48,10 +48,10 @@ public class NhanVienModel {
 	public void setNamSinh(String namSinh) {
 		this.namSinh = namSinh;
 	}
-	public String getGioiTinh() {
+	public int getGioiTinh() {
 		return gioiTinh;
 	}
-	public void setGioiTinh(String gioiTinh) {
+	public void setGioiTinh(int gioiTinh) {
 		this.gioiTinh = gioiTinh;
 	}
 
@@ -85,10 +85,10 @@ public class NhanVienModel {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getSoDth() {
+	public String getSoDth() {
 		return soDth;
 	}
-	public void setSoDth(int soDth) {
+	public void setSoDth(String soDth) {
 		this.soDth = soDth;
 	}
 	public String getChucVu() {
