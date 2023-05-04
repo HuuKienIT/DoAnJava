@@ -1,13 +1,32 @@
 package BUS;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Currency;
+import java.util.Locale;
 
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import model.CTDonHangModel;
 import model.CTPhieuNhapModel;
+import model.DonHangModel;
+import model.KhachHangModel;
+import model.NhaCungCapModel;
 import model.NhanVienModel;
+import model.PhieuNhapModel;
 import model.SanPhamGHModel;
 import model.SanPhamModel;
 
@@ -27,22 +46,20 @@ public class NhapHangBUS {
 			ctpn.setGia(u.getGia());
 			DAO.CTPhieuNhapDAO.themCTPhieuNhap(ctpn);
 		}
-	}
-
-	public static void XuatDonHang(ArrayList<SanPhamGHModel> GH, NhanVienModel nv, int tongsl, int tongtien) {
-		model.DonHangModel dh = new model.DonHangModel();
-		dh.setId_nv(nv.getId_nv());
-		dh.setTongsl(tongsl);//
-		dh.setTongtien(tongtien);
-		DAO.DonHangDAO.themDonHang(dh);
-		for (SanPhamGHModel u : GH) {
-			CTDonHangModel ctdh = new CTDonHangModel();
-			ctdh.setId_sp(u.getId_sp());
-			ctdh.setSoluong(u.getSoluong());
-			ctdh.setGia(u.getGia());
-			DAO.CTDonHangDAO.themCTDonHang(ctdh);
+		int output = JOptionPane.showConfirmDialog(null, "Bạn có muốn xuất ra File không?", "",
+				JOptionPane.YES_NO_OPTION);
+		if (output == JOptionPane.YES_OPTION) {
+			try {
+				xuatPDF(DAO.PhieuNhapDAO.layIDcuoi());
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (DocumentException e) {
+				e.printStackTrace();
+			}
+			System.out.println(DAO.PhieuNhapDAO.layIDcuoi());
 		}
 	}
+
 
 	public static ArrayList<SanPhamGHModel> xoaGH(ArrayList<SanPhamGHModel> GH,int id_sp) {
 		int co = 0;
@@ -123,5 +140,65 @@ public class NhapHangBUS {
 		}
 		return spLoc;
 	}
+	public static void xuatPDF(int id_pn) throws FileNotFoundException, DocumentException {
+
+		JFrame parentFrame = new JFrame();
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("Specify a file to save");
+		fileChooser.setFileFilter(new FileNameExtensionFilter(".pdf", "Portable Document Format"));
+		fileChooser.setSelectedFile(new File("PhieuNhap-"+ id_pn +".pdf"));
+		int userSelection = fileChooser.showSaveDialog(parentFrame);
+		File fileToSave = null;
+		if (userSelection == JFileChooser.APPROVE_OPTION) {
+			fileToSave = fileChooser.getSelectedFile();
+		}
+		Document document = new Document();
+		PdfWriter.getInstance(document, new FileOutputStream(fileToSave));
+
+		document.open();
+		PhieuNhapModel dh = DAO.PhieuNhapDAO.getPhieuNhapByID(id_pn);
+		NhaCungCapModel ncc = DAO.NhaCungCapDAO.getNCCByID(dh.getId_ncc());
+		NhanVienModel nv = DAO.NhanVienDAO.getUsersByID(dh.getId_nv());
+		// add title and date
+		Paragraph id_dh1 = new Paragraph("Ma Hoa Don: " + dh.getId_pn());
+		Paragraph KhachHang = new Paragraph("Nha Cung Cap : " + dh.getId_ncc() + "-" + ncc.getTen_ncc());
+		Paragraph NhanVien = new Paragraph("Nhan Vien : " + dh.getId_nv() + "-" + nv.getHoTen());
+		Paragraph date = new Paragraph("Date: " + dh.getNgaynhap() + "");
+		Paragraph tongsl = new Paragraph("Tong So Luong: " + dh.getTongsl());
+		Paragraph tongtien = new Paragraph("Tong Tien: " + intToMoney(dh.getTongtien()));
+		Paragraph trong = new Paragraph("  ");
+		document.add(id_dh1);
+		document.add(KhachHang);
+		document.add(NhanVien);
+		document.add(date);
+		document.add(tongsl);
+		document.add(tongtien);
+		document.add(trong);
+
+		PdfPTable table = new PdfPTable(new float[] { 1, 1, 1, 1 });
+		table.addCell("STT");
+		table.addCell("San Pham");
+		table.addCell("So Luong");
+		table.addCell("Gia Tien");
+		int dem = 1;
+		for (CTPhieuNhapModel ctdh : DAO.CTPhieuNhapDAO.getCTPhieuNhapByID(id_pn)) {
+			table.addCell(dem + "");
+			dem++;
+			table.addCell(ctdh.getId_sp() + "-" + DAO.SanPhamDAO.getTenSanPhamByIdSP(ctdh.getId_sp()));
+			table.addCell(ctdh.getSoluong() + "");
+			table.addCell(intToMoney(ctdh.getGia()));
+		}
+		document.add(table);
+		document.close();
+	}
+
+	public static String intToMoney(int value) {
+		Locale locale = new Locale("vi", "VN");
+		Currency currency = Currency.getInstance("VND");
+		NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+		currencyFormatter.setCurrency(currency);
+		return currencyFormatter.format(value);
+	}
+
 
 }

@@ -110,6 +110,5 @@ public class NhanHieuBUS {
 		} else {
 			JOptionPane.showMessageDialog(null, "Nhập thất bại");
 		}
-
 	}
 }

@@ -1,51 +1,34 @@
 package giaodien;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.Arrays;
 import java.util.Currency;
 
 import model.SanPhamGHModel;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.JComboBox;
-import javax.imageio.ImageIO;
-import javax.lang.model.type.NullType;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.SystemColor;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
-import DAO.SanPhamDAO;
-import DAO.KhachHangDAO;
-import DAO.NhanVienDAO;
-import model.CTDonHangModel;
-import model.KhachHangModel;
 import model.NhanVienModel;
 import model.SanPhamModel;
 
@@ -53,19 +36,11 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollBar;
-import javax.swing.ComboBoxModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JCheckBox;
@@ -83,6 +58,7 @@ public class BanHang extends JPanel {
 	private JLabel lblNewLabel_2;
 	private JTextField textField_1;
 	private JTextField textField_2;
+	JLabel txtDiemTL;
 	JPanel paneThayDoi = new JPanel();
 	JPanel paneGia;
 	JComboBox comboLoaiSp = new JComboBox();
@@ -318,7 +294,7 @@ public class BanHang extends JPanel {
 	 	txtTenKH.setBounds(130, 116, 200, 45);
 	 	panel_3.add(txtTenKH);
 	 	
-	 	JLabel txtDiemTL = new JLabel("0\r\n");
+	 	txtDiemTL = new JLabel("0");
 	 	txtDiemTL.setHorizontalAlignment(SwingConstants.CENTER);
 	 	txtDiemTL.setForeground(Color.ORANGE);
 	 	txtDiemTL.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 18));
@@ -372,7 +348,7 @@ public class BanHang extends JPanel {
        	modelSP.setColumnIdentifiers(columnNamesSP);
        	layDuLieu();
     	hienSanPham(sp);
-    	tableSP.setModel(modelSP);
+    	
     	tableSP.getColumnModel().getColumn(0).setPreferredWidth(100);
     	tableSP.getColumnModel().getColumn(1).setPreferredWidth(300);
     	tableSP.getColumnModel().getColumn(2).setPreferredWidth(200);
@@ -654,6 +630,8 @@ public class BanHang extends JPanel {
 		txtTenKH.setText("");
 		txtTongTien.setText("0");
 		txtTongsl.setText("0");
+		txtDiemTL.setText("0");
+		
 	}
 	public void TinhTongTien() {
 		int tongtien=0;
@@ -694,7 +672,7 @@ public class BanHang extends JPanel {
 	public void hienSanPham(ArrayList<SanPhamModel> spLoc) {
 		modelSP.setRowCount(0);
 		for(SanPhamModel sp : spLoc ) {
-			Object[] row = new Object[] {sp.getId_sp(),sp.getTensp(),intToMoney(sp.getGia()),sp.getConlai(),DAO.CTDonHangDAO.laySoLuongById(sp.getId_sp())} ;
+			Object[] row = new Object[] {sp.getId_sp(),sp.getTensp(),intToMoney(sp.getGia()),sp.getConlai()} ;
       		modelSP.addRow(row);
 		}
 		tableSP.setModel(modelSP);

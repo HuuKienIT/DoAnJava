@@ -42,12 +42,12 @@ public class CTDonHangDAO {
 	public static int laySoLuongById(int id_sp) {
 		int soluong=0;
 		try {
-			String sql = "SELECT sum(soluong) FROM ctdonhang where id_sp="+id_sp;
+			String sql = "SELECT sum(soluong) as tsl FROM ctdonhang where id_sp="+id_sp;
 			mySQLHelper helper = new mySQLHelper();
 			helper.open();
 			ResultSet rs = helper.executeQuery(sql);
 			while(rs.next()) {
-				soluong =rs.getInt("soluong");
+				soluong =rs.getInt("tsl");
 			}
 			helper.close();	
 		} catch (Exception e) {

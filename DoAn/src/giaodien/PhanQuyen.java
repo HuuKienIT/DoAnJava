@@ -18,6 +18,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import DAO.NhanVienDAO;
+import model.ChucVuModel;
+import model.NhanHieuModel;
 import model.NhanVienModel;
 import model.QuyenModel;
 import model.SanPhamModel;
@@ -35,8 +37,34 @@ public class PhanQuyen extends JPanel {
 	public JPanel paneGia;
 	private JTextField txtMax;
 	private JTextField txtMin;
+	JCheckBox ttbanhang;
+	JCheckBox ttnhaphang;
+	JCheckBox xnhanvien;
+	JCheckBox ttnhanvien;
+	JCheckBox xsanpham;
+	JCheckBox xthongke;
+	JCheckBox ttsanpham;
+	JLabel lblPhnQuyn;
+	JCheckBox ttphanquyen;
 	JComboBox comboBoxChucVu = new JComboBox();
+	public class Item {
+	    private String name;
+	    private int value;
 
+	    public Item(String name, int value) {
+	        this.name = name;
+	        this.value = value;
+	    }
+
+	    @Override
+	    public String toString() {
+	        return name;
+	    }
+
+	    public int getValue() {
+	        return value;
+	    }
+	}
 	public PhanQuyen() {
 		setBackground(SystemColor.control);
 		setLayout(null);
@@ -83,55 +111,55 @@ public class PhanQuyen extends JPanel {
 		lblSnPhm.setBounds(747, 323, 157, 40);
 		panel_1.add(lblSnPhm);
 
-		JCheckBox ttbanhang = new JCheckBox("Thao Tác");
+		ttbanhang = new JCheckBox("Thao Tác");
 		ttbanhang.setBackground(Color.WHITE);
 		ttbanhang.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
 		ttbanhang.setBounds(238, 138, 114, 23);
 		panel_1.add(ttbanhang);
 
-		JCheckBox ttnhaphang = new JCheckBox("Thao Tác");
+		ttnhaphang = new JCheckBox("Thao Tác");
 		ttnhaphang.setBackground(Color.WHITE);
 		ttnhaphang.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
 		ttnhaphang.setBounds(238, 248, 114, 23);
 		panel_1.add(ttnhaphang);
 
-		JCheckBox xnhanvien = new JCheckBox("Xem");
+		xnhanvien = new JCheckBox("Xem");
 		xnhanvien.setBackground(Color.WHITE);
 		xnhanvien.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
 		xnhanvien.setBounds(238, 362, 114, 23);
 		panel_1.add(xnhanvien);
 
-		JCheckBox ttnhanvien = new JCheckBox("Thao Tác");
+		ttnhanvien = new JCheckBox("Thao Tác");
 		ttnhanvien.setBackground(Color.WHITE);
 		ttnhanvien.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
 		ttnhanvien.setBounds(238, 403, 114, 23);
 		panel_1.add(ttnhanvien);
 
-		JCheckBox xsanpham = new JCheckBox("Xem");
+		xsanpham = new JCheckBox("Xem");
 		xsanpham.setBackground(Color.WHITE);
 		xsanpham.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
 		xsanpham.setBounds(778, 364, 114, 23);
 		panel_1.add(xsanpham);
 
-		JCheckBox ttsanpham = new JCheckBox("Thao Tác");
+		ttsanpham = new JCheckBox("Thao Tác");
 		ttsanpham.setBackground(Color.WHITE);
 		ttsanpham.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
 		ttsanpham.setBounds(778, 405, 114, 23);
 		panel_1.add(ttsanpham);
 
-		JCheckBox xthongke = new JCheckBox("Xem");
+		xthongke = new JCheckBox("Xem");
 		xthongke.setBackground(Color.WHITE);
 		xthongke.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
 		xthongke.setBounds(778, 138, 114, 23);
 		panel_1.add(xthongke);
 
-		JLabel lblPhnQuyn = new JLabel("Phân Quyền");
+		lblPhnQuyn = new JLabel("Phân Quyền");
 		lblPhnQuyn.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPhnQuyn.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 22));
 		lblPhnQuyn.setBounds(747, 201, 157, 40);
 		panel_1.add(lblPhnQuyn);
 
-		JCheckBox ttphanquyen = new JCheckBox("Thao Tác");
+		ttphanquyen = new JCheckBox("Thao Tác");
 		ttphanquyen.setBackground(Color.WHITE);
 		ttphanquyen.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
 		ttphanquyen.setBounds(778, 248, 114, 23);
@@ -140,7 +168,12 @@ public class PhanQuyen extends JPanel {
 		JButton btnLu = new JButton("Lưu");
 		btnLu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int id_cv = DAO.ChucVuDAO.getidChucVuByName(comboBoxChucVu.getSelectedItem().toString());
+				int id_cv=0;
+				Object selectedItem = comboBoxChucVu.getSelectedItem();
+				if (selectedItem instanceof Item) {
+				    Item item = (Item) selectedItem;
+				    id_cv = item.getValue();
+				}
 				DAO.ChucVu_QuyenDAO.XoaDi(id_cv);
 				if(ttbanhang.isSelected()) {
 					DAO.ChucVu_QuyenDAO.themVao(id_cv,1);
@@ -196,9 +229,14 @@ public class PhanQuyen extends JPanel {
 		comboBoxChucVu.setModel(LoaiSP);
 		comboBoxChucVu.setBackground(Color.WHITE);
 
-		for (String nh : DAO.ChucVuDAO.getAllChucVu()) {
-			LoaiSP.addElement(nh);
-		}
+//		for (String nh : DAO.ChucVuDAO.getAllChucVu()) {
+//			LoaiSP.addElement(nh);
+//		}
+		for (ChucVuModel cv : DAO.ChucVuDAO.getAllChucVu()) {
+			Item i = new Item(cv.getTen_cv(),cv.getId_cv());
+			comboBoxChucVu.addItem(i);
+			
+			}
 		comboBoxChucVu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ttbanhang.setSelected(false);
@@ -209,35 +247,22 @@ public class PhanQuyen extends JPanel {
 				xsanpham.setSelected(false);
 				ttsanpham.setSelected(false);
 				xthongke.setSelected(false);
-				int id_cv = DAO.ChucVuDAO.getidChucVuByName(comboBoxChucVu.getSelectedItem().toString());
-				for(QuyenModel q : DAO.ChucVu_QuyenDAO.getQuyenByidChucVu(id_cv)) {
-					if (q.id_q == 1) {
-						ttbanhang.setSelected(true);
-					}
-					if (q.id_q == 2) {
-						ttnhaphang.setSelected(true);
-					}
-					if (q.id_q == 3) {
-						xnhanvien.setSelected(true);
-					}
-					if (q.id_q == 4) {
-						ttnhanvien.setSelected(true);
-					}
-					if (q.id_q == 5) {
-						ttphanquyen.setSelected(true);
-					}
-					if (q.id_q == 6) {
-						xsanpham.setSelected(true);
-					}
-					if (q.id_q == 7) {
-						ttsanpham.setSelected(true);
-					}
-					if (q.id_q == 8) {
-						xthongke.setSelected(true);
-					}
+				int id_cv=0;
+				Object selectedItem = comboBoxChucVu.getSelectedItem();
+				if (selectedItem instanceof Item) {
+				    Item item = (Item) selectedItem;
+				    id_cv = item.getValue();
 				}
+				HienThi(id_cv);
 			}
 		});
+		int id_cv=0;
+		Object selectedItem = comboBoxChucVu.getSelectedItem();
+		if (selectedItem instanceof Item) {
+		    Item item = (Item) selectedItem;
+		    id_cv = item.getValue();
+		}
+		HienThi(id_cv);
 		comboBoxChucVu.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
 		comboBoxChucVu.setBounds(394, 11, 300, 30);
 		panel_2.add(comboBoxChucVu);
@@ -254,6 +279,34 @@ public class PhanQuyen extends JPanel {
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNewButton.setBounds(1060, 5, 100, 40);
 		panel_2.add(btnNewButton);
+	}
+	public void HienThi(int id_cv) {
+		for(QuyenModel q : DAO.ChucVu_QuyenDAO.getQuyenByidChucVu(id_cv)) {
+			if (q.id_q == 1) {
+				ttbanhang.setSelected(true);
+			}
+			if (q.id_q == 2) {
+				ttnhaphang.setSelected(true);
+			}
+			if (q.id_q == 3) {
+				xnhanvien.setSelected(true);
+			}
+			if (q.id_q == 4) {
+				ttnhanvien.setSelected(true);
+			}
+			if (q.id_q == 5) {
+				ttphanquyen.setSelected(true);
+			}
+			if (q.id_q == 6) {
+				xsanpham.setSelected(true);
+			}
+			if (q.id_q == 7) {
+				ttsanpham.setSelected(true);
+			}
+			if (q.id_q == 8) {
+				xthongke.setSelected(true);
+			}
+		}
 	}
 
 

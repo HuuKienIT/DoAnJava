@@ -13,6 +13,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JTextField;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
@@ -20,6 +23,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import DAO.NhanHieuDAO;
 import DAO.SanPhamDAO;
@@ -37,6 +41,7 @@ import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Currency;
@@ -331,6 +336,11 @@ public class SanPham extends JPanel {
        		Object[] row = new Object[] {sp.getId_sp(),sp.getTensp(),sp.getNhanhieu(),intToMoney(sp.getGia()),sp.getConlai()} ;
        		modelSP.addRow(row);
        	}
+		TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelSP);
+		table.setRowSorter(sorter);
+		sorter.setSortable(4, true); 
+		sorter.setSortKeys(Arrays.asList(new RowSorter.SortKey(4, SortOrder.ASCENDING))); 
+		sorter.sort();
 		table.setModel(modelSP);
 	}
 	public void TimKiem() {
@@ -366,14 +376,14 @@ public class SanPham extends JPanel {
 			 Collections.sort(spLoc, new Comparator<SanPhamModel>() {
 		            @Override
 		            public int compare(SanPhamModel s1, SanPhamModel s2) {
-		                return s1.getGia() - s2.getGia();
+		                return s1.getConlai() - s2.getConlai();
 		            }
 		        });		
 		}else {
 			Collections.sort(spLoc, new Comparator<SanPhamModel>() {
 	            @Override
 	            public int compare(SanPhamModel s1, SanPhamModel s2) {
-	                return s2.getGia() - s1.getGia();
+	                return s2.getConlai() - s1.getConlai();
 	            }
 	        });	
 		}

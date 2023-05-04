@@ -4,9 +4,30 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import model.DonHangModel;
 import model.PhieuNhapModel;
 public class PhieuNhapDAO {
-
+	public static PhieuNhapModel getPhieuNhapByID(int id_pn) {
+		PhieuNhapModel dh = new PhieuNhapModel();
+		try {
+			String sql = "SELECT * FROM phieunhap where id_dh=" + id_pn;
+			mySQLHelper helper = new mySQLHelper();
+			helper.open();
+			ResultSet rs = helper.executeQuery(sql);
+			while (rs.next()) {
+				dh.setId_pn(rs.getInt("id_pn"));
+				dh.setId_ncc(rs.getInt("id_ncc"));
+				dh.setId_nv(rs.getInt("id_nv"));
+				dh.setNgaynhap(rs.getDate("ngaynhap").toLocalDate());
+				dh.setTongsl(rs.getInt("tongsl"));
+				dh.setTongtien(rs.getInt("tongtien"));
+			}
+			helper.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return dh;
+	}
 	public static ArrayList<PhieuNhapModel> getAllPhieuNhap() {
 		ArrayList<PhieuNhapModel> ds = new ArrayList<PhieuNhapModel>();
 		try {

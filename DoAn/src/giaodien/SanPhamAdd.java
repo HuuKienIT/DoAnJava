@@ -275,6 +275,7 @@ public class SanPhamAdd extends JFrame {
 	}
 
 	public boolean checkExistSP(String masp) {
+
 		for (int i = 0; i < dsSP.size(); i++) {
 			if (dsSP.get(i).getMasp().equalsIgnoreCase(masp)) {
 				return true;

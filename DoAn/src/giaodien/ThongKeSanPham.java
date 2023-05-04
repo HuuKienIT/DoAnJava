@@ -12,6 +12,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Currency;
 import java.util.Locale;
 
@@ -20,15 +23,20 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import org.jfree.chart.*;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 
+import giaodien.PhanQuyen.Item;
 import model.SanPhamModel;
 
 public class ThongKeSanPham extends JPanel {
@@ -103,19 +111,31 @@ public class ThongKeSanPham extends JPanel {
 		table.getColumnModel().getColumn(0).setCellRenderer(new CenterAlignRenderer());
 		table.getColumnModel().getColumn(1).setCellRenderer(new CenterAlignRenderer());
 		scrollPane.setViewportView(table);
-		table.addMouseListener(new MouseAdapter() {
-			
-			
+		table.addMouseListener(new MouseAdapter() {				
 		});
 		hienthi();
-        
+    	table.getColumnModel().getColumn(0).setCellRenderer(new CenterAlignRenderer());
+    	DefaultTableCellRenderer rendererRight = new DefaultTableCellRenderer();
+        rendererRight.setHorizontalAlignment(SwingConstants.RIGHT);
+    	table.getColumnModel().getColumn(3).setCellRenderer(rendererRight);
+    	table.getColumnModel().getColumn(4).setCellRenderer(new CenterAlignRenderer());
+    	table.getColumnModel().getColumn(5).setCellRenderer(new CenterAlignRenderer());
+    
 	}
 	public void hienthi() {
-		
+		ArrayList<SanPhamModel> ds ;
 		for(SanPhamModel sp :DAO.SanPhamDAO.getAllSanPham()) {
-			Object[] row = new Object[] {sp.getId_sp(),sp.getNhanhieu(),sp.getTensp(),intToMoney(sp.getGia()),sp.getConlai()} ;
+			if(DAO.CTDonHangDAO.laySoLuongById(sp.getId_sp())<1) {
+				continue;
+			}
+			Object[] row = new Object[] {sp.getId_sp(),sp.getNhanhieu(),sp.getTensp(),intToMoney(sp.getGia()),sp.getConlai(),DAO.CTDonHangDAO.laySoLuongById(sp.getId_sp())} ;
       		model.addRow(row);
 		}
+		TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+		table.setRowSorter(sorter);
+		sorter.setSortable(5, true); 
+		sorter.setSortKeys(Arrays.asList(new RowSorter.SortKey(5, SortOrder.DESCENDING))); 
+		sorter.sort();
 		table.setModel(model);
 		
 	}

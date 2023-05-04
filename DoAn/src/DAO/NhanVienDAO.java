@@ -33,14 +33,10 @@ public class NhanVienDAO {
 				NhanVienModel tk = new NhanVienModel();
 				tk.setId_nv(rs.getInt("id_nv"));
 				tk.setHoTen(rs.getString("ten_nv"));
-				tk.setGioiTinh(rs.getInt("gioitinh"));
 				tk.setEmail(rs.getString("email"));
-				tk.setSoDth(rs.getString("sodth"));
-				tk.setTaiKhoan(rs.getString("taikhoan"));
-				tk.setMatKhau(rs.getString("matkhau"));
+				tk.setSoDth(rs.getInt("sodth"));
 				tk.setChucVu(rs.getString("ten_cv"));
 				tk.setPhoto(rs.getString("photo"));
-				tk.setNamSinh(rs.getString("ngaysinh"));
 				ds.add(tk);
 			}
 			helper.close();	
@@ -59,14 +55,10 @@ public class NhanVienDAO {
 			while(rs.next()) {	
 				tk.setId_nv(rs.getInt("id_nv"));
 				tk.setHoTen(rs.getString("ten_nv"));
-				tk.setGioiTinh(rs.getInt("gioitinh"));
 				tk.setEmail(rs.getString("email"));
-				tk.setSoDth(rs.getString("sodth"));
-				tk.setTaiKhoan(rs.getString("taikhoan"));
-				tk.setMatKhau(rs.getString("matkhau"));
+				tk.setSoDth(rs.getInt("sodth"));
 				tk.setChucVu(rs.getString("ten_cv"));
 				tk.setPhoto(rs.getString("photo"));
-				tk.setNamSinh(rs.getString("ngaysinh"));
 			}
 			helper.close();
 			
@@ -78,15 +70,13 @@ public class NhanVienDAO {
 	public static int themUsers(NhanVienModel us) {
 		int n=-1;
 		try {
-			int id_nv=demTongSoNV()+1;
-			int id_cv=ChucVuDAO.getidChucVuByName(us.chucVu);
-			String sql = "insert into nhanvien values('"+id_nv+"','"+us.hoTen+"','"+us.namSinh+"','"+us.taiKhoan+"','"+us.matKhau+"','"+id_cv+"','"+us.photo+"','"+us.soDth+"','"+us.email+"','"+us.gioiTinh+"')";
+			String sql = String.format("INSERT INTO nhanvien(hoten,email,taikhoan,matkhau.sodth,chucvu) VALUES('%s','%s','%s','%s','%d','%s')"
+					,us.getHoTen(),us.getEmail(),us.getTaiKhoan(),us.getMatKhau(),us.getSoDth(),us.getChucVu());
 			mySQLHelper helper = new mySQLHelper();
 			helper.open();
 			n = helper.executeUpdate(sql);
 			helper.close();
 		} catch (Exception e) {
-			System.out.print(e.toString());
 		}
 		return n;
 	}
@@ -105,21 +95,17 @@ public class NhanVienDAO {
 	public static NhanVienModel getUsersByID(int ID) {
 		NhanVienModel tk = new NhanVienModel();
 		try {
-			String sql = "SELECT * FROM nhanvien join chucvu on nhanvien.id_cv=chucvu.id_cv where nhanvien.id_nv='"+ID+"'";
+			String sql = "SELECT * FROM nhanvien where id_nv="+ID;
 			mySQLHelper helper = new mySQLHelper();
 			helper.open();
 			ResultSet rs = helper.executeQuery(sql);
 			while(rs.next()) {
 				tk.setId_nv(rs.getInt("id_nv"));
 				tk.setHoTen(rs.getString("ten_nv"));
-				tk.setGioiTinh(rs.getInt("gioitinh"));
 				tk.setEmail(rs.getString("email"));
-				tk.setSoDth(rs.getString("sodth"));
-				tk.setTaiKhoan(rs.getString("taikhoan"));
-				tk.setMatKhau(rs.getString("matkhau"));
-				tk.setChucVu(rs.getString("ten_cv"));
+				tk.setSoDth(rs.getInt("sodth"));
+//				tk.setChucVu(rs.getString("ten_cv"));
 				tk.setPhoto(rs.getString("photo"));
-				tk.setNamSinh(rs.getString("ngaysinh"));
 			}
 			helper.close();
 		} catch (Exception e) {
@@ -129,8 +115,8 @@ public class NhanVienDAO {
 	public static int chinhSuaUsers(int ID, NhanVienModel us) {
 		int n=-1;
 		try {
-			int id_cv=ChucVuDAO.getidChucVuByName(us.chucVu);
-			String sql = "update nhanvien set ten_nv='"+us.hoTen+"',ngaysinh='"+us.namSinh+"',taikhoan='"+us.taiKhoan+"',matkhau='"+us.matKhau+"',id_cv='"+id_cv+"',photo='"+us.photo+"',sodth='"+us.soDth+"',email='"+us.email+"',gioitinh='"+us.gioiTinh+"' where id_nv='"+ID+"'";
+			String sql = String.format("UPDATE users SET hoten='%s',email='%s',taikhoan='%s',matkhau='%s',sodth='%d',chucvu='%s' WHERE id_user='%d'"
+					,us.getHoTen(),us.getEmail(),us.getTaiKhoan(),us.getMatKhau(),us.getSoDth(),us.getChucVu(),ID);
 			mySQLHelper helper = new mySQLHelper();
 			helper.open();
 			n = helper.executeUpdate(sql);
