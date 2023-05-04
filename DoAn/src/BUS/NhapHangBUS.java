@@ -56,7 +56,6 @@ public class NhapHangBUS {
 			} catch (DocumentException e) {
 				e.printStackTrace();
 			}
-			System.out.println(DAO.PhieuNhapDAO.layIDcuoi());
 		}
 	}
 
@@ -156,7 +155,7 @@ public class NhapHangBUS {
 		PdfWriter.getInstance(document, new FileOutputStream(fileToSave));
 
 		document.open();
-		PhieuNhapModel dh = DAO.PhieuNhapDAO.getPhieuNhapByID(id_pn);
+		PhieuNhapModel dh = DAO.PhieuNhapDAO.getPhieuNhapByID(DAO.PhieuNhapDAO.layIDcuoi());
 		NhaCungCapModel ncc = DAO.NhaCungCapDAO.getNCCByID(dh.getId_ncc());
 		NhanVienModel nv = DAO.NhanVienDAO.getUsersByID(dh.getId_nv());
 		// add title and date

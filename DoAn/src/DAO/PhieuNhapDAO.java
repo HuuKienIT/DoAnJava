@@ -10,7 +10,7 @@ public class PhieuNhapDAO {
 	public static PhieuNhapModel getPhieuNhapByID(int id_pn) {
 		PhieuNhapModel dh = new PhieuNhapModel();
 		try {
-			String sql = "SELECT * FROM phieunhap where id_dh=" + id_pn;
+			String sql = "SELECT * FROM phieunhap where id_pn=" + id_pn;
 			mySQLHelper helper = new mySQLHelper();
 			helper.open();
 			ResultSet rs = helper.executeQuery(sql);

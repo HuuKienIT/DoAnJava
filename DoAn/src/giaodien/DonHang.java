@@ -25,6 +25,7 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Locale;
 
@@ -35,6 +36,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import model.DonHangModel;
+import model.DonHangModel;
 import model.KhachHangModel;
 import model.NhanVienModel;
 import javax.swing.border.TitledBorder;
@@ -194,26 +197,6 @@ public class DonHang extends JPanel {
 		table.getColumnModel().getColumn(4).setCellRenderer(new CenterAlignRenderer());
 		table.getColumnModel().getColumn(5).setCellRenderer(rendererRight);
 		scrollPane.setViewportView(table);
-
-		JButton btnNewButton_2 = new JButton("Xuất Excel");
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int output = JOptionPane.showConfirmDialog(null, "Bạn có muốn xuất File Excel không?", "",
-						JOptionPane.YES_NO_OPTION);
-				if (output == JOptionPane.YES_OPTION) {
-					try {
-						BUS.DonHangBUS.xuatExcel();
-						
-					} catch (IOException e1) {
-						
-					}
-				}
-			}
-		});
-		btnNewButton_2.setIcon(new ImageIcon(DonHang.class.getResource("/icon/export.jpg")));
-		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnNewButton_2.setBounds(1020, 11, 150, 40);
-		panel_1.add(btnNewButton_2);
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -233,7 +216,7 @@ public class DonHang extends JPanel {
 	}
 
 	public void layDulieu() {
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		DefaultTableModel model = new DefaultTableModel();
 		for (model.DonHangModel dh : DAO.DonHangDAO.getAllDonHang()) {
 			NhanVienModel nv = DAO.NhanVienDAO.getUsersByID(dh.getId_nv());
 			KhachHangModel kh = DAO.KhachHangDAO.getKhachHangByid(dh.getId_kh());
@@ -244,7 +227,29 @@ public class DonHang extends JPanel {
 		}
 		table.setModel(model);
 	}
-
+	public void TimKiem() {
+		DefaultTableModel model = new DefaultTableModel();
+		ArrayList<DonHangModel> spLoc = new ArrayList<DonHangModel>();
+		String chuoiTim =txtKhachHang.getText();
+		for(DonHangModel u :DAO.DonHangDAO.getAllDonHang()) {
+			NhanVienModel nv = DAO.NhanVienDAO.getUsersByID(u.getId_nv());
+			KhachHangModel kh = DAO.KhachHangDAO.getKhachHangByid(u.getId_kh());
+			if(nv.getHoTen().contains(chuoiTim.toLowerCase()) || String.valueOf(nv.getHoTen()).contains(chuoiTim) ) 
+			{
+				spLoc.add(u);
+			}
+		}	
+		model.setRowCount(0);
+		for(DonHangModel u : spLoc ) {
+			NhanVienModel nv = DAO.NhanVienDAO.getUsersByID(u.getId_nv());
+			KhachHangModel kh = DAO.KhachHangDAO.getKhachHangByid(u.getId_kh());
+			Object[] row = new Object[] { u.id_dh, kh.getId_kh() + " - " + kh.getTenkh(),
+					nv.getId_nv() + " - " + nv.getHoTen(), u.getNgayban(), u.getTongsl(),
+					intToMoney(u.getTongtien()) };
+      		model.addRow(row);
+		}
+		table.setModel(model);
+	}
 	public static String intToMoney(int value) {
 		Locale locale = new Locale("vi", "VN");
 		Currency currency = Currency.getInstance("VND");

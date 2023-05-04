@@ -97,25 +97,7 @@ public class PhieuNhap extends JPanel {
     	table.getColumnModel().getColumn(5).setCellRenderer(rendererRight);
 		scrollPane.setViewportView(table);
 		
-		JButton btnNewButton = new JButton("Xuất Excel");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int output = JOptionPane.showConfirmDialog(null, "Bạn có muốn xuất File Excel không?", "",
-						JOptionPane.YES_NO_OPTION);
-				if (output == JOptionPane.YES_OPTION) {
-					try {
-						BUS.PhieuNhapBUS.xuatExcel();
-						
-					} catch (IOException e1) {
-						
-					}
-				}
-			}
-		});
-		btnNewButton.setIcon(new ImageIcon(PhieuNhap.class.getResource("/icon/export.jpg")));
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnNewButton.setBounds(1020, 10, 150, 40);
-		panel_1.add(btnNewButton);
+
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
