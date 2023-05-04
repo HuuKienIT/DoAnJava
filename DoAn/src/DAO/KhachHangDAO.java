@@ -6,6 +6,47 @@ import java.util.ArrayList;
 import model.KhachHangModel;
 
 public class KhachHangDAO {
+	public static int tangDiem(int id_kh, int diem) {
+		int n = -1;
+		int sl=layDiem(id_kh)+diem;
+		try {
+			String sql="update khachhang set diem="+sl+" where id_kh="+id_kh;
+			mySQLHelper helper=new mySQLHelper();
+			helper.open();
+			n=helper.executeUpdate(sql);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return n;
+	}
+	public static int truDiem(int id_kh) {
+		int n = -1;
+		try {
+			String sql="update khachhang set diem = 0 where id_kh="+id_kh;
+			mySQLHelper helper=new mySQLHelper();
+			helper.open();
+			n=helper.executeUpdate(sql);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return n;
+	}
+	public static int layDiem(int id_kh) {
+		int diem = 0;
+		try {
+			String sql="select diem from khachhang where id_kh="+id_kh;
+			mySQLHelper helper=new mySQLHelper();
+			helper.open();
+			ResultSet rs = helper.executeQuery(sql);
+			while(rs.next()) {
+				diem=rs.getInt("diem");
+			}
+			helper.close();	
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return diem;
+	}
 	public static int demTongSoKH() {
 		int dem=0;
 		try {

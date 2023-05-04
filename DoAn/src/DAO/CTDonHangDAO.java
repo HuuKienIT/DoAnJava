@@ -39,5 +39,21 @@ public class CTDonHangDAO {
 	}
 	return n;
 	}
+	public static int laySoLuongById(int id_sp) {
+		int soluong=0;
+		try {
+			String sql = "SELECT sum(soluong) FROM ctdonhang where id_sp="+id_sp;
+			mySQLHelper helper = new mySQLHelper();
+			helper.open();
+			ResultSet rs = helper.executeQuery(sql);
+			while(rs.next()) {
+				soluong =rs.getInt("soluong");
+			}
+			helper.close();	
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return soluong;
+	}
 }
 

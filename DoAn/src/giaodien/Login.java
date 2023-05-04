@@ -138,26 +138,6 @@ public class Login extends JFrame {
 		txtMatKhau.setEchoChar('*');
 		panel.add(txtMatKhau);
 		
-		JLabel lblNewLabel_1 = new JLabel("Don't have an account?");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_1.setForeground(new Color(248, 248, 255));
-		lblNewLabel_1.setBounds(88, 389, 148, 25);
-		panel.add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("Sign Up");
-		lblNewLabel_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				new SignUp().setVisible(true);
-				dispose();
-			}
-		});
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
-		lblNewLabel_2.setBackground(new Color(240, 240, 240));
-		lblNewLabel_2.setForeground(new Color(248, 248, 255));
-		lblNewLabel_2.setBounds(232, 391, 65, 18);
-		panel.add(lblNewLabel_2);
-		
 		JLabel lblNewLabel_3 = new JLabel("");
 		lblNewLabel_3.setIcon(new ImageIcon(Login.class.getResource("/img/icons8-male-user-80.png")));
 		lblNewLabel_3.setBounds(10, 22, 92, 69);

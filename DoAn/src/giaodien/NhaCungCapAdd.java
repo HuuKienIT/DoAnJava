@@ -23,6 +23,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.ImageIcon;
 
 public class NhaCungCapAdd extends JFrame {
 
@@ -33,6 +34,7 @@ public class NhaCungCapAdd extends JFrame {
 	private JTextField txtemail;
 	ArrayList<NhaCungCapModel> dsNCC = NhaCungCapDAO.getAllNCC();
 	JButton btnNewButton;
+	private JButton btnXoa;
 
 	public NhaCungCapAdd() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -96,9 +98,10 @@ public class NhaCungCapAdd extends JFrame {
 		panel.add(txtemail);
 
 		btnNewButton = new JButton("Thêm");
+		btnNewButton.setIcon(new ImageIcon(NhaCungCapAdd.class.getResource("/icon/save.jpg")));
 		btnNewButton.setBackground(Color.WHITE);
 		btnNewButton.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
-		btnNewButton.setBounds(220, 300, 150, 30);
+		btnNewButton.setBounds(128, 302, 150, 40);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (txttenncc.getText().equals("")) {
@@ -146,6 +149,13 @@ public class NhaCungCapAdd extends JFrame {
 		lblSinThoi_1_1.setEnabled(true);
 		lblSinThoi_1_1.setBounds(46, 230, 150, 30);
 		panel.add(lblSinThoi_1_1);
+		
+		btnXoa = new JButton("Xóa");
+		btnXoa.setIcon(new ImageIcon(NhaCungCapAdd.class.getResource("/icon/delete.jpg")));
+		btnXoa.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
+		btnXoa.setBackground(Color.WHITE);
+		btnXoa.setBounds(343, 302, 123, 40);
+		panel.add(btnXoa);
 	}
 
 	public void setDuLieu(String id, String ten, String sdt, String email) {

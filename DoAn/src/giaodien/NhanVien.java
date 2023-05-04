@@ -37,6 +37,7 @@ public class NhanVien extends JPanel {
 	private JTextField txtMax;
 	private JTextField txtMin;
 	public ArrayList<NhanVienModel> dsNV = NhanVienDAO.getAllUsers();
+	private JTextField textField;
 	
 	public NhanVien() {
 		setBackground(SystemColor.control);
@@ -136,6 +137,32 @@ public class NhanVien extends JPanel {
 		lblNewLabel_3_1.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 20));
 		lblNewLabel_3_1.setBounds(20, 5, 109, 40);
 		panelTimKiem.add(lblNewLabel_3_1);
+		
+		textField = new JTextField();
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		textField.setBounds(350, 10, 250, 30);
+		panelTimKiem.add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("Tên / Email / Số ĐT");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_1.setBounds(174, 10, 150, 30);
+		panelTimKiem.add(lblNewLabel_1);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		comboBox_1.setBounds(748, 10, 150, 30);
+		panelTimKiem.add(comboBox_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Chức Vụ");
+		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_1_1.setBounds(660, 10, 150, 30);
+		panelTimKiem.add(lblNewLabel_1_1);
+		
+		JButton btnTm = new JButton("Tìm");
+		btnTm.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnTm.setBounds(941, 5, 100, 40);
+		panelTimKiem.add(btnTm);
 //		paneThayDoi.add(txtKiem);
 		
 		

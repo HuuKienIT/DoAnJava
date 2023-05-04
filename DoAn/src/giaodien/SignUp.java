@@ -21,26 +21,8 @@ public class SignUp extends JFrame {
 	private JTextField textField;
 	private JPasswordField passwordField;
 	private JPasswordField passwordField_1;
+	private JTextField textField_1;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SignUp frame = new SignUp();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public SignUp() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1056, 473);
@@ -105,27 +87,27 @@ public class SignUp extends JFrame {
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(173, 216, 230));
-		panel_2.setBounds(10, 149, 182, 40);
+		panel_2.setBounds(10, 200, 182, 40);
 		panel_1.add(panel_2);
 		panel_2.setLayout(null);
 		
 		JLabel lblNewLabel_2 = new JLabel("User Name");
 		lblNewLabel_2.setForeground(new Color(255, 255, 255));
-		lblNewLabel_2.setBounds(0, 10, 122, 26);
+		lblNewLabel_2.setBounds(10, 11, 122, 26);
 		panel_2.add(lblNewLabel_2);
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_2.setIcon(new ImageIcon(SignUp.class.getResource("/img/icons8-test-account-40.png")));
 		
 		textField = new JTextField();
 		textField.setFont(new Font("Tahoma", Font.BOLD, 13));
-		textField.setBounds(193, 149, 294, 40);
+		textField.setBounds(193, 200, 294, 40);
 		panel_1.add(textField);
 		textField.setBackground(new Color(255, 255, 255));
 		textField.setColumns(10);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(173, 216, 230));
-		panel_3.setBounds(10, 215, 182, 40);
+		panel_3.setBounds(10, 251, 182, 40);
 		panel_1.add(panel_3);
 		panel_3.setLayout(null);
 		
@@ -137,13 +119,13 @@ public class SignUp extends JFrame {
 		panel_3.add(lblNewLabel_3);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(193, 215, 294, 40);
+		passwordField.setBounds(193, 251, 294, 40);
 		panel_1.add(passwordField);
 		
 		JPanel panel_3_1 = new JPanel();
 		panel_3_1.setLayout(null);
 		panel_3_1.setBackground(new Color(173, 216, 230));
-		panel_3_1.setBounds(10, 280, 182, 40);
+		panel_3_1.setBounds(10, 302, 182, 40);
 		panel_1.add(panel_3_1);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("Confirm Password");
@@ -154,13 +136,33 @@ public class SignUp extends JFrame {
 		panel_3_1.add(lblNewLabel_3_1);
 		
 		passwordField_1 = new JPasswordField();
-		passwordField_1.setBounds(192, 280, 294, 40);
+		passwordField_1.setBounds(192, 302, 294, 40);
 		panel_1.add(passwordField_1);
 		
 		JButton btnNewButton = new JButton("Sign Up");
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnNewButton.setForeground(new Color(173, 216, 230));
-		btnNewButton.setBounds(204, 352, 139, 40);
+		btnNewButton.setBounds(204, 377, 139, 40);
 		panel_1.add(btnNewButton);
+		
+		JPanel panel_2_1 = new JPanel();
+		panel_2_1.setLayout(null);
+		panel_2_1.setBackground(new Color(173, 216, 230));
+		panel_2_1.setBounds(10, 149, 182, 40);
+		panel_1.add(panel_2_1);
+		
+		JLabel lblNewLabel_2_1 = new JLabel("Full Name");
+		lblNewLabel_2_1.setIcon(new ImageIcon(SignUp.class.getResource("/img/icons8-test-account-40.png")));
+		lblNewLabel_2_1.setForeground(Color.WHITE);
+		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_2_1.setBounds(10, 8, 150, 26);
+		panel_2_1.add(lblNewLabel_2_1);
+		
+		textField_1 = new JTextField();
+		textField_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+		textField_1.setColumns(10);
+		textField_1.setBackground(Color.WHITE);
+		textField_1.setBounds(193, 149, 294, 40);
+		panel_1.add(textField_1);
 	}
 }

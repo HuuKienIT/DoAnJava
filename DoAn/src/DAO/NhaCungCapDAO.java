@@ -18,7 +18,7 @@ public class NhaCungCapDAO {
 				ncc.setId_ncc(rs.getInt("id_ncc"));
 				ncc.setTen_ncc(rs.getString("ten_ncc"));
 				ncc.setEmail(rs.getString("email"));
-				ncc.setEmail(rs.getString("sodth"));
+				ncc.setSodth(rs.getString("sodth"));
 			}
 			helper.close();
 		} catch (Exception e) {
@@ -40,7 +40,7 @@ public class NhaCungCapDAO {
 				ncc.setId_ncc(rs.getInt("id_ncc"));
 				ncc.setTen_ncc(rs.getString("ten_ncc"));
 				ncc.setEmail(rs.getString("email"));
-				ncc.setEmail(rs.getString("sodth"));
+				ncc.setSodth(rs.getString("sodth"));
 				ds.add(ncc);
 			}
 			helper.close();

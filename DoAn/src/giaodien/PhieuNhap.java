@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -15,6 +17,7 @@ import javax.swing.JTextField;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Currency;
@@ -27,9 +30,12 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import DAO.NhanHieuDAO;
 import model.NhaCungCapModel;
 import model.NhanVienModel;
 import model.PhieuNhapModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PhieuNhap extends JPanel {
 	private JTable table;
@@ -90,6 +96,26 @@ public class PhieuNhap extends JPanel {
     	table.getColumnModel().getColumn(4).setCellRenderer(new CenterAlignRenderer());
     	table.getColumnModel().getColumn(5).setCellRenderer(rendererRight);
 		scrollPane.setViewportView(table);
+		
+		JButton btnNewButton = new JButton("Xuất Excel");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int output = JOptionPane.showConfirmDialog(null, "Bạn có muốn xuất File Excel không?", "",
+						JOptionPane.YES_NO_OPTION);
+				if (output == JOptionPane.YES_OPTION) {
+					try {
+						BUS.PhieuNhapBUS.xuatExcel();
+						
+					} catch (IOException e1) {
+						
+					}
+				}
+			}
+		});
+		btnNewButton.setIcon(new ImageIcon(PhieuNhap.class.getResource("/icon/export.jpg")));
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNewButton.setBounds(1020, 10, 150, 40);
+		panel_1.add(btnNewButton);
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -106,7 +132,7 @@ public class PhieuNhap extends JPanel {
 		for(PhieuNhapModel pn:dsPN) {
 			NhanVienModel nv = DAO.NhanVienDAO.getUsersByID(pn.getId_nv());
 			NhaCungCapModel ncc = DAO.NhaCungCapDAO.getNCCByID(pn.getId_ncc());
-			Object[] row = new Object[] {pn.getId_pn(),ncc.getTen_ncc(),nv.getHoTen(),pn.getNgaynhap(),pn.getTongsl(),intToMoney(pn.getTongtien())} ;
+			Object[] row = new Object[] {pn.getId_pn(),ncc.getId_ncc()+" - "+ncc.getTen_ncc(),nv.getId_nv()+" - "+nv.getHoTen(),pn.getNgaynhap(),pn.getTongsl(),intToMoney(pn.getTongtien())} ;
 			model.addRow(row);
 		}
 		table.setModel(model);

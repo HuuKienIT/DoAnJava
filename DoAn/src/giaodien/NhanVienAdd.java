@@ -49,9 +49,10 @@ public class NhanVienAdd extends JFrame {
 		setLocationRelativeTo(null);
 		
 		btnLu = new JButton("Thêm");
+		btnLu.setIcon(new ImageIcon(NhanVienAdd.class.getResource("/icon/save.jpg")));
 		btnLu.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 18));
 		btnLu.setBackground(Color.WHITE);
-		btnLu.setBounds(239, 310, 150, 40);
+		btnLu.setBounds(120, 310, 150, 40);
 		panel.add(btnLu);
 		
 		JLabel lblNewLabel_1 = new JLabel("Họ Tên");
@@ -65,32 +66,22 @@ public class NhanVienAdd extends JFrame {
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Số điện thoại");
 		lblNewLabel_1_1.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
-		lblNewLabel_1_1.setBounds(68, 128, 99, 30);
+		lblNewLabel_1_1.setBounds(70, 141, 99, 30);
 		panel.add(lblNewLabel_1_1);
 		
 		txtSodth.setColumns(10);
-		txtSodth.setBounds(195, 130, 200, 30);
+		txtSodth.setBounds(197, 143, 200, 30);
 		panel.add(txtSodth);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("Email");
 		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_1_2.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
-		lblNewLabel_1_2.setBounds(87, 80, 80, 30);
+		lblNewLabel_1_2.setBounds(87, 87, 80, 30);
 		panel.add(lblNewLabel_1_2);
 		
 		txtEmail.setColumns(10);
-		txtEmail.setBounds(195, 80, 227, 30);
+		txtEmail.setBounds(195, 87, 227, 30);
 		panel.add(txtEmail);
-		
-		JLabel lblNewLabel_1_3 = new JLabel("Năm sinh");
-		lblNewLabel_1_3.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
-		lblNewLabel_1_3.setBounds(87, 178, 80, 30);
-		panel.add(lblNewLabel_1_3);
-		
-		RoundJTextField txtNamSinh = new RoundJTextField(15);
-		txtNamSinh.setColumns(10);
-		txtNamSinh.setBounds(195, 180, 91, 30);
-		panel.add(txtNamSinh);
 		
 		JLabel lblNewLabel_1_4 = new JLabel("Mã NV");
 		lblNewLabel_1_4.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
@@ -106,11 +97,11 @@ public class NhanVienAdd extends JFrame {
 		JLabel lblNewLabel_1_2_1 = new JLabel("Chức vụ");
 		lblNewLabel_1_2_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_1_2_1.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
-		lblNewLabel_1_2_1.setBounds(87, 230, 80, 30);
+		lblNewLabel_1_2_1.setBounds(87, 199, 80, 30);
 		panel.add(lblNewLabel_1_2_1);
 		
 
-		comboChucVu.setBounds(195, 233, 168, 30);
+		comboChucVu.setBounds(195, 202, 168, 30);
 		panel.add(comboChucVu);
 		
 
@@ -122,6 +113,13 @@ public class NhanVienAdd extends JFrame {
 		btnNewButton.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 14));
 		btnNewButton.setBounds(493, 259, 100, 30);
 		panel.add(btnNewButton);
+		
+		JButton btnXa = new JButton("Xóa");
+		btnXa.setIcon(new ImageIcon(NhanVienAdd.class.getResource("/icon/delete.jpg")));
+		btnXa.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 18));
+		btnXa.setBackground(Color.WHITE);
+		btnXa.setBounds(300, 310, 150, 40);
+		panel.add(btnXa);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);

@@ -38,7 +38,8 @@ public class ChonKhachHang extends JFrame {
 	JLabel txtTenKH ;
 	JLabel txtMaKH ;
 	JLabel txtID_KH;
-	public ChonKhachHang(JLabel MaKH,JLabel TenKH) {
+	JLabel txtDiemTL;
+	public ChonKhachHang(JLabel MaKH,JLabel TenKH,JLabel txtDiemTL) {
 		setBounds(100, 100, 936, 525);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -99,7 +100,7 @@ public class ChonKhachHang extends JFrame {
 		panel_1.add(scrollPane);
 		table = new cusTable();	
 
-		String[] columnNames = {"ID","Mã KH", "Họ Tên",  "Số Điện Thoại","Điểm"};
+		String[] columnNames = {"ID", "Họ Tên", "Số Điện Thoại","Điểm"};
        	model.setColumnIdentifiers(columnNames);
        	layDuLieu();
        	table.setModel(model);
@@ -108,12 +109,15 @@ public class ChonKhachHang extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				 if (e.getClickCount() == 2) { // Check if the click count is 2 (double-click)
 					 MaKH.setText(table.getValueAt(table.getSelectedRow(), 0)+"");
-					 TenKH.setText(table.getValueAt(table.getSelectedRow(), 2)+"");
-					 
+					 TenKH.setText(table.getValueAt(table.getSelectedRow(), 1)+"");
+					 txtDiemTL.setText(table.getValueAt(table.getSelectedRow(), 3)+"");
 					 dispose();
                  }
 			}
 		});
+       	table.getColumnModel().getColumn(0).setCellRenderer(new CenterAlignRenderer());
+       	table.getColumnModel().getColumn(2).setCellRenderer(new CenterAlignRenderer());
+       	table.getColumnModel().getColumn(3).setCellRenderer(new CenterAlignRenderer());
 		scrollPane.setViewportView(table);
 		scrollPane.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 		scrollPane.getViewport().setBackground(Color.WHITE);
@@ -122,7 +126,7 @@ public class ChonKhachHang extends JFrame {
 	}
 	public void layDuLieu() {
 		for(KhachHangModel kh :DAO.KhachHangDAO.getAllKH() ) {
-       		Object[] row = new Object[] {kh.getId_kh(),kh.getMakh(),kh.getTenkh(),"0"+kh.getSodth(),kh.getDiemtl()} ;
+       		Object[] row = new Object[] {kh.getId_kh(),kh.getTenkh(),"0"+kh.getSodth(),kh.getDiemtl()} ;
        		model.addRow(row);
        	}
 		table.setModel(model);

@@ -33,6 +33,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -151,6 +152,18 @@ public class SanPham extends JPanel {
 		panelHeader.add(btnNewButton_2_1);
 		
 		JButton btnNewButton_2_2 = new JButton("Xuất Excel");
+		btnNewButton_2_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int output = JOptionPane.showConfirmDialog(null, "Bạn có muốn xuất File Excel không?", "",
+						JOptionPane.YES_NO_OPTION);
+				if (output == JOptionPane.YES_OPTION) {
+					try {
+						BUS.SanPhamBUS.xuatExcel();
+					} catch (IOException e1) {
+					}
+				}
+			}
+		});
 		btnNewButton_2_2.setIcon(new ImageIcon(SanPham.class.getResource("/icon/export.jpg")));
 		btnNewButton_2_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNewButton_2_2.setBounds(905, 5, 150, 40);
@@ -315,7 +328,7 @@ public class SanPham extends JPanel {
 	public void layDuLieu() {
 		modelSP.setRowCount(0);
 		for(SanPhamModel sp : dsSP ) {
-       		Object[] row = new Object[] {sp.getId_sp(),sp.getMasp()+"  -  "+sp.getTensp(),sp.getNhanhieu(),intToMoney(sp.getGia()),sp.getConlai()} ;
+       		Object[] row = new Object[] {sp.getId_sp(),sp.getTensp(),sp.getNhanhieu(),intToMoney(sp.getGia()),sp.getConlai()} ;
        		modelSP.addRow(row);
        	}
 		table.setModel(modelSP);
@@ -366,7 +379,7 @@ public class SanPham extends JPanel {
 		}
 		modelSP.setRowCount(0);
 		for(SanPhamModel sp : spLoc ) {
-			Object[] row = new Object[] {sp.getId_sp(),sp.getMasp()+"  -  "+sp.getTensp(),sp.getNhanhieu(),intToMoney(sp.getGia()),sp.getConlai()} ;
+			Object[] row = new Object[] {sp.getId_sp(),sp.getTensp(),sp.getNhanhieu(),intToMoney(sp.getGia()),sp.getConlai()} ;
       		modelSP.addRow(row);
 		}
 		table.setModel(modelSP);

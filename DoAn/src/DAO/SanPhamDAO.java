@@ -7,6 +7,48 @@ import model.PhieuNhapModel;
 import model.SanPhamModel;
 
 public class SanPhamDAO {
+	public static int tangSoLuong(int id_sp, int soluong) {
+		int n = -1;
+		int sl=laySoLuongById(id_sp)+soluong;
+		try {
+			String sql="update sanpham set soluong="+sl+" where id_sp="+id_sp;
+			mySQLHelper helper=new mySQLHelper();
+			helper.open();
+			n=helper.executeUpdate(sql);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return n;
+	}
+	public static int giamSoLuong(int id_sp, int soluong) {
+		int n = -1;
+		int sl=laySoLuongById(id_sp)-soluong;
+		try {
+			String sql="update sanpham set soluong="+sl+" where id_sp="+id_sp;
+			mySQLHelper helper=new mySQLHelper();
+			helper.open();
+			n=helper.executeUpdate(sql);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return n;
+	}
+	public static int laySoLuongById(int id_sp) {
+		int soluong=0;
+		try {
+			String sql = "SELECT soluong FROM sanpham where id_sp=" + id_sp;
+			mySQLHelper helper = new mySQLHelper();
+			helper.open();
+			ResultSet rs = helper.executeQuery(sql);
+			while (rs.next()) {
+				soluong = rs.getInt("soluong");
+			}
+			helper.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return soluong;
+	}
 	public static ArrayList<SanPhamModel> getAllSanPham() {
 		ArrayList<SanPhamModel> ds = new ArrayList<SanPhamModel>();
 		try {

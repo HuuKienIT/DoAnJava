@@ -28,6 +28,8 @@ public class ChiTietDH extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private int id_dh;
+	JLabel txtTongTien = new JLabel();
+	JLabel txtTongSL = new JLabel();
 
 	public ChiTietDH(int id_dh) {
 		this.id_dh=id_dh;
@@ -77,7 +79,7 @@ public class ChiTietDH extends JFrame {
 
 		scrollPane.setViewportView(table);
 		
-		JLabel txtTongSL = new JLabel("\r\n5");
+		
 		txtTongSL.setBorder(new TitledBorder(null, "T\u1ED5ng S\u1ED1 l\u01B0\u1EE3ng", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		txtTongSL.setForeground(Color.RED);
 		txtTongSL.setHorizontalAlignment(SwingConstants.CENTER);
@@ -85,7 +87,7 @@ public class ChiTietDH extends JFrame {
 		txtTongSL.setBounds(576, 380, 100, 50);
 		panel.add(txtTongSL);
 		
-		JLabel txtTongTien = new JLabel("100k");
+		
 		txtTongTien.setBorder(new TitledBorder(null, "T\u1ED5ng Ti\u1EC1n", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		txtTongTien.setForeground(Color.RED);
 		txtTongTien.setHorizontalAlignment(SwingConstants.CENTER);
@@ -97,10 +99,15 @@ public class ChiTietDH extends JFrame {
 	public void layDuLieu() {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		int stt=1;
+		int tongtien=0;int tongsl=0;
 		for(CTDonHangModel ctdh: DAO.CTDonHangDAO.getCTDonHangByID(this.id_dh) ) {
        		Object[] row = new Object[] {stt++,DAO.SanPhamDAO.getTenSanPhamByIdSP(ctdh.getId_sp()),intToMoney(ctdh.getGia()),ctdh.getSoluong(),intToMoney(ctdh.getSoluong()*ctdh.getGia())} ;
        		model.addRow(row);
+       		tongtien+=ctdh.getSoluong()*ctdh.getGia();
+       		tongsl+=ctdh.getSoluong();
        	}
+		txtTongTien.setText(intToMoney(tongtien));
+		txtTongSL.setText(tongsl+"");
 		table.setModel(model);
 	}
 	public static String intToMoney(int value) {

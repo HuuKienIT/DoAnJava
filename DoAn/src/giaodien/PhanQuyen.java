@@ -245,6 +245,11 @@ public class PhanQuyen extends JPanel {
 		comboBoxChucVu.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
 
 		JButton btnNewButton = new JButton("New");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new PhanQuyenAdd().setVisible(true);
+			}
+		});
 		btnNewButton.setIcon(new ImageIcon(PhanQuyen.class.getResource("/icon/add.jpg")));
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNewButton.setBounds(1060, 5, 100, 40);

@@ -51,6 +51,7 @@ public class KhachHang extends JPanel {
 	public JComboBox comboLoaiSp = new JComboBox();
 	private JTextField txtMax;
 	private JTextField txtMin;
+	private JTextField textField;
 	
 	public KhachHang() {
 		setBackground(SystemColor.control);
@@ -75,7 +76,7 @@ public class KhachHang extends JPanel {
 		scrollPane.getViewport().setBackground(Color.WHITE);
 		
 		table = new cusTable();	
-		String[] columnNames = {"ID","Mã KH", "Họ Tên", "Số điện thoại", "Điểm"};
+		String[] columnNames = {"ID", "Họ Tên", "Số điện thoại", "Điểm"};
        	model.setColumnIdentifiers(columnNames);
        
        	layDuLieu();
@@ -130,7 +131,10 @@ public class KhachHang extends JPanel {
                  }
 			}
 		});
-        
+    	table.getColumnModel().getColumn(0).setCellRenderer(new CenterAlignRenderer());
+    	table.getColumnModel().getColumn(2).setCellRenderer(new CenterAlignRenderer());
+    	table.getColumnModel().getColumn(3).setCellRenderer(new CenterAlignRenderer());
+      
         RoundedJPanel panelTimKiem = new RoundedJPanel(20);
 		panelTimKiem.setLayout(null);
 		panelTimKiem.setBackground(Color.WHITE);
@@ -142,6 +146,21 @@ public class KhachHang extends JPanel {
 		lblNewLabel_3_1.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 20));
 		lblNewLabel_3_1.setBounds(20, 5, 109, 40);
 		panelTimKiem.add(lblNewLabel_3_1);
+		
+		JLabel lblNewLabel_1 = new JLabel("Tên / Số ĐT");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_1.setBounds(250, 10, 150, 30);
+		panelTimKiem.add(lblNewLabel_1);
+		
+		textField = new JTextField();
+		textField.setBounds(413, 10, 300, 30);
+		panelTimKiem.add(textField);
+		textField.setColumns(10);
+		
+		JButton btnTm = new JButton("Tìm");
+		btnTm.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnTm.setBounds(920, 5, 100, 40);
+		panelTimKiem.add(btnTm);
 //		paneThayDoi.add(txtKiem);
 		
 		paneGia = new JPanel();
@@ -185,7 +204,7 @@ public class KhachHang extends JPanel {
 	}
 	public void layDuLieu() {
 		for(KhachHangModel kh :DAO.KhachHangDAO.getAllKH() ) {
-       		Object[] row = new Object[] {kh.getId_kh(),kh.getMakh(),kh.getTenkh(),"0"+kh.getSodth(),kh.getDiemtl()} ;
+       		Object[] row = new Object[] {kh.getId_kh(),kh.getTenkh(),"0"+kh.getSodth(),kh.getDiemtl()} ;
        		model.addRow(row);
        	}
 		table.setModel(model);

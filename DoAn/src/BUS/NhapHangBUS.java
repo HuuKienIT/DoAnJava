@@ -13,10 +13,9 @@ import model.SanPhamModel;
 
 public class NhapHangBUS {
 	public static void NhapHang(ArrayList<SanPhamGHModel> GH, NhanVienModel nv, int tongsl, int tongtien, int id_ncc) {
-
 		model.PhieuNhapModel pn = new model.PhieuNhapModel();
 		pn.setId_nv(nv.getId_nv());
-		pn.setId_ncc(id_ncc);// Integer.parseInt(txtID_KH.getText())
+		pn.setId_ncc(id_ncc);
 		pn.setTongsl(tongsl);
 		pn.setTongtien(tongtien);
 		DAO.PhieuNhapDAO.themPhieuNhap(pn);
@@ -24,6 +23,7 @@ public class NhapHangBUS {
 			CTPhieuNhapModel ctpn = new CTPhieuNhapModel();
 			ctpn.setId_sp(u.getId_sp());
 			ctpn.setSoluong(u.getSoluong());
+			DAO.SanPhamDAO.tangSoLuong(u.getId_sp(), u.getSoluong());
 			ctpn.setGia(u.getGia());
 			DAO.CTPhieuNhapDAO.themCTPhieuNhap(ctpn);
 		}
@@ -44,10 +44,10 @@ public class NhapHangBUS {
 		}
 	}
 
-	public static ArrayList<SanPhamGHModel> xoaGH(ArrayList<SanPhamGHModel> GH, String ma_sp) {
+	public static ArrayList<SanPhamGHModel> xoaGH(ArrayList<SanPhamGHModel> GH,int id_sp) {
 		int co = 0;
 		for (SanPhamGHModel sp : GH) {
-			if (sp.getMasp().equals(ma_sp)) {
+			if (sp.getId_sp()==id_sp) {
 				int output = JOptionPane.showConfirmDialog(null, "Bạn có muốn xóa không?", "",
 						JOptionPane.YES_NO_OPTION);
 				if (output == JOptionPane.YES_OPTION) {
@@ -65,17 +65,17 @@ public class NhapHangBUS {
 	}
 
 	public static ArrayList<SanPhamGHModel> themGioHang(ArrayList<SanPhamModel> sp, ArrayList<SanPhamGHModel> GH,
-			String ma_sp, int soluong) {
+			int id_sp, int soluong) {
 		boolean co = false;
 		for (SanPhamGHModel spc : GH) {
-			if (spc.getMasp().equals(ma_sp)) {
+			if (spc.getId_sp()==id_sp) {
 				co = true;
 				spc.setSoluong(spc.getSoluong() + soluong);
 			}
 		}
 		if (!co) {
 			for (SanPhamModel s : sp) {
-				if (s.getMasp().equals(ma_sp)) {
+				if (s.getId_sp()==id_sp) {
 					SanPhamGHModel sp1 = new SanPhamGHModel();
 					sp1.setId_sp(s.getId_sp());
 					sp1.setMasp(s.getMasp());

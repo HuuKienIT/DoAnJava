@@ -15,6 +15,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.ImageIcon;
 
 public class ThemKhachHang extends JFrame {
 
@@ -23,6 +24,7 @@ public class ThemKhachHang extends JFrame {
 	private JTextField txtSoDth;
 	private JTextField txtMaKh;
 	JButton btnNewButton;
+	private JButton btnXa;
 	public ThemKhachHang() {
 
 		setType(Type.UTILITY);
@@ -73,12 +75,14 @@ public class ThemKhachHang extends JFrame {
 		panel.add(txtSoDth);
 		
 		btnNewButton = new JButton("Thêm");
+		btnNewButton.setIcon(new ImageIcon(ThemKhachHang.class.getResource("/icon/save.jpg")));
 		btnNewButton.setBackground(Color.WHITE);
 		btnNewButton.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
-		btnNewButton.setBounds(224, 230, 100, 30);
+		btnNewButton.setBounds(130, 230, 150, 40);
 		panel.add(btnNewButton);
 		
 		txtMaKh = new JTextField();
+		txtMaKh.disable();
 		txtMaKh.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
 		txtMaKh.setColumns(10);
 		txtMaKh.setBounds(226, 80, 200, 30);
@@ -90,6 +94,13 @@ public class ThemKhachHang extends JFrame {
 		akbask.setEnabled(true);
 		akbask.setBounds(42, 80, 150, 30);
 		panel.add(akbask);
+		
+		btnXa = new JButton("Xóa");
+		btnXa.setIcon(new ImageIcon(ThemKhachHang.class.getResource("/icon/delete.jpg")));
+		btnXa.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
+		btnXa.setBackground(Color.WHITE);
+		btnXa.setBounds(310, 230, 130, 40);
+		panel.add(btnXa);
 	}
 	public void setDuLieu(int id_kh) {
 		KhachHangModel kh =DAO.KhachHangDAO.getKhachHangByid(id_kh);

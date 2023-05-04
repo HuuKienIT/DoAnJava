@@ -1,35 +1,29 @@
 package giaodien;
 
-import java.awt.EventQueue;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import DAO.NhanHieuDAO;
 import model.NhanHieuModel;
 
-import java.awt.Window.Type;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-
-public class NhanHieuAdd extends JFrame {
-
+public class PhanQuyenAdd extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_2;
 	JButton btnNewButton;
-	ArrayList<NhanHieuModel> dsNH=NhanHieuDAO.getAllNhanHieu();
-	public NhanHieuAdd() {
+	public PhanQuyenAdd() {
 		setBounds(100, 100, 591, 345);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -43,7 +37,7 @@ public class NhanHieuAdd extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("NHÃN HIỆU");
+		JLabel lblNewLabel = new JLabel("Nhóm Quyền");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 23));
 		lblNewLabel.setEnabled(true);
@@ -57,7 +51,7 @@ public class NhanHieuAdd extends JFrame {
 		lblHTn.setBounds(46, 80, 150, 30);
 		panel.add(lblHTn);
 		
-		JLabel lblEmail = new JLabel("Tên Nhãn Hiệu");
+		JLabel lblEmail = new JLabel("Tên Quyền");
 		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblEmail.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 18));
 		lblEmail.setEnabled(true);
@@ -83,38 +77,9 @@ public class NhanHieuAdd extends JFrame {
 		btnNewButton.setBounds(215, 200, 150, 30);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (textField_2.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Nhập Tên nhãn hiệu");
-                    textField_2.requestFocus();
-                    return;
-                }
-				int id_nh=Integer.parseInt(textField.getText());
-				String tennh=textField_2.getText();
-				if(!checkExistTenNH(tennh)) {
-					if(BUS.NhanHieuBUS.addNH(tennh)) {
-						setVisible(false);
-					}
-				}
-				else {
-					if(BUS.NhanHieuBUS.updateNH(id_nh,tennh)) {
-						setVisible(false);
-					}
-				}
+				
 			}
 		});
 		panel.add(btnNewButton);
-	}
-	public void setDuLieu(String id, String ten) {
-		textField.setText(id);
-		textField_2.setText(ten);
-		btnNewButton.setText("Cập Nhật");
-	}
-	public boolean checkExistTenNH(String tennh) {
-		for(int i=0;i<dsNH.size();i++) {
-			if(dsNH.get(i).getTen_nh().equalsIgnoreCase(tennh)) {
-				return true;
-			}
-		}
-		return false;
 	}
 }
