@@ -6,6 +6,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import model.NhaCungCapModel;
+import model.NhanVienModel;
 
 import java.awt.Font;
 import java.awt.Color;
@@ -26,8 +27,12 @@ public class NhaCungCap extends JPanel {
 	private JTextField textField_1;
 	private JTable table;
 	DefaultTableModel model = new DefaultTableModel();
-
-	public NhaCungCap() {
+	JButton btnNewButton;
+	JButton btnNhpExcel;
+	JButton btnXutExcel;
+	NhanVienModel nv;
+	public NhaCungCap(NhanVienModel nv) {
+		this.nv=nv;
 		setBackground(SystemColor.control);
 		setLayout(null);
 
@@ -62,7 +67,7 @@ public class NhaCungCap extends JPanel {
 		lblNewLabel_2.setBounds(20, 5, 46, 40);
 		panel_2.add(lblNewLabel_2);
 
-		JButton btnNewButton = new JButton("New");
+		btnNewButton = new JButton("New");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new NhaCungCapAdd().setVisible(true);
@@ -73,13 +78,13 @@ public class NhaCungCap extends JPanel {
 		btnNewButton.setBounds(1060, 5, 100, 40);
 		panel_2.add(btnNewButton);
 
-		JButton btnNhpExcel = new JButton("Nhập Excel");
+		btnNhpExcel = new JButton("Nhập Excel");
 		btnNhpExcel.setIcon(new ImageIcon(NhaCungCap.class.getResource("/icon/import.jpg")));
 		btnNhpExcel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNhpExcel.setBounds(750, 5, 150, 40);
 		panel_2.add(btnNhpExcel);
 
-		JButton btnXutExcel = new JButton("Xuất Excel");
+		btnXutExcel = new JButton("Xuất Excel");
 		btnXutExcel.setIcon(new ImageIcon(NhaCungCap.class.getResource("/icon/export.jpg")));
 		btnXutExcel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnXutExcel.setBounds(905, 5, 150, 40);
@@ -139,9 +144,8 @@ public class NhaCungCap extends JPanel {
 				}
 			}
 		});
-
+		HienSuDung();
 	}
-
 	public void layDuLieu() {
 		model.setRowCount(0);
 		for (NhaCungCapModel ncc : DAO.NhaCungCapDAO.getAllNCC()) {
@@ -149,5 +153,14 @@ public class NhaCungCap extends JPanel {
 			model.addRow(row);
 		}
 		table.setModel(model);
+	}
+	public void HienSuDung() {
+		if (!BUS.PhanQuyenBUS.KTQuyen(nv.getId_nv(), 7)) {
+			btnNhpExcel.setEnabled(false);
+			btnXutExcel.setEnabled(false);
+			btnNewButton.setEnabled(false);
+			table.setEnabled(false);
+		}
+		
 	}
 }

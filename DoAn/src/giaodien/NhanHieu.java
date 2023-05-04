@@ -22,6 +22,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import DAO.NhanHieuDAO;
+import model.NhanVienModel;
 import model.SanPhamGHModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -31,8 +32,12 @@ public class NhanHieu extends JPanel {
 	private JTable table;
 	DefaultTableModel model = new DefaultTableModel();
 	public static int id;
-
-	public NhanHieu() {
+	JButton btnNhpExcel;
+	JButton btnXutExcel;
+	JButton btnNewButton;
+	NhanVienModel nv;
+	public NhanHieu(NhanVienModel nv) {
+		this.nv=nv;
 		setBackground(SystemColor.control);
 		setLayout(null);
 
@@ -97,7 +102,7 @@ public class NhanHieu extends JPanel {
 		lblNewLabel_2.setBounds(20, 5, 46, 40);
 		panel_2.add(lblNewLabel_2);
 
-		JButton btnNewButton = new JButton("New");
+		btnNewButton = new JButton("New");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new NhanHieuAdd().setVisible(true);
@@ -109,7 +114,7 @@ public class NhanHieu extends JPanel {
 		btnNewButton.setBounds(1060, 5, 100, 40);
 		panel_2.add(btnNewButton);
 
-		JButton btnNhpExcel = new JButton("Nhập Excel");
+		btnNhpExcel = new JButton("Nhập Excel");
 		btnNhpExcel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -124,7 +129,7 @@ public class NhanHieu extends JPanel {
 		btnNhpExcel.setBounds(750, 5, 150, 40);
 		panel_2.add(btnNhpExcel);
 
-		JButton btnXutExcel = new JButton("Xuất Excel");
+		btnXutExcel = new JButton("Xuất Excel");
 		btnXutExcel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int output = JOptionPane.showConfirmDialog(null, "Bạn có muốn xuất File Excel không?", "",
@@ -169,6 +174,7 @@ public class NhanHieu extends JPanel {
 		lblNewLabel_1_2_1.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
 		lblNewLabel_1_2_1.setBounds(479, 11, 78, 30);
 		panel_3.add(lblNewLabel_1_2_1);
+		HienSuDung();
 
 	}
 
@@ -178,5 +184,14 @@ public class NhanHieu extends JPanel {
 			Object[] row = new Object[] { nh.getId_nh(), nh.getTen_nh() };
 			model.addRow(row);
 		}
+	}
+	public void HienSuDung() {
+		if (!BUS.PhanQuyenBUS.KTQuyen(nv.getId_nv(), 7)) {
+			btnNhpExcel.setEnabled(false);
+			btnXutExcel.setEnabled(false);
+			btnNewButton.setEnabled(false);
+			table.setEnabled(false);
+		}
+		
 	}
 }

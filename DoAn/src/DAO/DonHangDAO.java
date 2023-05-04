@@ -30,7 +30,39 @@ public class DonHangDAO {
 		}
 		return dh;
 	}
-
+	public static int laySoLuongTheoNhanHieu(int id_nh) {
+		int tong = 0;
+		try {
+			String sql = "select sum(ctdonhang.soluong) as soluong from ctdonhang join sanpham on sanpham.id_sp =ctdonhang.id_sp where id_nh= "+id_nh ;
+			mySQLHelper helper = new mySQLHelper();
+			helper.open();
+			ResultSet rs = helper.executeQuery(sql);
+			while (rs.next()) {
+				tong=rs.getInt("soluong");
+			}
+			helper.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return tong;
+	}
+	public static int layTongSoLuong() {
+		int tong = 0;
+		try {
+			String sql = "select sum(tongsl) as soluong from donhang";
+			mySQLHelper helper = new mySQLHelper();
+			helper.open();
+			ResultSet rs = helper.executeQuery(sql);
+			while (rs.next()) {
+				tong=rs.getInt("soluong");
+			}
+			helper.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return tong;
+	}
+	
 	public static int doanhThuThang(int thang, int nam) {
 		int tong = 0;
 		try {

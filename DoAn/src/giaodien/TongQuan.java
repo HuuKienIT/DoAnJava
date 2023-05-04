@@ -228,9 +228,8 @@ public class TongQuan extends JPanel {
         // Create a dataset with sales by quarter
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for(int i=1;i<=12;i++) {
-        	dataset.addValue(DAO.DonHangDAO.doanhThuThang(i,nam), "Doanh Thu", i+"");
+        	dataset.addValue(DAO.DonHangDAO.doanhThuThang(i,nam)/1000000, "Doanh Thu", i+"");
         }     
-
         return dataset;
     }
 
@@ -239,7 +238,7 @@ public class TongQuan extends JPanel {
         JFreeChart chart = ChartFactory.createBarChart(
             "", // chart title
             "Tháng", // domain axis label
-            "Doanh Thu", // range axis label
+            "Doanh Thu (Đơn vị: Triệu đồng)", // range axis label
             dataset, // data
             PlotOrientation.VERTICAL, // orientation
             true, // include legend

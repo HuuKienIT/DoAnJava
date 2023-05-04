@@ -37,12 +37,12 @@ import javax.swing.table.DefaultTableModel;
 
 import model.KhachHangModel;
 import model.NhanVienModel;
+import javax.swing.border.TitledBorder;
 
 public class DonHang extends JPanel {
 	JPanel panel_1 = new RoundedJPanel(20);
 	private JTable table;
 	private JTextField txtKhachHang;
-	private JTextField txtNhanVien;
 	private JTextField txtStart;
 	private JTextField txtEnd;
 
@@ -72,67 +72,45 @@ public class DonHang extends JPanel {
 				}
 			}
 		});
-		txtKhachHang.setText("    Nhập tên Khách Hàng");
+		txtKhachHang.setText("    Nhập tên Khách Hàng / Nhân Viên");
 		txtKhachHang.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
-		txtKhachHang.setBounds(170, 10, 200, 30);
+		txtKhachHang.setBounds(200, 5, 300, 40);
 		panel.add(txtKhachHang);
 		txtKhachHang.setColumns(10);
-
-		JLabel lblTm = new JLabel("TÌM");
-		lblTm.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTm.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 25));
-		lblTm.setBackground(Color.WHITE);
-		lblTm.setBounds(1051, 10, 70, 30);
-		panel.add(lblTm);
-
-		txtNhanVien = new RoundJTextField(10);
-		txtNhanVien.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (txtNhanVien.getText().equals("    Nhập tên Nhân Viên")) {
-					txtNhanVien.setText("");
-				}
-			}
-		});
-		txtNhanVien.setText("    Nhập tên Nhân Viên");
-		txtNhanVien.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
-		txtNhanVien.setColumns(10);
-		txtNhanVien.setBounds(396, 10, 200, 30);
-		panel.add(txtNhanVien);
 
 		txtStart = new RoundJTextField(10);
 		txtStart.setEditable(false);
 		txtStart.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
 		txtStart.setColumns(10);
-		txtStart.setBounds(666, 10, 120, 30);
+		txtStart.setBounds(618, 10, 120, 30);
 		panel.add(txtStart);
 
 		txtEnd = new RoundJTextField(10);
 		txtEnd.setEditable(false);
 		txtEnd.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
 		txtEnd.setColumns(10);
-		txtEnd.setBounds(886, 10, 120, 30);
+		txtEnd.setBounds(838, 10, 120, 30);
 		panel.add(txtEnd);
 
 		JLabel lbln = new JLabel("đến");
 		lbln.setHorizontalAlignment(SwingConstants.CENTER);
 		lbln.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 20));
 		lbln.setBackground(Color.WHITE);
-		lbln.setBounds(821, 10, 70, 30);
+		lbln.setBounds(773, 10, 70, 30);
 		panel.add(lbln);
 
 		JLabel lblT = new JLabel("Từ");
 		lblT.setHorizontalAlignment(SwingConstants.CENTER);
 		lblT.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 20));
 		lblT.setBackground(Color.WHITE);
-		lblT.setBounds(606, 10, 50, 30);
+		lblT.setBounds(558, 10, 50, 30);
 		panel.add(lblT);
 
 		JButton btnNewButton = new JButton("");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				final pickdate dp = new pickdate();
-				dp.popupShow(lblTm);
+				dp.popupShow(dp);
 				dp.addPopupListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						txtStart.setText(dp.getFormattedDate());
@@ -142,14 +120,14 @@ public class DonHang extends JPanel {
 			}
 		});
 		btnNewButton.setIcon(new ImageIcon(DonHang.class.getResource("/icon/datepick.jpg")));
-		btnNewButton.setBounds(791, 10, 30, 30);
+		btnNewButton.setBounds(743, 10, 30, 30);
 		panel.add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				final pickdate dp = new pickdate();
-				dp.popupShow(lblTm);
+				dp.popupShow(dp);
 				dp.addPopupListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						txtEnd.setText(dp.getFormattedDate());
@@ -159,14 +137,13 @@ public class DonHang extends JPanel {
 			}
 		});
 		btnNewButton_1.setIcon(new ImageIcon(DonHang.class.getResource("/icon/datepick.jpg")));
-		btnNewButton_1.setBounds(1011, 10, 30, 30);
+		btnNewButton_1.setBounds(963, 10, 30, 30);
 		panel.add(btnNewButton_1);
 
 		JButton btnNewButton_1_1 = new JButton("");
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtKhachHang.setText("    Nhập tên Khách Hàng");
-				txtNhanVien.setText("    Nhập tên Nhân Viên");
+				txtKhachHang.setText("    Nhập tên Khách Hàng / Nhân Viên");
 				txtStart.setText("");
 				txtEnd.setText("");
 			}
@@ -174,6 +151,16 @@ public class DonHang extends JPanel {
 		btnNewButton_1_1.setIcon(new ImageIcon(DonHang.class.getResource("/icon/reset.jpg")));
 		btnNewButton_1_1.setBounds(1131, 10, 30, 30);
 		panel.add(btnNewButton_1_1);
+		
+		JButton btnNewButton_1_1_1 = new JButton("Tìm");
+		btnNewButton_1_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnNewButton_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNewButton_1_1_1.setBounds(1030, 5, 80, 40);
+		panel.add(btnNewButton_1_1_1);
 
 		panel_1.setBackground(SystemColor.text);
 		panel_1.setBounds(0, 60, 1180, 739);

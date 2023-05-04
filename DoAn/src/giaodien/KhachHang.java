@@ -30,6 +30,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -38,6 +39,7 @@ import javax.swing.table.JTableHeader;
 import DAO.NhanVienDAO;
 import model.KhachHangModel;
 import model.NhanVienModel;
+import model.KhachHangModel;
 
 import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
@@ -52,8 +54,12 @@ public class KhachHang extends JPanel {
 	private JTextField txtMax;
 	private JTextField txtMin;
 	private JTextField textField;
-	
-	public KhachHang() {
+	JButton btnNewButton ;
+	JButton btnNhpExcel;
+	JButton btnXutExcel;
+	NhanVienModel nv;
+	public KhachHang(NhanVienModel nv) {
+		this.nv=nv;
 		setBackground(SystemColor.control);
 		setLayout(null);
 		
@@ -99,7 +105,7 @@ public class KhachHang extends JPanel {
         lblNewLabel_2.setBounds(20, 5, 50, 40);
         panel_2.add(lblNewLabel_2);
         
-        JButton btnNewButton = new JButton("New");
+        btnNewButton = new JButton("New");
         btnNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		new ThemKhachHang().setVisible(true);;
@@ -110,13 +116,13 @@ public class KhachHang extends JPanel {
         btnNewButton.setBounds(1060, 5, 100, 40);
         panel_2.add(btnNewButton);
         
-        JButton btnNhpExcel = new JButton("Nhập Excel");
+       btnNhpExcel = new JButton("Nhập Excel");
         btnNhpExcel.setIcon(new ImageIcon(KhachHang.class.getResource("/icon/import.jpg")));
         btnNhpExcel.setFont(new Font("Tahoma", Font.PLAIN, 16));
         btnNhpExcel.setBounds(750, 5, 150, 40);
         panel_2.add(btnNhpExcel);
         
-        JButton btnXutExcel = new JButton("Xuất Excel");
+       btnXutExcel = new JButton("Xuất Excel");
         btnXutExcel.setIcon(new ImageIcon(KhachHang.class.getResource("/icon/export.jpg")));
         btnXutExcel.setFont(new Font("Tahoma", Font.PLAIN, 16));
         btnXutExcel.setBounds(905, 5, 150, 40);
@@ -158,9 +164,24 @@ public class KhachHang extends JPanel {
 		textField.setColumns(10);
 		
 		JButton btnTm = new JButton("Tìm");
+		btnTm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TimKiem();
+			}
+		});
 		btnTm.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnTm.setBounds(920, 5, 100, 40);
+		btnTm.setBounds(822, 5, 100, 40);
 		panelTimKiem.add(btnTm);
+		
+		JButton btnReset = new JButton("Reset");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				layDuLieu();
+			}
+		});
+		btnReset.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnReset.setBounds(948, 5, 100, 40);
+		panelTimKiem.add(btnReset);
 //		paneThayDoi.add(txtKiem);
 		
 		paneGia = new JPanel();
@@ -201,16 +222,38 @@ public class KhachHang extends JPanel {
 		txtMax.setColumns(10);
 		txtMax.setBounds(338, 1, 200, 29);
 		paneGia.add(txtMax);
+		HienSuDung();
 	}
 	public void layDuLieu() {
+		model.setRowCount(0);
 		for(KhachHangModel kh :DAO.KhachHangDAO.getAllKH() ) {
-       		Object[] row = new Object[] {kh.getId_kh(),kh.getTenkh(),"0"+kh.getSodth(),kh.getDiemtl()} ;
+       		Object[] row = new Object[] {kh.getId_kh(),kh.getTenkh(),kh.getSodth(),kh.getDiemtl()} ;
        		model.addRow(row);
        	}
 		table.setModel(model);
 	}
-	public Object[] timkiem() {
-		Object[] row = new Object[] {};
-		return row;
+	public void TimKiem() {
+		ArrayList<KhachHangModel> spLoc = new ArrayList<KhachHangModel>();
+		String chuoiTim =textField.getText();
+		for(KhachHangModel u :DAO.KhachHangDAO.getAllKH()) {
+			if(u.getTenkh().toLowerCase().contains(chuoiTim.toLowerCase()) || String.valueOf(u.getSodth()).contains(chuoiTim) ) 
+			{
+				spLoc.add(u);
+			}
+		}	
+		model.setRowCount(0);
+		for(KhachHangModel u : spLoc ) {
+			Object[] row = new Object[] {u.getId_kh(),u.getTenkh(),u.getSodth(),u.getDiemtl()} ;
+      		model.addRow(row);
+		}
+		table.setModel(model);
+	}
+	public void HienSuDung() {
+		if (!BUS.PhanQuyenBUS.KTQuyen(nv.getId_nv(), 10)) {
+			btnNhpExcel.setEnabled(false);
+			btnXutExcel.setEnabled(false);
+			btnNewButton.setEnabled(false);
+			table.setEnabled(false);
+		}
 	}
 }

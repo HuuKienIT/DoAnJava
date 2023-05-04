@@ -21,7 +21,6 @@ import java.io.OutputStreamWriter;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 public class Login extends JFrame {
-
 	private JPanel contentPane;
 	private JTextField txtTenDn;
 	private JPasswordField txtMatKhau;
@@ -203,7 +202,6 @@ public class Login extends JFrame {
             			}
             		}
             		dem++;
-            
             }
             reader.close();
         } catch (IOException e) {

@@ -19,6 +19,8 @@ import java.util.ArrayList;
 
 
 import DAO.NhanVienDAO;
+import giaodien.PhanQuyen.Item;
+import model.ChucVuModel;
 import model.NhanVienModel;
 
 import javax.swing.JScrollPane;
@@ -29,17 +31,37 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class NhanVien extends JPanel {
+	public class Item {
+	    private String name;
+	    private int value;
+
+	    public Item(String name, int value) {
+	        this.name = name;
+	        this.value = value;
+	    }
+
+	    @Override
+	    public String toString() {
+	        return name;
+	    }
+
+	    public int getValue() {
+	        return value;
+	    }
+	}
 	private JTable table;
 	public DefaultTableModel model =new DefaultTableModel();
 	public JPanel paneGia;
-	public JComboBox comboBox = new JComboBox();
-	public JComboBox comboLoaiSp = new JComboBox();
 	private JTextField txtMax;
 	private JTextField txtMin;
 	public ArrayList<NhanVienModel> dsNV = NhanVienDAO.getAllUsers();
 	private JTextField textField;
-	
-	public NhanVien() {
+	JButton btnNhpExcel;
+	JButton btnNewButton;
+	JButton btnXutExcel;
+	NhanVienModel nvn;
+	public NhanVien(NhanVienModel nvn) {
+		this.nvn=nvn;
 		setBackground(SystemColor.control);
 		setLayout(null);
 		
@@ -93,7 +115,7 @@ public class NhanVien extends JPanel {
         lblNewLabel_2.setBounds(20, 5, 50, 40);
         panel_2.add(lblNewLabel_2);
         
-        JButton btnNewButton = new JButton("New");
+        btnNewButton = new JButton("New");
         btnNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		new NhanVienAdd().setVisible(true);
@@ -104,13 +126,13 @@ public class NhanVien extends JPanel {
         btnNewButton.setBounds(1060, 5, 100, 40);
         panel_2.add(btnNewButton);
         
-        JButton btnNhpExcel = new JButton("Nhập Excel");
+        btnNhpExcel = new JButton("Nhập Excel");
         btnNhpExcel.setIcon(new ImageIcon(NhanVien.class.getResource("/icon/import.jpg")));
         btnNhpExcel.setFont(new Font("Tahoma", Font.PLAIN, 16));
         btnNhpExcel.setBounds(745, 5, 150, 40);
         panel_2.add(btnNhpExcel);
         
-        JButton btnXutExcel = new JButton("Xuất Excel");
+        btnXutExcel = new JButton("Xuất Excel");
         btnXutExcel.setIcon(new ImageIcon(NhanVien.class.getResource("/icon/export.jpg")));
         btnXutExcel.setFont(new Font("Tahoma", Font.PLAIN, 16));
         btnXutExcel.setBounds(905, 5, 150, 40);
@@ -140,47 +162,41 @@ public class NhanVien extends JPanel {
 		
 		textField = new JTextField();
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField.setBounds(350, 10, 250, 30);
+		textField.setBounds(430, 10, 350, 30);
 		panelTimKiem.add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblNewLabel_1 = new JLabel("Tên / Email / Số ĐT");
+		JLabel lblNewLabel_1 = new JLabel("Tên / Email / Số ĐT ");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel_1.setBounds(174, 10, 150, 30);
+		lblNewLabel_1.setBounds(174, 10, 250, 30);
 		panelTimKiem.add(lblNewLabel_1);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		comboBox_1.setBounds(748, 10, 150, 30);
-		panelTimKiem.add(comboBox_1);
-		
-		JLabel lblNewLabel_1_1 = new JLabel("Chức Vụ");
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel_1_1.setBounds(660, 10, 150, 30);
-		panelTimKiem.add(lblNewLabel_1_1);
-		
 		JButton btnTm = new JButton("Tìm");
+		btnTm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TimKiem();
+			}
+		});
 		btnTm.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnTm.setBounds(941, 5, 100, 40);
+		btnTm.setBounds(900, 5, 100, 40);
 		panelTimKiem.add(btnTm);
-//		paneThayDoi.add(txtKiem);
 		
-		
-		
+		JButton btnReset = new JButton("Reset");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				layDuLieu();
+				textField.setText("");
+			}
+		});
+		btnReset.setIcon(new ImageIcon(NhanVien.class.getResource("/icon/reset.jpg")));
+		btnReset.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnReset.setBounds(1028, 5, 120, 40);
+		panelTimKiem.add(btnReset);
+		HienSuDung();	
 	}
-	public void hienthi() {
-		model.setRowCount(0);
-		for(NhanVienModel u : NhanVienDAO.getAllUsers() ) {
-       		String rows[] = new String[5];
-       		rows[0] = u.getId_nv()+"";
-       		rows[1] = u.getHoTen();
-       		rows[2] = u.getEmail();
-       		rows[2] = u.getMatKhau();
-       		rows[4] = u.getChucVu();
-     	   model.addRow(rows);
-        }
-	}
+
 	public void layDuLieu() {
+		model.setRowCount(0);
        	for( NhanVienModel u : dsNV) {
        		Object[] row = new Object[] {u.getId_nv(),u.getHoTen(),u.getEmail(),"0"+u.getSoDth(),u.getChucVu()} ;
        		model.addRow(row);
@@ -189,36 +205,26 @@ public class NhanVien extends JPanel {
 	}
 	public void TimKiem() {
 		ArrayList<NhanVienModel> spLoc = new ArrayList<NhanVienModel>();
-//		String tenSP = txtKiem.getText();
-//		if(tenSP.equals("Nhập tên Sản Phẩm")) {
-//			tenSP="";
-//		}
-//		String nhanHieu = (String) comboLoaiSp.getSelectedItem();
-//		if(nhanHieu.equals("Tất cả Nhãn Hiệu")) {
-//			nhanHieu="";
-//		}
-//		int giaMin=0;
-//		if(!textField_1.getText().equals("")) {
-//			giaMin=Integer.parseInt(textField_1.getText());
-//		}
-//		int giaMax=10000000;
-//		if(!textField_2.getText().equals("")) {
-//			giaMax=Integer.parseInt(textField_2.getText());
-//		}
-//		if(giaMin>giaMax) {
-//			return;
-//		}
-//		for(NhanVienModel sp :DAO.sanPhamDAO.getAllSanPham()) {
-//			if(sp.getTensp().toLowerCase().contains(tenSP.toLowerCase())&& sp.getNhanhieu().toLowerCase().contains(nhanHieu.toLowerCase())&&sp.getGia()>=giaMin && sp.getGia()<=giaMax) 
-//			{
-//				spLoc.add(sp);
-//			}
-//		}	
-//		modelSP.setRowCount(0);
-//		for(NhanVienModel sp : spLoc ) {
-//			Object[] row = new Object[] {sp.getMasp(),sp.getTensp(),intToMoney(sp.getGia()),sp.getConlai()} ;
-//      		modelSP.addRow(row);
-//		}
-//		tableSP.setModel(modelSP);
+		String chuoiTim =textField.getText();
+		for(NhanVienModel u :DAO.NhanVienDAO.getAllUsers()) {
+			if(u.getHoTen().toLowerCase().contains(chuoiTim.toLowerCase()) || String.valueOf("+"+u.getSoDth()).contains(chuoiTim) || u.getEmail().toLowerCase().contains(chuoiTim.toLowerCase())  ) 
+			{
+				spLoc.add(u);
+			}
+		}	
+		model.setRowCount(0);
+		for(NhanVienModel u : spLoc ) {
+			Object[] row = new Object[] {u.getId_nv(),u.getHoTen(),u.getEmail(),"0"+u.getSoDth(),u.getChucVu()} ;
+      		model.addRow(row);
+		}
+		table.setModel(model);
+	}
+	public void HienSuDung() {
+		if (!BUS.PhanQuyenBUS.KTQuyen(nvn.getId_nv(), 10)) {
+			btnNhpExcel.setEnabled(false);
+			btnXutExcel.setEnabled(false);
+			btnNewButton.setEnabled(false);
+			table.setEnabled(false);
+		}
 	}
 }

@@ -14,6 +14,7 @@ import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.border.MatteBorder;
 
@@ -23,6 +24,8 @@ import model.NhanVienModel;
 
 import javax.swing.SwingConstants;
 import java.awt.Dialog.ModalExclusionType;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class NhanVienAdd extends JFrame {
 	private JPanel contentPane;
@@ -33,6 +36,7 @@ public class NhanVienAdd extends JFrame {
 	JComboBox comboChucVu = new JComboBox();
 	JLabel lblNewLabel = new JLabel("");
 	JButton btnLu;
+	JButton btnXa;
 	public NhanVienAdd() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 734, 540);
@@ -99,13 +103,11 @@ public class NhanVienAdd extends JFrame {
 		lblNewLabel_1_2_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_1_2_1.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
 		lblNewLabel_1_2_1.setBounds(87, 199, 80, 30);
-		panel.add(lblNewLabel_1_2_1);
-		
+		panel.add(lblNewLabel_1_2_1);	
 
 		comboChucVu.setBounds(195, 202, 168, 30);
 		panel.add(comboChucVu);
 		
-
 		lblNewLabel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		lblNewLabel.setBounds(467, 87, 150, 150);
 		panel.add(lblNewLabel);
@@ -115,11 +117,23 @@ public class NhanVienAdd extends JFrame {
 		btnNewButton.setBounds(493, 259, 100, 30);
 		panel.add(btnNewButton);
 		
-		JButton btnXa = new JButton("Xóa");
+		btnXa = new JButton("Xóa");
+		btnXa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int output = JOptionPane.showConfirmDialog(null, 
+                        "Tất cả các dữ liệu liên quan như đơn hàng, phiếu nhập sẽ bị xóa. Bạn có muốn xóa không?", "",
+                        JOptionPane.YES_NO_OPTION);
+	 			if(output==JOptionPane.YES_OPTION){
+	 				DAO.NhanVienDAO.xoaUsers(Integer.parseInt(txtID.getText()));
+	 				JOptionPane.showMessageDialog(null,"Xóa thành công");
+	 			}	
+			}
+		});
 		btnXa.setIcon(new ImageIcon(NhanVienAdd.class.getResource("/icon/delete.jpg")));
 		btnXa.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 18));
 		btnXa.setBackground(Color.WHITE);
 		btnXa.setBounds(300, 310, 150, 40);
+		btnXa.setVisible(false);
 		panel.add(btnXa);
 		
 		JPanel panel_1 = new JPanel();
@@ -143,6 +157,7 @@ public class NhanVienAdd extends JFrame {
    		layChucVu();
    		comboChucVu.setSelectedItem(u.getChucVu());
    		hienhinh(u.getPhoto());
+   		btnXa.setVisible(true);
 	}
 	public void layChucVu() {
 		DefaultComboBoxModel model =  (DefaultComboBoxModel) comboChucVu.getModel();

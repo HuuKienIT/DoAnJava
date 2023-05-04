@@ -83,10 +83,18 @@ public class NhanVienDAO {
 	public static int xoaUsers(int ID) {
 		int n=-1;
 		try {
-			String sql = "DELETE FROM users nhanvien id_nv="+ID;
 			mySQLHelper helper = new mySQLHelper();
+			
 			helper.open();
+			String sql = "DELETE FROM donhang where id_nv="+ID;
 			n = helper.executeUpdate(sql);
+			
+			String sql1 = "DELETE FROM phieunhap where id_nv="+ID;
+			n = helper.executeUpdate(sql1);
+			
+			String sql2 = "DELETE FROM nhanvien where id_nv="+ID;
+			n = helper.executeUpdate(sql2);
+			
 			helper.close();
 		} catch (Exception e) {
 		}

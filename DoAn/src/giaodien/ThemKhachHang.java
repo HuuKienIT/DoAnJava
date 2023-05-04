@@ -104,7 +104,7 @@ public class ThemKhachHang extends JFrame {
 	}
 	public void setDuLieu(int id_kh) {
 		KhachHangModel kh =DAO.KhachHangDAO.getKhachHangByid(id_kh);
-		txtMaKh.setText(kh.getMakh());
+		txtMaKh.setText(kh.getId_kh()+"");
 		txtHoTen.setText(kh.getTenkh());
 		txtSoDth.setText(kh.getSodth()+"");
 		btnNewButton.setText("Cập nhật");

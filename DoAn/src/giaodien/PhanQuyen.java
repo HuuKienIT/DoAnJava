@@ -31,6 +31,8 @@ import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.JSeparator;
 import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PhanQuyen extends JPanel {
 	public DefaultTableModel model = new DefaultTableModel();
@@ -46,6 +48,8 @@ public class PhanQuyen extends JPanel {
 	JCheckBox ttsanpham;
 	JLabel lblPhnQuyn;
 	JCheckBox ttphanquyen;
+	JCheckBox xkhachhang;
+	JCheckBox ttkhachhang;
 	JComboBox comboBoxChucVu = new JComboBox();
 	public class Item {
 	    private String name;
@@ -124,6 +128,12 @@ public class PhanQuyen extends JPanel {
 		panel_1.add(ttnhaphang);
 
 		xnhanvien = new JCheckBox("Xem");
+		xnhanvien.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				HanChe();
+			}
+		});
 		xnhanvien.setBackground(Color.WHITE);
 		xnhanvien.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
 		xnhanvien.setBounds(238, 362, 114, 23);
@@ -136,6 +146,12 @@ public class PhanQuyen extends JPanel {
 		panel_1.add(ttnhanvien);
 
 		xsanpham = new JCheckBox("Xem");
+		xsanpham.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				HanChe();
+			}
+		});
 		xsanpham.setBackground(Color.WHITE);
 		xsanpham.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
 		xsanpham.setBounds(778, 364, 114, 23);
@@ -165,7 +181,8 @@ public class PhanQuyen extends JPanel {
 		ttphanquyen.setBounds(778, 248, 114, 23);
 		panel_1.add(ttphanquyen);
 
-		JButton btnLu = new JButton("Lưu");
+		JButton btnLu = new JButton("   Lưu");
+		btnLu.setIcon(new ImageIcon(PhanQuyen.class.getResource("/icon/save.jpg")));
 		btnLu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int id_cv=0;
@@ -199,14 +216,44 @@ public class PhanQuyen extends JPanel {
 				if(xthongke.isSelected()) {
 					DAO.ChucVu_QuyenDAO.themVao(id_cv,8);
 				}		
+				if(xkhachhang.isSelected()) {
+					DAO.ChucVu_QuyenDAO.themVao(id_cv,9);
+				}
+				if(ttkhachhang.isSelected()) {
+					DAO.ChucVu_QuyenDAO.themVao(id_cv,10);
+				}		
 				JOptionPane.showMessageDialog(null,"Đã Cập Nhật");
 			}
 			
 		});
 
 		btnLu.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnLu.setBounds(476, 557, 100, 40);
+		btnLu.setBounds(483, 580, 150, 40);
 		panel_1.add(btnLu);
+		
+		xkhachhang = new JCheckBox("Xem");
+		xkhachhang.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				HanChe();
+			}
+		});
+		xkhachhang.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
+		xkhachhang.setBackground(Color.WHITE);
+		xkhachhang.setBounds(238, 491, 114, 23);
+		panel_1.add(xkhachhang);
+		
+		ttkhachhang = new JCheckBox("Thao Tác");
+		ttkhachhang.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
+		ttkhachhang.setBackground(Color.WHITE);
+		ttkhachhang.setBounds(238, 532, 114, 23);
+		panel_1.add(ttkhachhang);
+		
+		JLabel lblKhchHng = new JLabel("Khách Hàng");
+		lblKhchHng.setHorizontalAlignment(SwingConstants.LEFT);
+		lblKhchHng.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 22));
+		lblKhchHng.setBounds(209, 452, 157, 40);
+		panel_1.add(lblKhchHng);
 
 		JPanel panel_2 = new RoundedJPanel(20);
 		panel_2.setBackground(Color.WHITE);
@@ -247,6 +294,8 @@ public class PhanQuyen extends JPanel {
 				xsanpham.setSelected(false);
 				ttsanpham.setSelected(false);
 				xthongke.setSelected(false);
+				xkhachhang.setSelected(false);
+				ttkhachhang.setSelected(false);
 				int id_cv=0;
 				Object selectedItem = comboBoxChucVu.getSelectedItem();
 				if (selectedItem instanceof Item) {
@@ -306,8 +355,33 @@ public class PhanQuyen extends JPanel {
 			if (q.id_q == 8) {
 				xthongke.setSelected(true);
 			}
+			if (q.id_q == 9) {
+				xkhachhang.setSelected(true);
+			}
+			if (q.id_q == 10) {
+				ttkhachhang.setSelected(true);
+			}
+			HanChe();
 		}
 	}
-
-
+	public void HanChe() {
+		if(xkhachhang.isSelected()==false) {
+			ttkhachhang.setSelected(false);
+			ttkhachhang.setEnabled(false);
+		}else {
+			ttkhachhang.setEnabled(true);
+		}
+		if(xnhanvien.isSelected()==false) {
+			ttnhanvien.setSelected(false);
+			ttnhanvien.setEnabled(false);
+		}else {
+			ttnhanvien.setEnabled(true);
+		}
+		if(xsanpham.isSelected()==false) {
+			ttsanpham.setSelected(false);
+			ttsanpham.setEnabled(false);
+		}else {
+			ttsanpham.setEnabled(true);
+		}
+	}
 }

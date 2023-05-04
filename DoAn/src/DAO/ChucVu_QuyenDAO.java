@@ -23,6 +23,24 @@ public class ChucVu_QuyenDAO {
 		}
 		return ds;
 	}
+	public static ArrayList<QuyenModel>  getQuyenByidNhanVien(int id_nv) {
+		ArrayList<QuyenModel> ds = new ArrayList<QuyenModel>();
+		try {
+			String sql = "SELECT id_q FROM chucvu_quyen join nhanvien on nhanvien.id_cv = chucvu_quyen.id_cv where id_nv ="+id_nv ;
+			mySQLHelper helper = new mySQLHelper();
+			helper.open();
+			ResultSet rs = helper.executeQuery(sql);
+			while(rs.next()) {
+				QuyenModel q = new QuyenModel();
+				q.setId_q(rs.getInt("id_q"));
+				ds.add(q);
+			}
+			helper.close();	
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return ds;
+	}
 	public static void themVao(int id_cv, int id_q) {
 		try {
 			String sql = "insert into chucvu_quyen(id_cv,id_q) value("+id_cv+","+id_q+")";

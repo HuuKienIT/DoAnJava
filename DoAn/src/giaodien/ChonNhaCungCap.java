@@ -12,11 +12,13 @@ import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import DAO.NhanVienDAO;
+import model.KhachHangModel;
 import model.NhaCungCapModel;
 import model.NhanVienModel;
 
@@ -25,13 +27,14 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ChonNhaCungCap extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
 	private JTextField textField;
-	private JTextField textField_1;
 	DefaultTableModel model =new DefaultTableModel();
 	JLabel txtTenKH ;
 	JLabel txtMaKH ;
@@ -52,20 +55,18 @@ public class ChonNhaCungCap extends JFrame {
 		panel.setLayout(null);
 		
 		textField = new JTextField();
-		textField.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "T\u00EAn Nh\u00E0 Cung C\u1EA5p", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		textField.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "T\u00EAn Nh\u00E0 Cung C\u1EA5p / S\u1ED1 \u0111i\u1EC7n tho\u1EA1i", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField.setBounds(164, 5, 200, 40);
+		textField.setBounds(200, 5, 300, 40);
 		panel.add(textField);
 		textField.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField_1.setColumns(10);
-		textField_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "S\u1ED1 \u0110i\u1EC7n Tho\u1EA1i", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		textField_1.setBounds(404, 5, 200, 40);
-		panel.add(textField_1);
-		
 		JButton btnNewButton = new JButton("Tìm");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TimKiem();
+			}
+		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNewButton.setBounds(647, 8, 89, 35);
 		panel.add(btnNewButton);
@@ -92,7 +93,7 @@ public class ChonNhaCungCap extends JFrame {
 		panel_1.add(scrollPane);
 		table = new cusTable();	
 
-		String[] columnNames = {"ID","Mã NCC", "Tên NCC" , "Số Điện Thoại"};
+		String[] columnNames = {"ID", "Tên NCC" , "Số Điện Thoại", "Email"};
        	model.setColumnIdentifiers(columnNames);
        	layDuLieu();
        	table.setModel(model);
@@ -113,10 +114,27 @@ public class ChonNhaCungCap extends JFrame {
 		
 	}
 	public void layDuLieu() {
+		model.setRowCount(0);
 		for(NhaCungCapModel ncc :DAO.NhaCungCapDAO.getAllNCC() ) {
-       		Object[] row = new Object[] {ncc.getId_ncc(),"NCC-1",ncc.getTen_ncc()} ;
+       		Object[] row = new Object[] {ncc.getId_ncc(),ncc.getTen_ncc(),ncc.getSDT(),ncc.getEmail()} ;
        		model.addRow(row);
        	}
+		table.setModel(model);
+	}
+	public void TimKiem() {
+		ArrayList<NhaCungCapModel> spLoc = new ArrayList<NhaCungCapModel>();
+		String chuoiTim =textField.getText();
+		for(NhaCungCapModel u :DAO.NhaCungCapDAO.getAllNCC()) {
+			if(u.getTen_ncc().toLowerCase().contains(chuoiTim.toLowerCase()) || String.valueOf(u.getSDT()).contains(chuoiTim) ) 
+			{
+				spLoc.add(u);
+			}
+		}	
+		model.setRowCount(0);
+		for(NhaCungCapModel ncc : spLoc ) {
+			Object[] row = new Object[] {ncc.getId_ncc(),ncc.getTen_ncc(),ncc.getSDT(),ncc.getEmail()} ;
+      		model.addRow(row);
+		}
 		table.setModel(model);
 	}
 

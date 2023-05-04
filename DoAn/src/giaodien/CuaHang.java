@@ -17,13 +17,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.border.MatteBorder;
 
+import model.NhanVienModel;
+
 public class CuaHang extends JPanel {
 	
 	JLabel lblSanPham = new JLabel("SẢN PHẨM");
 	JLabel lblNCC = new JLabel("NHÀ CUNG CẤP");
 	JLabel lblNhanHieu = new JLabel("NHÃN HIỆU");
-	
-	public CuaHang() {
+	NhanVienModel nv;
+	public CuaHang(NhanVienModel nv) {
+		this.nv=nv;
 		setLayout(null);
 		
 		JPanel panel = new JPanel();
@@ -38,21 +41,12 @@ public class CuaHang extends JPanel {
 		body.setLayout(new BorderLayout(0, 0));
 
 		// add panel san pham
-		SanPham tsp = new SanPham();
+		SanPham tsp = new SanPham(nv);
 		tsp.setBackground(SystemColor.control);
 		tsp.setLayout(null);
 		tsp.setVisible(true);
 		body.add(tsp);
 
-		
-		// add panel ql nhà cung cấp
-		NhaCungCap tncc = new NhaCungCap();
-		tncc.setLayout(null);
-		tncc.setVisible(true);
-		// add panel ql don vi tinh
-		NhanHieu tdvt = new NhanHieu();
-		tdvt.setLayout(null);
-		tdvt.setVisible(true);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);
@@ -67,7 +61,7 @@ public class CuaHang extends JPanel {
 				resetLabel();
 				lblSanPham.setBorder(new MatteBorder(0, 0, 3, 0, (Color) new Color(0, 0, 0)));
 		        body.removeAll();
-		        body.add(new SanPham());
+		        body.add(new SanPham(nv));
 		        body.repaint();
 		        body.validate();
 		      
@@ -92,7 +86,7 @@ public class CuaHang extends JPanel {
 				resetLabel();
 				lblNCC.setBorder(new MatteBorder(0, 0, 3, 0, (Color) new Color(0, 0, 0)));
 		        body.removeAll();
-		        body.add(new NhaCungCap());
+		        body.add(new NhaCungCap(nv));
 		        body.repaint();
 		        body.validate();
 		        
@@ -115,7 +109,7 @@ public class CuaHang extends JPanel {
 				resetLabel();
 				lblNhanHieu.setBorder(new MatteBorder(0, 0, 3, 0, (Color) new Color(0, 0, 0)));
 		        body.removeAll();
-		        body.add(new NhanHieu());
+		        body.add(new NhanHieu(nv));
 		        body.repaint();
 		        body.validate();
 			}

@@ -61,14 +61,13 @@ public class ThongKeSanPham extends JPanel {
 		panel_7.setLayout(null);
 		
 		DefaultPieDataset dataset = new DefaultPieDataset();
-		int TongSL =DAO.SanPhamDAO.demTongSoLuong();
+		int TongSL =DAO.DonHangDAO.layTongSoLuong();
 		ArrayList<model.NhanHieuModel> dsNH = DAO.NhanHieuDAO.getAllNhanHieu();
 		for(model.NhanHieuModel nh :dsNH) {
-//			if(DAO.sanPhamDAO.demSanPhamByNhanHieu(nh.getTen_nh())!=0) {
-				dataset.setValue(nh.getTen_nh(), DAO.SanPhamDAO.demSanPhamByNhanHieu(nh.getTen_nh())*100/TongSL);
-//			}
+			if(DAO.DonHangDAO.laySoLuongTheoNhanHieu(nh.getId_nh())>1) {
+				dataset.setValue(nh.getTen_nh(), DAO.DonHangDAO.laySoLuongTheoNhanHieu(nh.getId_nh())*100/TongSL);
+			}
 		}
-
         JFreeChart chart = ChartFactory.createPieChart("TỈ LỆ SẢN PHẨM ĐÃ BÁN THEO NHÃN HIỆU", dataset, true, true, true);
 
         // Tuỳ chỉnh biểu đồ
@@ -97,7 +96,7 @@ public class ThongKeSanPham extends JPanel {
         
         JScrollPane scrollPane = new JScrollPane();
 		scrollPane.getViewport().setBackground(Color.WHITE);
-		scrollPane.setBounds(10, 30, 1160, 350);
+		scrollPane.setBounds(10, 50, 1160, 330);
 		panel_5_1.add(scrollPane);
 
 		table = new cusTable();
@@ -111,6 +110,11 @@ public class ThongKeSanPham extends JPanel {
 		table.getColumnModel().getColumn(0).setCellRenderer(new CenterAlignRenderer());
 		table.getColumnModel().getColumn(1).setCellRenderer(new CenterAlignRenderer());
 		scrollPane.setViewportView(table);
+		
+		JLabel lblNewLabel = new JLabel("THỐNG KÊ CÁC SẢN PHẨM BÁN CHẠY NHẤT");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblNewLabel.setBounds(380, 11, 500, 30);
+		panel_5_1.add(lblNewLabel);
 		table.addMouseListener(new MouseAdapter() {				
 		});
 		hienthi();

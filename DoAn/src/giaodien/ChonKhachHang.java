@@ -12,11 +12,13 @@ import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import DAO.NhanVienDAO;
+import model.KhachHangModel;
 import model.KhachHangModel;
 import model.NhanVienModel;
 
@@ -33,7 +35,6 @@ public class ChonKhachHang extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private JTextField textField;
-	private JTextField textField_1;
 	DefaultTableModel model =new DefaultTableModel();
 	JLabel txtTenKH ;
 	JLabel txtMaKH ;
@@ -55,20 +56,18 @@ public class ChonKhachHang extends JFrame {
 		panel.setLayout(null);
 		
 		textField = new JTextField();
-		textField.setBorder(new TitledBorder(null, "T\u00EAn Kh\u00E1ch H\u00E0ng", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		textField.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "T\u00EAn Kh\u00E1ch H\u00E0ng / S\u1ED1 \u0111i\u1EC7n tho\u1EA1i", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField.setBounds(180, 5, 200, 40);
+		textField.setBounds(200, 5, 300, 40);
 		panel.add(textField);
 		textField.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField_1.setColumns(10);
-		textField_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "S\u1ED1 \u0110i\u1EC7n Tho\u1EA1i", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		textField_1.setBounds(400, 5, 200, 40);
-		panel.add(textField_1);
-		
 		JButton btnNewButton = new JButton("Tìm");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TimKiem();
+			}
+		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNewButton.setBounds(650, 9, 89, 35);
 		panel.add(btnNewButton);
@@ -126,9 +125,25 @@ public class ChonKhachHang extends JFrame {
 	}
 	public void layDuLieu() {
 		for(KhachHangModel kh :DAO.KhachHangDAO.getAllKH() ) {
-       		Object[] row = new Object[] {kh.getId_kh(),kh.getTenkh(),"0"+kh.getSodth(),kh.getDiemtl()} ;
+       		Object[] row = new Object[] {kh.getId_kh(),kh.getTenkh(),kh.getSodth(),kh.getDiemtl()} ;
        		model.addRow(row);
        	}
+		table.setModel(model);
+	}
+	public void TimKiem() {
+		ArrayList<KhachHangModel> spLoc = new ArrayList<KhachHangModel>();
+		String chuoiTim =textField.getText();
+		for(KhachHangModel u :DAO.KhachHangDAO.getAllKH()) {
+			if(u.getTenkh().toLowerCase().contains(chuoiTim.toLowerCase()) || String.valueOf(u.getSodth()).contains(chuoiTim) ) 
+			{
+				spLoc.add(u);
+			}
+		}	
+		model.setRowCount(0);
+		for(KhachHangModel kh : spLoc ) {
+			Object[] row = new Object[] {kh.getId_kh(),kh.getTenkh(),kh.getSodth(),kh.getDiemtl()} ;
+      		model.addRow(row);
+		}
 		table.setModel(model);
 	}
 }
