@@ -18,7 +18,9 @@ import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Locale;
@@ -31,6 +33,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import DAO.NhanHieuDAO;
+import model.PhieuNhapModel;
+import model.KhachHangModel;
 import model.NhaCungCapModel;
 import model.NhanVienModel;
 import model.PhieuNhapModel;
@@ -40,6 +44,7 @@ import java.awt.event.ActionEvent;
 public class PhieuNhap extends JPanel {
 	private JTable table;
 	ArrayList<PhieuNhapModel> dsPN;
+	RoundJTextField txtKhachHang = new RoundJTextField(10);
 	public PhieuNhap() {
 		setBackground(SystemColor.control);
 		setLayout(null);
@@ -50,12 +55,90 @@ public class PhieuNhap extends JPanel {
 		add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblTmKim = new JLabel("TÌM KIẾM");
-		lblTmKim.setBackground(SystemColor.text);
-		lblTmKim.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTmKim.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 25));
-		lblTmKim.setBounds(0, 10, 150, 30);
-		panel.add(lblTmKim);
+		RoundedJPanel panel_2 = new RoundedJPanel(20);
+		panel_2.setLayout(null);
+		panel_2.setBackground(Color.WHITE);
+		panel_2.setBounds(0, 0, 1180, 50);
+		panel.add(panel_2);
+		
+		JLabel lblTmKim_1 = new JLabel("TÌM KIẾM");
+		lblTmKim_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTmKim_1.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 25));
+		lblTmKim_1.setBackground(Color.WHITE);
+		lblTmKim_1.setBounds(0, 10, 150, 30);
+		panel_2.add(lblTmKim_1);
+		
+
+		txtKhachHang.setText("");
+		txtKhachHang.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
+		txtKhachHang.setColumns(10);
+		txtKhachHang.setBounds(300, 10, 250, 30);
+		panel_2.add(txtKhachHang);
+		
+		RoundJTextField txtStart = new RoundJTextField(10);
+		txtStart.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
+		txtStart.setEditable(false);
+		txtStart.setColumns(10);
+		txtStart.setBounds(618, 10, 120, 30);
+		panel_2.add(txtStart);
+		
+		RoundJTextField txtEnd = new RoundJTextField(10);
+		txtEnd.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
+		txtEnd.setEditable(false);
+		txtEnd.setColumns(10);
+		txtEnd.setBounds(838, 10, 120, 30);
+		panel_2.add(txtEnd);
+		
+		JLabel lbln = new JLabel("đến");
+		lbln.setHorizontalAlignment(SwingConstants.CENTER);
+		lbln.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 20));
+		lbln.setBackground(Color.WHITE);
+		lbln.setBounds(773, 10, 70, 30);
+		panel_2.add(lbln);
+		
+		JLabel lblT = new JLabel("Từ");
+		lblT.setHorizontalAlignment(SwingConstants.CENTER);
+		lblT.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 20));
+		lblT.setBackground(Color.WHITE);
+		lblT.setBounds(558, 10, 50, 30);
+		panel_2.add(lblT);
+		
+		JButton btnNewButton = new JButton("");
+		btnNewButton.setIcon(new ImageIcon(PhieuNhap.class.getResource("/icon/datepick.jpg")));
+		btnNewButton.setBounds(743, 10, 30, 30);
+		panel_2.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("");
+		btnNewButton_1.setIcon(new ImageIcon(PhieuNhap.class.getResource("/icon/datepick.jpg")));
+		btnNewButton_1.setBounds(963, 10, 30, 30);
+		panel_2.add(btnNewButton_1);
+		
+		JButton btnNewButton_1_1 = new JButton("");
+		btnNewButton_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				layDuLieu();
+			}
+		});
+		btnNewButton_1_1.setIcon(new ImageIcon(PhieuNhap.class.getResource("/icon/reset.jpg")));
+		btnNewButton_1_1.setBounds(1131, 5, 40, 40);
+		panel_2.add(btnNewButton_1_1);
+		
+		JButton btnNewButton_1_1_1 = new JButton("Tìm");
+		btnNewButton_1_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TimKiem();
+			}
+		});
+		btnNewButton_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNewButton_1_1_1.setBounds(1030, 5, 80, 40);
+		panel_2.add(btnNewButton_1_1_1);
+		
+		JLabel lblTnNccNv = new JLabel("Tên NCC/ NV");
+		lblTnNccNv.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTnNccNv.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 20));
+		lblTnNccNv.setBackground(Color.WHITE);
+		lblTnNccNv.setBounds(150, 10, 150, 30);
+		panel_2.add(lblTnNccNv);
 		
 		JPanel panel_1 = new RoundedJPanel(20);
 		panel_1.setBackground(SystemColor.text);
@@ -97,6 +180,28 @@ public class PhieuNhap extends JPanel {
     	table.getColumnModel().getColumn(5).setCellRenderer(rendererRight);
 		scrollPane.setViewportView(table);
 		
+		JButton btnNewButton_1_1_1_1 = new JButton("Xuất Excel");
+		btnNewButton_1_1_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int output = JOptionPane.showConfirmDialog(null, 
+                        "Bạn có muốn xuất Excel không?", "",
+                        JOptionPane.YES_NO_OPTION);
+	 			if(output==JOptionPane.YES_OPTION){  
+	 				try {
+						BUS.PhieuNhapBUS.xuatExcel();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	 			}
+				
+			}
+		});
+		btnNewButton_1_1_1_1.setIcon(new ImageIcon(PhieuNhap.class.getResource("/icon/export.jpg")));
+		btnNewButton_1_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNewButton_1_1_1_1.setBounds(1020, 11, 150, 40);
+		panel_1.add(btnNewButton_1_1_1_1);
+		
 
 		table.addMouseListener(new MouseAdapter() {
 			@Override
@@ -116,6 +221,32 @@ public class PhieuNhap extends JPanel {
 			NhaCungCapModel ncc = DAO.NhaCungCapDAO.getNCCByID(pn.getId_ncc());
 			Object[] row = new Object[] {pn.getId_pn(),ncc.getId_ncc()+" - "+ncc.getTen_ncc(),nv.getId_nv()+" - "+nv.getHoTen(),pn.getNgaynhap(),pn.getTongsl(),intToMoney(pn.getTongtien())} ;
 			model.addRow(row);
+		}
+		table.setModel(model);
+	}
+	public void TimKiem() {
+		DefaultTableModel model =(DefaultTableModel) table.getModel();
+		ArrayList<PhieuNhapModel> spLoc = new ArrayList<PhieuNhapModel>();
+		String chuoiTim =txtKhachHang.getText();
+		DateFormat df = new SimpleDateFormat("yyyy/mm/dd"); 
+//		Date startDate =  (Date) df.parse(txtEnd.getText());
+//		Date endDate = (Date) df.parse(txtEnd.getText());
+		for(PhieuNhapModel u :DAO.PhieuNhapDAO.getAllPhieuNhap()) {
+			NhanVienModel nv = DAO.NhanVienDAO.getUsersByID(u.getId_nv());
+			NhaCungCapModel ncc = DAO.NhaCungCapDAO.getNCCByID(u.getId_ncc());
+			if(ncc.getTen_ncc().toLowerCase().contains(chuoiTim.toLowerCase()) || nv.getHoTen().toLowerCase().contains(chuoiTim.toLowerCase())  ) 
+			{
+				spLoc.add(u);
+			}
+		}	
+		model.setRowCount(0);
+		for(PhieuNhapModel u : spLoc ) {
+			NhanVienModel nv = DAO.NhanVienDAO.getUsersByID(u.getId_nv());
+			NhaCungCapModel ncc = DAO.NhaCungCapDAO.getNCCByID(u.getId_ncc());
+			Object[] row = new Object[] { u.id_pn, ncc.getId_ncc() + " - " + ncc.getTen_ncc(),
+					nv.getId_nv() + " - " + nv.getHoTen(), u.getNgaynhap(), u.getTongsl(),
+					intToMoney(u.getTongtien()) };
+      		model.addRow(row);
 		}
 		table.setModel(model);
 	}

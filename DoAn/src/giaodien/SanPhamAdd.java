@@ -55,7 +55,6 @@ public class SanPhamAdd extends JFrame {
 	String filename = "null";
 	boolean doianh=false;
 	JButton btnNewButton_1_1_1;
-	JButton btnXoa = new JButton("Xóa");
 	public SanPhamAdd() {
 		setType(Type.UTILITY);
 		setBounds(100, 100, 1000,600);
@@ -162,7 +161,7 @@ public class SanPhamAdd extends JFrame {
 		btnNewButton_1_1_1.setBackground(SystemColor.text);
 		btnNewButton_1_1_1.setIcon(new ImageIcon(SanPhamAdd.class.getResource("/icon/save.jpg")));
 		btnNewButton_1_1_1.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 15));
-		btnNewButton_1_1_1.setBounds(200, 349, 150, 50);
+		btnNewButton_1_1_1.setBounds(248, 349, 150, 50);
 		btnNewButton_1_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (txtMaSP.getText().equals("")) {
@@ -227,18 +226,6 @@ public class SanPhamAdd extends JFrame {
 		txtTenSP.setBounds(200, 111, 300, 60);
 		panel_1.add(txtTenSP);
 		
-		
-		btnXoa.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnXoa.setIcon(new ImageIcon(SanPhamAdd.class.getResource("/icon/delete.jpg")));
-		btnXoa.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 15));
-		btnXoa.setBackground(Color.WHITE);
-		btnXoa.setBounds(374, 349, 150, 50);
-		btnXoa.setVisible(false);
-		panel_1.add(btnXoa);
-		
 		JPanel panel = new RoundedJPanel(20);
 		panel.setBackground(Color.WHITE);
 		panel.setBounds(10, 10, 965, 50);
@@ -260,7 +247,6 @@ public class SanPhamAdd extends JFrame {
 		txtDonGia.setText(sp.getGia() + "");
 		hienhinh(sp.getPhoto());
 		btnNewButton_1_1_1.setText("Cập nhật");
-		btnXoa.setVisible(true);
 	}
 
 	public void hienhinh(String tenfile) {

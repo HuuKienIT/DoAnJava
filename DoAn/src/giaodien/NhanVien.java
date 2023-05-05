@@ -4,6 +4,8 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 
 import javax.swing.SwingConstants;
@@ -15,6 +17,7 @@ import javax.swing.JTextField;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -127,12 +130,40 @@ public class NhanVien extends JPanel {
         panel_2.add(btnNewButton);
         
         btnNhpExcel = new JButton("Nhập Excel");
+        btnNhpExcel.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		int output = JOptionPane.showConfirmDialog(null, "Bạn có muốn xuất lấy file mẫu không?", "",
+						JOptionPane.YES_NO_OPTION);
+				if (output == JOptionPane.YES_OPTION) {
+					try {
+						BUS.NhanVienBUS.FielExcelMau();
+					} catch (IOException e1) {
+					}
+				}
+				try {
+					BUS.NhanVienBUS.nhapExcel();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+        	}
+        });
         btnNhpExcel.setIcon(new ImageIcon(NhanVien.class.getResource("/icon/import.jpg")));
         btnNhpExcel.setFont(new Font("Tahoma", Font.PLAIN, 16));
         btnNhpExcel.setBounds(745, 5, 150, 40);
         panel_2.add(btnNhpExcel);
         
         btnXutExcel = new JButton("Xuất Excel");
+        btnXutExcel.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		try {
+					BUS.NhanVienBUS.xuatExcel();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+        	}
+        });
         btnXutExcel.setIcon(new ImageIcon(NhanVien.class.getResource("/icon/export.jpg")));
         btnXutExcel.setFont(new Font("Tahoma", Font.PLAIN, 16));
         btnXutExcel.setBounds(905, 5, 150, 40);

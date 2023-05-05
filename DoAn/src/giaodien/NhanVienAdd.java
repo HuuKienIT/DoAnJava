@@ -51,7 +51,6 @@ public class NhanVienAdd extends JFrame {
 	JComboBox comboChucVu = new JComboBox();
 	JLabel lblNewLabel = new JLabel("");
 	JButton btnLu;
-	JButton btnXa;
 	private JPasswordField txtMatKhau;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	JRadioButton rdobtnNam, rdobtnNu;
@@ -80,7 +79,7 @@ public class NhanVienAdd extends JFrame {
 		btnLu.setIcon(new ImageIcon(NhanVienAdd.class.getResource("/icon/save.jpg")));
 		btnLu.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 18));
 		btnLu.setBackground(Color.WHITE);
-		btnLu.setBounds(116, 448, 150, 40);
+		btnLu.setBounds(237, 446, 150, 40);
 		btnLu.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -256,25 +255,6 @@ public class NhanVienAdd extends JFrame {
 			}
 		});
 		panel.add(btnNewButton);
-		
-		btnXa = new JButton("Xóa");
-		btnXa.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int output = JOptionPane.showConfirmDialog(null, 
-                        "Tất cả các dữ liệu liên quan như đơn hàng, phiếu nhập sẽ bị xóa. Bạn có muốn xóa không?", "",
-                        JOptionPane.YES_NO_OPTION);
-	 			if(output==JOptionPane.YES_OPTION){
-	 				DAO.NhanVienDAO.xoaUsers(Integer.parseInt(txtID.getText()));
-	 				JOptionPane.showMessageDialog(null,"Xóa thành công");
-	 			}	
-			}
-		});
-		btnXa.setIcon(new ImageIcon(NhanVienAdd.class.getResource("/icon/delete.jpg")));
-		btnXa.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 18));
-		btnXa.setBackground(Color.WHITE);
-		btnXa.setBounds(307, 448, 150, 40);
-		btnXa.setVisible(false);
-		panel.add(btnXa);
 		
 		JLabel lblNewLabel_1_2_2 = new JLabel("Giới tính");
 		lblNewLabel_1_2_2.setHorizontalAlignment(SwingConstants.RIGHT);

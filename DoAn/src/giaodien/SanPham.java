@@ -154,6 +154,20 @@ public class SanPham extends JPanel {
 		btnNewButton_2_1 = new JButton("Nhập Excel");
 		btnNewButton_2_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int output = JOptionPane.showConfirmDialog(null, "Bạn có muốn xuất lấy file mẫu không?", "",
+						JOptionPane.YES_NO_OPTION);
+				if (output == JOptionPane.YES_OPTION) {
+					try {
+						BUS.SanPhamBUS.FielExcelMau();
+					} catch (IOException e1) {
+					}
+				}
+				try {
+					BUS.SanPhamBUS.nhapExcel();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnNewButton_2_1.setIcon(new ImageIcon(SanPham.class.getResource("/icon/import.jpg")));

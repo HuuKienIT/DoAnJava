@@ -137,4 +137,39 @@ public class SanPhamBUS {
 			JOptionPane.showMessageDialog(null, "Xuất File thất bại");
 		}
 	}
+	public static void FielExcelMau() throws IOException {
+		ArrayList<SanPhamModel> ds = DAO.SanPhamDAO.getAllSanPham();
+		JFrame parentFrame = new JFrame();
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("Specify a file to save");
+		fileChooser.setFileFilter(new FileNameExtensionFilter(".xlsx", "Microsoft Excel Documents"));
+		fileChooser.setSelectedFile(new File("SanPhamMau.xlsx"));
+		int userSelection = fileChooser.showSaveDialog(parentFrame);
+		if (userSelection == JFileChooser.APPROVE_OPTION) {
+			File fileToSave = fileChooser.getSelectedFile();
+			XSSFWorkbook wb = new XSSFWorkbook();
+			XSSFSheet sheet = wb.createSheet("SanPham");
+			FileOutputStream fileOut;
+			fileOut = new FileOutputStream(fileToSave);
+			Row rowhead = sheet.createRow(0);
+			rowhead.createCell(0).setCellValue("ID Sản Phẩm");
+			rowhead.createCell(1).setCellValue("Tên Sản Phẩm");
+			rowhead.createCell(2).setCellValue("ID Nhãn Hiệu");
+			rowhead.createCell(3).setCellValue("Giá");
+			rowhead.createCell(5).setCellValue("Hình ảnh");
+
+			sheet.autoSizeColumn(0);
+			sheet.autoSizeColumn(1);
+			sheet.autoSizeColumn(2);
+			sheet.autoSizeColumn(3);
+			sheet.autoSizeColumn(4);
+			sheet.autoSizeColumn(5);
+			wb.write(fileOut);
+			fileOut.close();
+			wb.close();
+			JOptionPane.showMessageDialog(null, "Xuất File thành công");
+		} else {
+			JOptionPane.showMessageDialog(null, "Xuất File thất bại");
+		}
+	}
 }

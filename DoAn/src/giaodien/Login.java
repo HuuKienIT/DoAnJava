@@ -161,6 +161,7 @@ public class Login extends JFrame {
 		}else {
 			if(DAO.NhanVienDAO.layMatKhau(tendn).equals(matkhau)) {
 				if(checkLuuDN.isSelected()) {
+					clearFile();
 			        ghiTaiKhoan(txtTenDn.getText(),txtMatKhau.getText());
 		        }else {
 			        clearFile();

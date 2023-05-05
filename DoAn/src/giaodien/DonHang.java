@@ -23,8 +23,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Locale;
@@ -48,7 +53,7 @@ public class DonHang extends JPanel {
 	private JTextField txtKhachHang;
 	private JTextField txtStart;
 	private JTextField txtEnd;
-
+	DefaultTableModel model =new DefaultTableModel();
 	public DonHang() {
 		setBackground(SystemColor.control);
 		setLayout(null);
@@ -67,17 +72,10 @@ public class DonHang extends JPanel {
 		panel.add(lblTmKim);
 
 		txtKhachHang = new RoundJTextField(10);
-		txtKhachHang.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (txtKhachHang.getText().equals("    Nhập tên Khách Hàng")) {
-					txtKhachHang.setText("");
-				}
-			}
-		});
-		txtKhachHang.setText("    Nhập tên Khách Hàng / Nhân Viên");
+
+		txtKhachHang.setText("");
 		txtKhachHang.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
-		txtKhachHang.setBounds(200, 5, 300, 40);
+		txtKhachHang.setBounds(300, 10, 250, 30);
 		panel.add(txtKhachHang);
 		txtKhachHang.setColumns(10);
 
@@ -146,24 +144,32 @@ public class DonHang extends JPanel {
 		JButton btnNewButton_1_1 = new JButton("");
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtKhachHang.setText("    Nhập tên Khách Hàng / Nhân Viên");
+				txtKhachHang.setText("");
 				txtStart.setText("");
 				txtEnd.setText("");
+				layDulieu();
 			}
 		});
 		btnNewButton_1_1.setIcon(new ImageIcon(DonHang.class.getResource("/icon/reset.jpg")));
-		btnNewButton_1_1.setBounds(1131, 10, 30, 30);
+		btnNewButton_1_1.setBounds(1131, 5, 40, 40);
 		panel.add(btnNewButton_1_1);
 		
 		JButton btnNewButton_1_1_1 = new JButton("Tìm");
 		btnNewButton_1_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				TimKiem();
 			}
 		});
 		btnNewButton_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNewButton_1_1_1.setBounds(1030, 5, 80, 40);
 		panel.add(btnNewButton_1_1_1);
+		
+		JLabel lblTnKhnv = new JLabel("Tên KH / NV");
+		lblTnKhnv.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTnKhnv.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 20));
+		lblTnKhnv.setBackground(Color.WHITE);
+		lblTnKhnv.setBounds(150, 10, 150, 30);
+		panel.add(lblTnKhnv);
 
 		panel_1.setBackground(SystemColor.text);
 		panel_1.setBounds(0, 60, 1180, 739);
@@ -206,6 +212,27 @@ public class DonHang extends JPanel {
 			}
 
 		});
+		JButton btnNewButton_1_1_1_1 = new JButton("Xuất Excel");
+		btnNewButton_1_1_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int output = JOptionPane.showConfirmDialog(null, 
+                        "Bạn có muốn xuất Excel không?", "",
+                        JOptionPane.YES_NO_OPTION);
+	 			if(output==JOptionPane.YES_OPTION){  
+	 				try {
+						BUS.DonHangBUS.xuatExcel();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	 			}
+				
+			}
+		});
+		btnNewButton_1_1_1_1.setIcon(new ImageIcon(PhieuNhap.class.getResource("/icon/export.jpg")));
+		btnNewButton_1_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNewButton_1_1_1_1.setBounds(1020, 11, 150, 40);
+		panel_1.add(btnNewButton_1_1_1_1);
 	}
 
 	public static int moneyToInt(String value) throws ParseException {
@@ -216,8 +243,9 @@ public class DonHang extends JPanel {
 	}
 
 	public void layDulieu() {
-		DefaultTableModel model = new DefaultTableModel();
-		for (model.DonHangModel dh : DAO.DonHangDAO.getAllDonHang()) {
+		model.setRowCount(0);
+		DefaultTableModel model =(DefaultTableModel) table.getModel();
+		for (DonHangModel dh : DAO.DonHangDAO.getAllDonHang()) {
 			NhanVienModel nv = DAO.NhanVienDAO.getUsersByID(dh.getId_nv());
 			KhachHangModel kh = DAO.KhachHangDAO.getKhachHangByid(dh.getId_kh());
 			Object[] row = new Object[] { dh.id_dh, kh.getId_kh() + " - " + kh.getTenkh(),
@@ -228,13 +256,16 @@ public class DonHang extends JPanel {
 		table.setModel(model);
 	}
 	public void TimKiem() {
-		DefaultTableModel model = new DefaultTableModel();
+		DefaultTableModel model =(DefaultTableModel) table.getModel();
 		ArrayList<DonHangModel> spLoc = new ArrayList<DonHangModel>();
 		String chuoiTim =txtKhachHang.getText();
+		DateFormat df = new SimpleDateFormat("yyyy/mm/dd"); 
+//		Date startDate =  (Date) df.parse(txtEnd.getText());
+//		Date endDate = (Date) df.parse(txtEnd.getText());
 		for(DonHangModel u :DAO.DonHangDAO.getAllDonHang()) {
 			NhanVienModel nv = DAO.NhanVienDAO.getUsersByID(u.getId_nv());
 			KhachHangModel kh = DAO.KhachHangDAO.getKhachHangByid(u.getId_kh());
-			if(nv.getHoTen().contains(chuoiTim.toLowerCase()) || String.valueOf(nv.getHoTen()).contains(chuoiTim) ) 
+			if(kh.getTenkh().toLowerCase().contains(chuoiTim.toLowerCase()) || nv.getHoTen().toLowerCase().contains(chuoiTim.toLowerCase())  ) 
 			{
 				spLoc.add(u);
 			}

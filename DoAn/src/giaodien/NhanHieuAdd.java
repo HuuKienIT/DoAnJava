@@ -80,7 +80,7 @@ public class NhanHieuAdd extends JFrame {
 		btnNewButton = new JButton("Thêm");
 		btnNewButton.setBackground(Color.WHITE);
 		btnNewButton.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
-		btnNewButton.setBounds(215, 200, 150, 30);
+		btnNewButton.setBounds(215, 200, 150, 40);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (textField_2.getText().equals("")) {
