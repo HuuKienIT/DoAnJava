@@ -75,43 +75,43 @@ public class PhieuNhap extends JPanel {
 		txtKhachHang.setBounds(300, 10, 250, 30);
 		panel_2.add(txtKhachHang);
 		
-		RoundJTextField txtStart = new RoundJTextField(10);
-		txtStart.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
-		txtStart.setEditable(false);
-		txtStart.setColumns(10);
-		txtStart.setBounds(618, 10, 120, 30);
-		panel_2.add(txtStart);
+//		RoundJTextField txtStart = new RoundJTextField(10);
+//		txtStart.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
+//		txtStart.setEditable(false);
+//		txtStart.setColumns(10);
+//		txtStart.setBounds(618, 10, 120, 30);
+//		panel_2.add(txtStart);
+//		
+//		RoundJTextField txtEnd = new RoundJTextField(10);
+//		txtEnd.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
+//		txtEnd.setEditable(false);
+//		txtEnd.setColumns(10);
+//		txtEnd.setBounds(838, 10, 120, 30);
+//		panel_2.add(txtEnd);
+//		
+//		JLabel lbln = new JLabel("đến");
+//		lbln.setHorizontalAlignment(SwingConstants.CENTER);
+//		lbln.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 20));
+//		lbln.setBackground(Color.WHITE);
+//		lbln.setBounds(773, 10, 70, 30);
+//		panel_2.add(lbln);
+//		
+//		JLabel lblT = new JLabel("Từ");
+//		lblT.setHorizontalAlignment(SwingConstants.CENTER);
+//		lblT.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 20));
+//		lblT.setBackground(Color.WHITE);
+//		lblT.setBounds(558, 10, 50, 30);
+//		panel_2.add(lblT);
 		
-		RoundJTextField txtEnd = new RoundJTextField(10);
-		txtEnd.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
-		txtEnd.setEditable(false);
-		txtEnd.setColumns(10);
-		txtEnd.setBounds(838, 10, 120, 30);
-		panel_2.add(txtEnd);
-		
-		JLabel lbln = new JLabel("đến");
-		lbln.setHorizontalAlignment(SwingConstants.CENTER);
-		lbln.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 20));
-		lbln.setBackground(Color.WHITE);
-		lbln.setBounds(773, 10, 70, 30);
-		panel_2.add(lbln);
-		
-		JLabel lblT = new JLabel("Từ");
-		lblT.setHorizontalAlignment(SwingConstants.CENTER);
-		lblT.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 20));
-		lblT.setBackground(Color.WHITE);
-		lblT.setBounds(558, 10, 50, 30);
-		panel_2.add(lblT);
-		
-		JButton btnNewButton = new JButton("");
-		btnNewButton.setIcon(new ImageIcon(PhieuNhap.class.getResource("/icon/datepick.jpg")));
-		btnNewButton.setBounds(743, 10, 30, 30);
-		panel_2.add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("");
-		btnNewButton_1.setIcon(new ImageIcon(PhieuNhap.class.getResource("/icon/datepick.jpg")));
-		btnNewButton_1.setBounds(963, 10, 30, 30);
-		panel_2.add(btnNewButton_1);
+//		JButton btnNewButton = new JButton("");
+//		btnNewButton.setIcon(new ImageIcon(PhieuNhap.class.getResource("/icon/datepick.jpg")));
+//		btnNewButton.setBounds(743, 10, 30, 30);
+//		panel_2.add(btnNewButton);
+//		
+//		JButton btnNewButton_1 = new JButton("");
+//		btnNewButton_1.setIcon(new ImageIcon(PhieuNhap.class.getResource("/icon/datepick.jpg")));
+//		btnNewButton_1.setBounds(963, 10, 30, 30);
+//		panel_2.add(btnNewButton_1);
 		
 		JButton btnNewButton_1_1 = new JButton("");
 		btnNewButton_1_1.addActionListener(new ActionListener() {

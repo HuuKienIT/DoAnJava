@@ -11,11 +11,15 @@ import model.KhachHangModel;
 import java.awt.Window.Type;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ThemKhachHang extends JFrame {
 
@@ -24,11 +28,11 @@ public class ThemKhachHang extends JFrame {
 	private JTextField txtSoDth;
 	private JTextField txtMaKh;
 	JButton btnNewButton;
-	private JButton btnXa;
+	private JTextField txtEmail;
 	public ThemKhachHang() {
 
 		setType(Type.UTILITY);
-		setBounds(100, 100, 591, 345);
+		setBounds(100, 100, 591, 411);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);
@@ -37,7 +41,7 @@ public class ThemKhachHang extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(10, 11, 555, 284);
+		panel.setBounds(10, 11, 555, 350);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -75,10 +79,35 @@ public class ThemKhachHang extends JFrame {
 		panel.add(txtSoDth);
 		
 		btnNewButton = new JButton("Thêm");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(txtHoTen.getText().equals("") || txtEmail.getText().equals("") || txtSoDth.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"Không để trống");
+				}else {
+					if(txtMaKh.getText().equals("")) {
+						KhachHangModel kh = new KhachHangModel();
+						kh.setTenkh(txtHoTen.getText());
+						kh.setSodth(Integer.parseInt(txtSoDth.getText()));
+						kh.setEmail(txtEmail.getText());
+						DAO.KhachHangDAO.themKhachHang(kh);
+						JOptionPane.showMessageDialog(null,"Thêm Thành công");
+						dispose();
+					}else {
+						KhachHangModel kh = new KhachHangModel();
+						kh.setTenkh(txtHoTen.getText());
+						kh.setSodth(Integer.parseInt(txtSoDth.getText()));
+						kh.setEmail(txtEmail.getText());
+						DAO.KhachHangDAO.updateKhachHang(kh, Integer.parseInt(txtMaKh.getText()));
+						JOptionPane.showMessageDialog(null,"Sửa Thành công");
+						dispose();
+					}
+				}	
+			}
+		});
 		btnNewButton.setIcon(new ImageIcon(ThemKhachHang.class.getResource("/icon/save.jpg")));
 		btnNewButton.setBackground(Color.WHITE);
 		btnNewButton.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
-		btnNewButton.setBounds(130, 230, 150, 40);
+		btnNewButton.setBounds(210, 285, 150, 40);
 		panel.add(btnNewButton);
 		
 		txtMaKh = new JTextField();
@@ -95,18 +124,25 @@ public class ThemKhachHang extends JFrame {
 		akbask.setBounds(42, 80, 150, 30);
 		panel.add(akbask);
 		
-		btnXa = new JButton("Xóa");
-		btnXa.setIcon(new ImageIcon(ThemKhachHang.class.getResource("/icon/delete.jpg")));
-		btnXa.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
-		btnXa.setBackground(Color.WHITE);
-		btnXa.setBounds(310, 230, 130, 40);
-		panel.add(btnXa);
+		JLabel lblEmail = new JLabel("Email");
+		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblEmail.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 18));
+		lblEmail.setEnabled(true);
+		lblEmail.setBounds(42, 233, 150, 30);
+		panel.add(lblEmail);
+		
+		txtEmail = new JTextField();
+		txtEmail.setFont(new Font("Open Sans ExtraBold", Font.PLAIN, 16));
+		txtEmail.setColumns(10);
+		txtEmail.setBounds(226, 233, 200, 30);
+		panel.add(txtEmail);
 	}
 	public void setDuLieu(int id_kh) {
 		KhachHangModel kh =DAO.KhachHangDAO.getKhachHangByid(id_kh);
 		txtMaKh.setText(kh.getId_kh()+"");
 		txtHoTen.setText(kh.getTenkh());
 		txtSoDth.setText(kh.getSodth()+"");
+		txtEmail.setText(kh.getEmail());
 		btnNewButton.setText("Cập nhật");
 	}
 }

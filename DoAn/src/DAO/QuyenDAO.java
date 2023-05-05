@@ -25,4 +25,16 @@ public class QuyenDAO {
 		}
 		return ds;
 	}
+	public static void addQuyen(String tenquyen) {
+		try {
+			String sql = "insert into quyen(ten_q) values ('"+tenquyen+"')";
+			mySQLHelper helper = new mySQLHelper();
+			helper.open();
+			helper.executeUpdate(sql);
+			helper.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
 }

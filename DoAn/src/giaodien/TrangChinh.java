@@ -297,6 +297,10 @@ public class TrangChinh extends JFrame {
 		doiPanel();
 		hienUser();
 		HienSuDung();
+		
+		if (!BUS.PhanQuyenBUS.KTQuyen(nv.getId_nv(), 1)) {
+			bh.setVisible(false);
+		}
 
 	}
 

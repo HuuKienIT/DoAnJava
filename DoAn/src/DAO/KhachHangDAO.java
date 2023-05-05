@@ -98,12 +98,37 @@ public class KhachHangDAO {
 				kh.setTenkh(rs.getString("ten_kh"));
 				kh.setSodth(rs.getInt("sdth"));
 				kh.setDiemtl(rs.getInt("diem"));
+				kh.setEmail(rs.getString("email"));
 			}
 			helper.close();	
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return kh;
+	}
+	public static int  themKhachHang(KhachHangModel kh) {
+		int n = -1;
+		try {
+			String sql = "insert into khachhang(ten_kh,sdth,email) values ('"+kh.getTenkh()+"','"+kh.getSodth()+"','"+kh.getEmail()+"')";
+			mySQLHelper helper = new mySQLHelper();
+			helper.open();
+			n = helper.executeUpdate(sql);
+			helper.close();
+		} catch (Exception e) {
+		}
+		return n;
+	}
+	public static int  updateKhachHang(KhachHangModel kh,int id_kh) {
+		int n = -1;
+		try {
+			String sql = "update khachhang set ten_kh = '"+kh.getTenkh()+"', sdth = "+kh.getSodth() +", email = '"+kh.getEmail()+"' where id_kh ="+id_kh;
+			mySQLHelper helper = new mySQLHelper();
+			helper.open();
+			n = helper.executeUpdate(sql);
+			helper.close();
+		} catch (Exception e) {
+		}
+		return n;
 	}
 
 }

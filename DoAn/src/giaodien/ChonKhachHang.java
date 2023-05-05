@@ -69,7 +69,7 @@ public class ChonKhachHang extends JFrame {
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnNewButton.setBounds(650, 9, 89, 35);
+		btnNewButton.setBounds(538, 10, 89, 35);
 		panel.add(btnNewButton);
 		
 		JLabel lblNewLabel = new JLabel("Tìm Kiếm");
@@ -87,6 +87,17 @@ public class ChonKhachHang extends JFrame {
 		btnNew.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNew.setBounds(750, 8, 120, 35);
 		panel.add(btnNew);
+		
+		JButton btnNewButton_1 = new JButton("");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				layDuLieu();
+			}
+		});
+		btnNewButton_1.setIcon(new ImageIcon(ChonKhachHang.class.getResource("/icon/reset.jpg")));
+		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNewButton_1.setBounds(651, 10, 40, 35);
+		panel.add(btnNewButton_1);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);
@@ -124,6 +135,7 @@ public class ChonKhachHang extends JFrame {
 		
 	}
 	public void layDuLieu() {
+		model.setRowCount(0);
 		for(KhachHangModel kh :DAO.KhachHangDAO.getAllKH() ) {
        		Object[] row = new Object[] {kh.getId_kh(),kh.getTenkh(),kh.getSodth(),kh.getDiemtl()} ;
        		model.addRow(row);

@@ -79,67 +79,67 @@ public class DonHang extends JPanel {
 		panel.add(txtKhachHang);
 		txtKhachHang.setColumns(10);
 
-		txtStart = new RoundJTextField(10);
-		txtStart.setEditable(false);
-		txtStart.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
-		txtStart.setColumns(10);
-		txtStart.setBounds(618, 10, 120, 30);
-		panel.add(txtStart);
+//		txtStart = new RoundJTextField(10);
+//		txtStart.setEditable(false);
+//		txtStart.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
+//		txtStart.setColumns(10);
+//		txtStart.setBounds(618, 10, 120, 30);
+//		panel.add(txtStart);
+//
+//		txtEnd = new RoundJTextField(10);
+//		txtEnd.setEditable(false);
+//		txtEnd.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
+//		txtEnd.setColumns(10);
+//		txtEnd.setBounds(838, 10, 120, 30);
+//		panel.add(txtEnd);
+//
+//		JLabel lbln = new JLabel("đến");
+//		lbln.setHorizontalAlignment(SwingConstants.CENTER);
+//		lbln.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 20));
+//		lbln.setBackground(Color.WHITE);
+//		lbln.setBounds(773, 10, 70, 30);
+//		panel.add(lbln);
+//
+//		JLabel lblT = new JLabel("Từ");
+//		lblT.setHorizontalAlignment(SwingConstants.CENTER);
+//		lblT.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 20));
+//		lblT.setBackground(Color.WHITE);
+//		lblT.setBounds(558, 10, 50, 30);
+//		panel.add(lblT);
 
-		txtEnd = new RoundJTextField(10);
-		txtEnd.setEditable(false);
-		txtEnd.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 16));
-		txtEnd.setColumns(10);
-		txtEnd.setBounds(838, 10, 120, 30);
-		panel.add(txtEnd);
-
-		JLabel lbln = new JLabel("đến");
-		lbln.setHorizontalAlignment(SwingConstants.CENTER);
-		lbln.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 20));
-		lbln.setBackground(Color.WHITE);
-		lbln.setBounds(773, 10, 70, 30);
-		panel.add(lbln);
-
-		JLabel lblT = new JLabel("Từ");
-		lblT.setHorizontalAlignment(SwingConstants.CENTER);
-		lblT.setFont(new Font("Open Sans SemiBold", Font.PLAIN, 20));
-		lblT.setBackground(Color.WHITE);
-		lblT.setBounds(558, 10, 50, 30);
-		panel.add(lblT);
-
-		JButton btnNewButton = new JButton("");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				final pickdate dp = new pickdate();
-				dp.popupShow(dp);
-				dp.addPopupListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						txtStart.setText(dp.getFormattedDate());
-						dp.popupHide();
-					}
-				});
-			}
-		});
-		btnNewButton.setIcon(new ImageIcon(DonHang.class.getResource("/icon/datepick.jpg")));
-		btnNewButton.setBounds(743, 10, 30, 30);
-		panel.add(btnNewButton);
-
-		JButton btnNewButton_1 = new JButton("");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				final pickdate dp = new pickdate();
-				dp.popupShow(dp);
-				dp.addPopupListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						txtEnd.setText(dp.getFormattedDate());
-						dp.popupHide();
-					}
-				});
-			}
-		});
-		btnNewButton_1.setIcon(new ImageIcon(DonHang.class.getResource("/icon/datepick.jpg")));
-		btnNewButton_1.setBounds(963, 10, 30, 30);
-		panel.add(btnNewButton_1);
+//		JButton btnNewButton = new JButton("");
+//		btnNewButton.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				final pickdate dp = new pickdate();
+//				dp.popupShow(dp);
+//				dp.addPopupListener(new ActionListener() {
+//					public void actionPerformed(ActionEvent e) {
+//						txtStart.setText(dp.getFormattedDate());
+//						dp.popupHide();
+//					}
+//				});
+//			}
+//		});
+//		btnNewButton.setIcon(new ImageIcon(DonHang.class.getResource("/icon/datepick.jpg")));
+//		btnNewButton.setBounds(743, 10, 30, 30);
+//		panel.add(btnNewButton);
+//
+//		JButton btnNewButton_1 = new JButton("");
+//		btnNewButton_1.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				final pickdate dp = new pickdate();
+//				dp.popupShow(dp);
+//				dp.addPopupListener(new ActionListener() {
+//					public void actionPerformed(ActionEvent e) {
+//						txtEnd.setText(dp.getFormattedDate());
+//						dp.popupHide();
+//					}
+//				});
+//			}
+//		});
+//		btnNewButton_1.setIcon(new ImageIcon(DonHang.class.getResource("/icon/datepick.jpg")));
+//		btnNewButton_1.setBounds(963, 10, 30, 30);
+//		panel.add(btnNewButton_1);
 
 		JButton btnNewButton_1_1 = new JButton("");
 		btnNewButton_1_1.addActionListener(new ActionListener() {

@@ -77,7 +77,13 @@ public class PhanQuyenAdd extends JFrame {
 		btnNewButton.setBounds(215, 200, 150, 30);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				if(textField_2.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"Chưa có thông tin ");
+				}else {
+					DAO.QuyenDAO.addQuyen(textField_2.getText());
+					JOptionPane.showMessageDialog(null,"Thêm Thành công");
+					dispose();
+				}
 			}
 		});
 		panel.add(btnNewButton);

@@ -35,8 +35,8 @@ public class BanHangBUS {
 	public static void XuatDonHang(ArrayList<SanPhamGHModel> GH, NhanVienModel nv, int tongsl, int tongtien, int id_kh,
 			int sd) {
 		if (sd == 1 && DAO.KhachHangDAO.layDiem(id_kh) != 0) {
-			Float giam = (float) (DAO.KhachHangDAO.layDiem(id_kh) / 100);
-			tongtien = Math.round(tongtien * giam);
+			Float giam = (float) (DAO.KhachHangDAO.layDiem(id_kh)*1.0 / 100);
+			tongtien = Math.round(tongtien-tongtien * giam);
 			DAO.KhachHangDAO.truDiem(id_kh);
 		}
 		DAO.KhachHangDAO.tangDiem(id_kh, tongtien / 1000000);
